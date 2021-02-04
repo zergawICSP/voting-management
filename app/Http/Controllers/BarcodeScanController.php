@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Delegate;
+use App\Models\ShareHolder;
 use Illuminate\Http\Request;
 
-class DelegateController extends Controller
+class BarcodeScanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $delegates = Delegate::all();
+        $shareHolders = ShareHolder::where('barcode', $request->input('barcode'))->get();
 
         return response()->json([
-            "delegates" => $delegates
+            'shareHolders' => $shareHolders
         ]);
     }
 
@@ -35,37 +35,33 @@ class DelegateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Delegate  $delegate
+     * @param  \App\Models\ShareHolder  $shareHolder
      * @return \Illuminate\Http\Response
      */
-    public function show(Delegate $delegate)
+    public function show(ShareHolder $shareHolder)
     {
-        $delegate->share_holders = $delegate->shareHolders;
-
-        return response()->json([
-            'delegate' => $delegate
-        ]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Delegate  $delegate
+     * @param  \App\Models\ShareHolder  $shareHolder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Delegate $delegate)
+    public function update(Request $request, ShareHolder $shareHolder)
     {
-        
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Delegate  $delegate
+     * @param  \App\Models\ShareHolder  $shareHolder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Delegate $delegate)
+    public function destroy(ShareHolder $shareHolder)
     {
         //
     }

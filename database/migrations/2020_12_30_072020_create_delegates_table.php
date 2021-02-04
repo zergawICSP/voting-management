@@ -16,8 +16,7 @@ class CreateDelegatesTable extends Migration
         Schema::create('delegates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone');
-            $table->boolean('is_present');
+            $table->boolean('is_present')->default(false);
             $table->timestamps();
         });
     }

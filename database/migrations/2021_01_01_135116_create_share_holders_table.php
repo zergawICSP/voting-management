@@ -17,10 +17,10 @@ class CreateShareHoldersTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('no_of_shares');
-            $table->boolean('is_delegated')->default(false);
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->boolean('is_present')->default(false);
             $table->foreignId('delegate_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('barcode')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShareHolder;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class ShareHolderController extends Controller
 {
@@ -14,7 +16,11 @@ class ShareHolderController extends Controller
      */
     public function index()
     {
-        //
+        $shareholders = ShareHolder::paginate(15);
+
+        return response()->json([
+            'shareholders' => $shareholders
+        ]);
     }
 
     /**
@@ -25,7 +31,24 @@ class ShareHolderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required',
+                'no_of_shares' => 'required|integer|min:1',
+                'phone' => 'required'
+            ]);            
+        } catch(ValidationException $e) {
+            return response()->json([
+                'errors' => $e->errors()
+            ]);
+        }
+
+        // if($request->delegate_id) {
+        //     $shareholder = ShareHolder::create([
+        //         'name' => $request->name,
+        //         'no_of_shares' => 
+        //     ])
+        // }
     }
 
     /**
@@ -34,9 +57,13 @@ class ShareHolderController extends Controller
      * @param  \App\Models\ShareHolder  $shareHolder
      * @return \Illuminate\Http\Response
      */
-    public function show(ShareHolder $shareHolder)
+    public function show(ShareHolder $shareholder)
     {
-        //
+        // dd($shareHolder);
+
+        return response()->json([
+            'shareholder' => $shareholder
+        ]);
     }
 
     /**
@@ -46,9 +73,14 @@ class ShareHolderController extends Controller
      * @param  \App\Models\ShareHolder  $shareHolder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ShareHolder $shareHolder)
+    public function update(Request $request, ShareHolder $shareholder)
     {
-        //
+        $shareholder->barcode = $request->input('barcode');
+        $shareholder->save();
+
+        return response()->json([
+            'shareholder' => $shareholder
+        ]);
     }
 
     /**

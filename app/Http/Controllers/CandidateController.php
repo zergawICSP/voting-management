@@ -17,6 +17,11 @@ class CandidateController extends Controller
     {
         $candidates = Candidate::all();
 
+        $candidates->each(function ($candidate) {
+            $agenda = $candidate->votingAgenda();
+            $candidate->votingAgenda = $agenda; 
+        });
+
         return response()->json([
             'candidates' => $candidates
         ]);
@@ -58,9 +63,10 @@ class CandidateController extends Controller
      */
     public function show(Candidate $candidate)
     {
-        // dd($candidate);
+        $agenda = $candidate->votingAgenda();
         return response()->json([
-            "candidate" => $candidate
+            "candidate" => $candidate,
+            "agenda" => $agenda
         ]);
     }
 
@@ -73,7 +79,7 @@ class CandidateController extends Controller
      */
     public function update(Request $request, Candidate $candidate)
     {
-        //
+        
     }
 
     /**
