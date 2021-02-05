@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class VotingAgendaShareholder extends Migration
+class DelegateVotingAgenda extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class VotingAgendaShareholder extends Migration
      */
     public function up()
     {
-        Schema::create('voting_agenda_shareholder', function (Blueprint $table) {
+        Schema::create('delegate_voting_agenda', function (Blueprint $table) {
+            $table->foreignId('delegate_id')->constrained()->onDelete('cascade');
             $table->foreignId('voting_agenda_id')->constrained()->onDelete('cascade');
-            $table->foreignId('share_holder_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -26,6 +26,6 @@ class VotingAgendaShareholder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('voting_agenda_shareholder');
+        Schema::dropIfExists('delegate_voting_agenda');
     }
 }

@@ -13,7 +13,7 @@ class MeetingAgendaShareholder extends Migration
      */
     public function up()
     {
-        Schema::create('meeting_agenda_shareholder', function (Blueprint $table) {
+        Schema::create('meeting_agenda_share_holder', function (Blueprint $table) {
             $table->foreignId('meeting_agenda_id')->constrained()->onDelete('cascade');
             $table->foreignId('share_holder_id')->constrained()->onDelete('cascade');
         });
@@ -26,6 +26,6 @@ class MeetingAgendaShareholder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meeting_agenda_shareholder');
+        Schema::dropIfExists('meeting_agenda_share_holder');
     }
 }

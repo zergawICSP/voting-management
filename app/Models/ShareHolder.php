@@ -19,4 +19,13 @@ class ShareHolder extends Model
     {
         return $this->belongsToMany(MeetingAgenda::class);
     }
+    public function votingAgendas()
+    {
+        return $this->belongsToMany(VotingAgenda::class);
+    }
+
+    public function candidates()
+    {
+        return $this->belongsToMany(Candidate::class);
+    }
 }

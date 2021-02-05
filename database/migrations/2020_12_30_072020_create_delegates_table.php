@@ -17,6 +17,9 @@ class CreateDelegatesTable extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('is_present')->default(false);
+            $table->string('barcode')->nullable();
+            $table->boolean('voted_meeting_agenda')->default(false);
+            $table->boolean('voted_voting_agenda')->default(false);
             $table->timestamps();
         });
     }

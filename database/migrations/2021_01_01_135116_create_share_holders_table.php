@@ -21,6 +21,8 @@ class CreateShareHoldersTable extends Migration
             $table->boolean('is_present')->default(false);
             $table->foreignId('delegate_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('barcode')->nullable();
+            $table->boolean('voted_meeting_agenda')->default(false);
+            $table->boolean('voted_voting_agenda')->default(false);
             $table->timestamps();
         });
     }

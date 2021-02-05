@@ -16,10 +16,22 @@ class CandidateController extends Controller
     public function index()
     {
         $candidates = Candidate::all();
+        
 
         $candidates->each(function ($candidate) {
-            $agenda = $candidate->votingAgenda();
-            $candidate->votingAgenda = $agenda; 
+            $candidates = Candidate::all();
+            $totalVoteCount = 0;
+            foreach ($candidates as $candate) {
+                $totalVoteCount += $candate->no_of_votes;
+            }
+            $candidate->votingAgenda;
+            if ($totalVoteCount !== 0)
+            {
+                $candidate->votePercentage = $candidate->no_of_votes / $totalVoteCount;
+            } else {
+                $candidate->votePercentage = 0;
+            }
+            
         });
 
         return response()->json([

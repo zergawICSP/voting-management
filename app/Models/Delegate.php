@@ -15,4 +15,8 @@ class Delegate extends Model
     {
         return $this->hasMany(ShareHolder::class);
     }
+    public function votingAgendas()
+    {
+        return $this->belongsToMany(VotingAgenda::class);
+    }
 }

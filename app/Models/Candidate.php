@@ -15,4 +15,7 @@ class Candidate extends Model
     {
         return $this->belongsTo(VotingAgenda::class);
     }
+    public function shareholders() {
+        return $this->belongsToMany(ShareHolder::class);
+    }
 }

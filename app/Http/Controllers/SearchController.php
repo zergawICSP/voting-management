@@ -16,7 +16,7 @@ class SearchController extends Controller
     public function __invoke(Request $request)
     {
         $query = $request->query('q');
-        $shareholders = ShareHolder::query()->where('name', 'LIKE', "%$query%")->get();
+        $shareholders = ShareHolder::where('name', 'LIKE', "%$query%")->get();
 
         $shareholders->each(function($shareholder) {
             $shareholder->name = trim($shareholder->name);

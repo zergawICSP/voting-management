@@ -15,4 +15,13 @@ class VotingAgenda extends Model
     {
         return $this->hasMany(Candidate::class);
     }
+
+    public function shareholders() {
+        return $this->belongsToMany(ShareHolder::class);
+    }
+
+    public function delegates()
+    {
+        return $this->belongsToMany(Delegate::class);
+    }
 }
