@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ShareHolder;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AttendanceController extends Controller
@@ -17,6 +18,15 @@ class AttendanceController extends Controller
      */
     public function __invoke(Request $request, ShareHolder $shareholder)
     {
+        try {
+            $request->validate([
+                'barcode' => 'required'
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'error' => $e->errors()
+            ], 400);
+        }
         
         try {
             if($shareholder->delegate_id !== null && $shareholder->delegate_id !==0) {
