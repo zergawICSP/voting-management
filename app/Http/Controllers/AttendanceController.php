@@ -15,7 +15,7 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(ShareHolder $shareholder)
+    public function __invoke(Request $request, ShareHolder $shareholder)
     {
         
         try {
@@ -26,14 +26,17 @@ class AttendanceController extends Controller
                     $shareholder->is_present = true;
                     $shareholder->save();
                 }
+                $delegate->barcode = $request->input('barcode');
+                $delegate->save();
             }else {
                 $shareholder->is_present = true;
+                $shareholder->barcode = $request->input('barcode');
                 $shareholder->save(); 
             }
         }  catch (Exception $e) {
             return response()->json([
                 'error' => $e
-            ]);
+            ], 400);
         }
         
         return response()->json([
