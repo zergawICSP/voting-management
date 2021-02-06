@@ -104,9 +104,6 @@ class VoteController extends Controller
     public function meetingAgenda(Request $request, MeetingAgenda $meetingAgenda)
     {
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
-        return response()->json([
-            'requests' => $request
-        ]);
 
         foreach ($shareholder->meetingAgendas as $agenda) {
             if ($agenda->id === $meetingAgenda->id) {
