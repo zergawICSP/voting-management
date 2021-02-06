@@ -112,20 +112,9 @@ class VoteController extends Controller
                 ], 400);
             }
         }
-
-        if($request->input('yesField') && !$request->input('noField') && !$request->input('neutralField'))
+        if($request->input('noField') && !$request->input('neutralField'))
         {
-            $meetingAgenda->yes += $shareholder->no_of_shares;
-            $meetingAgenda->save();
-
-            $shareholder->meetingAgendas()->attach($meetingAgenda);
-
-            return response()->json([
-                'success' => true
-            ]);
-        }
-        if(!$request->input('yesField') && $request->input('noField') && !$request->input('neutralField'))
-        {
+            $meetingAgenda->yes -= $shareholder->no_of_shares;
             $meetingAgenda->no += $shareholder->no_of_shares;
             $meetingAgenda->save();
 
@@ -135,8 +124,9 @@ class VoteController extends Controller
                 'success' => true
             ]);
         }
-        if(!$request->input('yesField') && !$request->input('noField') && $request->input('neutralField'))
+        if(!$request->input('noField') && $request->input('neutralField'))
         {
+            $meetingAgenda->yes -= $shareholder->no_of_shares;
             $meetingAgenda->neutral += $shareholder->no_of_shares;
             $meetingAgenda->save();
 
