@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+// EXTERNAL IMPORTS
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "react-tippy/dist/tippy.css";
+
+// COMPONENT IMPORTS
+import AppLandingPage from "./components/layouts/landing/index_";
+import LoginPage from "./components/layouts/Login/Root";
+import HomePage from "./components/layouts/home/Root";
+import VotePage from "./components/layouts/vote/Root";
+import RegistrationPage from "./components/layouts/shareholderRegistration/Root";
+import Store from "./store/index_";
+
+// IMAGE IMPORTS
+toast.configure();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={Store}>
+      <Router>
+        <div className="App font-Montserrat">
+          <Switch>
+            <Route path="/" component={AppLandingPage} exact />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/home" component={HomePage} />
+            <Route path="/vote" component={VotePage} />
+            <Route path="/register" component={RegistrationPage} />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 
