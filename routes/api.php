@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\BarcodeSearchController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DelegateController;
@@ -40,5 +42,8 @@ Route::get('/attendants', GetAllAttendantsController::class);
 
 // Voting Controller
 Route::post('/vote/{votingAgenda}', [VoteController::class, 'votingAgenda']);
-Route::post('vote-meeting-agenda/{meetingAgenda}', [VoteController::class, 'meetingAgenda']);
+Route::post('/vote-meeting-agenda/{meetingAgenda}', [VoteController::class, 'meetingAgenda']);
 
+// Auth Controllers
+Route::post('/login', LoginController::class);
+Route::post('/logout', LogoutController::class);
