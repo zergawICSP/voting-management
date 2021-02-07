@@ -50,7 +50,8 @@ class ShareHolderController extends Controller
                 'name' => $request->input('name'),
                 'no_of_shares' => $request->input('no_of_shares'),
                 'phone' => $request->input('phone'),
-                'barcode' =>$request->input('barcode')
+                'barcode' =>$request->input('barcode'),
+                'is_present' => true
             ]);
         } catch(Exception $e) {
             return response()->json([

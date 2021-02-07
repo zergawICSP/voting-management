@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -28,16 +30,21 @@ class LoginController extends Controller
             ]);
         }
 
-        $credentials = $request->only('username', 'password');
+        $user = User::where('username', $request->input('username'))->first();
 
-        if (Auth::attempt($credentials)) {
+        if (!$user) {
             return response()->json([
-                'user' => Auth::user()
-            ]);
+                'errors' => 'No user with that username found!'
+            ], 404);
+        } else if(Hash::check($request->input('password'), $user->password)) {
+            return response()->json([
+                'error' => 'Username or password incorrect!'
+            ], 403);
         } else {
             return response()->json([
-                'error' => 'Username or Password Incorrect'
-            ], 401);
+                'user' => $user
+            ]);
         }
+
     }
 }
