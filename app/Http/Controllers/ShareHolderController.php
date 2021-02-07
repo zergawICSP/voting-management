@@ -35,7 +35,8 @@ class ShareHolderController extends Controller
             $request->validate([
                 'name' => 'required',
                 'no_of_shares' => 'required|integer|min:1',
-                'phone' => 'required'
+                'phone' => 'required',
+                'barcode' => 'required'
             ]);            
         } catch(ValidationException $e) {
             return response()->json([
@@ -43,12 +44,24 @@ class ShareHolderController extends Controller
             ]);
         }
 
-        // if($request->delegate_id) {
-        //     $shareholder = ShareHolder::create([
-        //         'name' => $request->name,
-        //         'no_of_shares' => 
-        //     ])
-        // }
+        
+        try {
+            $shareholder = ShareHolder::create([
+                'name' => $request->input('name'),
+                'no_of_shares' => $request->input('no_of_shares'),
+                'phone' => $request->input('phone'),
+                'barcode' =>$request->input('barcode')
+            ]);
+        } catch(Exception $e) {
+            return response()->json([
+                'errors' => $e
+            ], 500);
+        }
+
+        return response()->json([
+            'shareholder' => $shareholder
+        ], 201);
+        
     }
 
     /**
