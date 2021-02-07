@@ -4,6 +4,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BarcodeSearchController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DelegateController;
+use App\Http\Controllers\GetAllAttendantsController;
 use App\Http\Controllers\MeetingAgendaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShareHolderController;
@@ -35,6 +36,7 @@ Route::apiResource('/meeting-agendas', MeetingAgendaController::class)->only(['i
 Route::get('/search', SearchController::class);
 Route::post('/attend/{shareholder}', AttendanceController::class);
 Route::get('/barcode', BarcodeSearchController::class);
+Route::get('/attendants', GetAllAttendantsController::class);
 
 // Voting Controller
 Route::post('/vote/{votingAgenda}', [VoteController::class, 'votingAgenda']);
