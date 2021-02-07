@@ -36,9 +36,10 @@ class LoginController extends Controller
             return response()->json([
                 'errors' => 'No user with that username found!'
             ], 404);
-        } else if(Hash::check($request->input('password'), $user->password)) {
+        } else if(!Hash::check($request->input('password'), $user->password)) {
             return response()->json([
-                'error' => 'Username or password incorrect!'
+                'error' => 'Username or password incorrect!',
+                'password' => $request->input('password')
             ], 403);
         } else {
             return response()->json([

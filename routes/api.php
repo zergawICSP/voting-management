@@ -29,7 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 // API Resource Controller Routes
-Route::apiResource('/shareholders', ShareHolderController::class)->except(['store', 'delete']);
+Route::apiResource('/shareholders', ShareHolderController::class)->except(['delete']);
 Route::apiResource('/candidates', CandidateController::class)->only(['index', 'show']);
 Route::apiResource('/delegates', DelegateController::class)->only(['index', 'show']);
 Route::apiResource('/meeting-agendas', MeetingAgendaController::class)->only(['index', 'show']);
