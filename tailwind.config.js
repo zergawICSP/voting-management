@@ -9,6 +9,7 @@ module.exports = {
         third: "#057DF6",
       },
       fontFamily: {
+        'sans': ['Montserrat'],
         Montserrat: ["Montserrat", "sans-serif"],
       },
     },

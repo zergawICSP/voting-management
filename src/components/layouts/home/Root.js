@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import { instance } from "../../../api/config";
 import { Tooltip } from "react-tippy";
+import { Redirect } from "react-router-dom";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-bootstrap.css";
@@ -19,7 +20,6 @@ import "ag-grid-community/dist/styles/ag-theme-bootstrap.css";
 import AppNavigation from "../nav/Nav";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import { submittingAttendantsData } from "../../../action/attendantsAction";
-import { Redirect } from "react-router-dom";
 
 class AppHomePage extends Component {
   // Component State
@@ -32,10 +32,10 @@ class AppHomePage extends Component {
     scannedBarCodeResult: null,
     toggelingCamera: false,
     sendingCollectedValue: null,
+    isDelegateChecked: false,
   };
 
   render() {
-
     // Route Guarding
     if (!localStorage.getItem("username")) return <Redirect to="/login" />;
 
@@ -54,16 +54,44 @@ class AppHomePage extends Component {
 
       if (inputValue.length > 2) {
         this.setState({ isSearchActivated: true, isSearchLoading: true });
-        instance.get("/search?q=" + inputValue).then((data) => {
-          data.data.shareholders.map((SingleValue) =>
-            dataValues.push(SingleValue)
-          );
-          this.setState({
-            isSearchLoading: false,
-            filteredLists: [...dataValues],
-          });
-          console.log(data.data.shareholders);
-        });
+        if (this.state.isDelegateChecked) {
+          instance
+            .get("/search-delegate?q=" + inputValue)
+            .then((data) => {
+              console.log(data.data);
+              data.data.delegatess.map((SingleValue) =>
+                dataValues.push(SingleValue)
+              );
+              this.setState({
+                isSearchLoading: false,
+                filteredLists: [...dataValues],
+              });
+              console.log(data.data.delegatess);
+            })
+            .catch((error) =>
+              toast.error(error.response.data.error, {
+                position: "bottom-center",
+              })
+            );
+        } else {
+          instance
+            .get("/search?q=" + inputValue)
+            .then((data) => {
+              data.data.shareholders.map((SingleValue) =>
+                dataValues.push(SingleValue)
+              );
+              this.setState({
+                isSearchLoading: false,
+                filteredLists: [...dataValues],
+              });
+              console.log(data.data.shareholders);
+            })
+            .catch((error) =>
+              toast.error(error.response.data.error, {
+                position: "bottom-center",
+              })
+            );
+        }
       } else {
         this.setState({ isSearchActivated: false });
       }
@@ -74,6 +102,11 @@ class AppHomePage extends Component {
       params.api.applyTransaction({ add: this.state.filteredLists });
     };
 
+    // Getting the Present Value parameter
+    const gettingPresentValue = function (params) {
+      return params.data.is_present ? "Present" : "Not Present";
+    };
+
     // Column Headers
     const columnDefs = [
       {
@@ -82,6 +115,11 @@ class AppHomePage extends Component {
         checkboxSelection: true,
       },
       { headerName: "Total Share Amount", field: "no_of_shares" },
+      {
+        headerName: "Is Present",
+        field: "is_present",
+        valueGetter: gettingPresentValue,
+      },
     ];
 
     const defaultColDef = {
@@ -90,6 +128,11 @@ class AppHomePage extends Component {
 
     // Row selection type - whether it is single, multiple or both
     const rowSelectionType = "multiple";
+
+    // Checking if the row is selectable
+    const isRowSelectable = (node) => {
+      return node.data ? !node.data.is_present : false;
+    };
 
     // Operation when the row is selected
     const onSelectionChanged = (e) => {
@@ -115,14 +158,22 @@ class AppHomePage extends Component {
 
     // Sending collected attendant information
     const sendingCollectedAttendanceData = () => {
-      const { checkedAttendants, scannedBarCodeResult } = this.state;
+      const {
+        checkedAttendants,
+        scannedBarCodeResult,
+        isDelegateChecked,
+      } = this.state;
       if (checkedAttendants.length > 0) {
         if (scannedBarCodeResult !== null && scannedBarCodeResult !== "") {
           let checkedAttantsID;
           checkedAttendants.map(
             (SingleData) => (checkedAttantsID = SingleData.id)
           );
-          submittingAttendantsData(checkedAttantsID, scannedBarCodeResult);
+          submittingAttendantsData(
+            checkedAttantsID,
+            scannedBarCodeResult,
+            isDelegateChecked
+          );
           this.setState({
             isSearchActivated: false,
             scannedBarCodeResult: null,
@@ -178,6 +229,22 @@ class AppHomePage extends Component {
                       </small>
                     ) : null}
                   </div>
+                  <div className="text-white flex flex-row justify-center items-center space-x-5">
+                    <input
+                      type="checkbox"
+                      className="rounded-full"
+                      onChange={() => {
+                        this.setState(
+                          {
+                            isDelegateChecked: !this.state.isDelegateChecked,
+                          },
+                          () => console.log(this.state.isDelegateChecked)
+                        );
+                      }}
+                      checked={this.state.isDelegateChecked}
+                    />
+                    <p>Is Attendant a Deligate ?</p>
+                  </div>
                 </div>
               </Form>
             )}
@@ -202,6 +269,7 @@ class AppHomePage extends Component {
                     rowSelection={rowSelectionType}
                     onSelectionChanged={onSelectionChanged}
                     rowMultiSelectWithClick={true}
+                    isRowSelectable={isRowSelectable}
                     className="bg-transparent"
                   ></AgGridReact>
                 </div>
@@ -320,9 +388,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submittingAttendantsData: (checkedAttantsID, scannedBarCodeResult) =>
+    submittingAttendantsData: (
+      checkedAttantsID,
+      scannedBarCodeResult,
+      isDelegateChecked
+    ) =>
       dispatch(
-        submittingAttendantsData(checkedAttantsID, scannedBarCodeResult)
+        submittingAttendantsData(
+          checkedAttantsID,
+          scannedBarCodeResult,
+          isDelegateChecked
+        )
       ),
   };
 };

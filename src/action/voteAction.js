@@ -36,7 +36,10 @@ export const submitMeetingVote = (
         }
       })
       .catch((error) =>
-        dispatch({ type: VOTING_MEETING_AGENDA_ERROR, payload: error })
+        dispatch({
+          type: VOTING_MEETING_AGENDA_ERROR,
+          payload: error.response.data.error,
+        })
       );
   };
 };
@@ -49,7 +52,7 @@ export const submitCandidateVote = (candidates, barcode) => {
 
     // Operation
     instance
-      .post("/vote/2", {candidates, barcode})
+      .post("/vote/2", { candidates, barcode })
       .then((response) => {
         if (response.status === 200) {
           dispatch({ type: BOARD_VOTE_SUCCESS });
@@ -59,6 +62,8 @@ export const submitCandidateVote = (candidates, barcode) => {
             payload: response.error + ": Bad Request",
           });
       })
-      .catch((error) => dispatch({ type: BOARD_VOTE_ERROR, payload: error }));
+      .catch((error) =>
+        dispatch({ type: BOARD_VOTE_ERROR, payload: error.response.data.error })
+      );
   };
 };

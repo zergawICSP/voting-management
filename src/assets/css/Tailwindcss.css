@@ -1,5 +1,11 @@
 @tailwind base;
 @tailwind components;
+
+@font-face {
+    font-family: 'Montserrat';
+    src: local('Montserrat'), url(./assets/fonts/Montserrat-Regular.otf) format('otf');
+}
+
 @tailwind utilities;
 /* Ag_Grid Css Customization */
 
