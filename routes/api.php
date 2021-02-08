@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\BarcodeSearchController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\DelegateAttendanceController;
 use App\Http\Controllers\DelegateController;
+use App\Http\Controllers\DelegateSearchController;
 use App\Http\Controllers\GetAllAttendantsController;
 use App\Http\Controllers\MeetingAgendaController;
 use App\Http\Controllers\SearchController;
@@ -36,7 +38,9 @@ Route::apiResource('/meeting-agendas', MeetingAgendaController::class)->only(['i
 
 // Single Action Controller Routes
 Route::get('/search', SearchController::class);
+Route::get('/search-delegate', DelegateSearchController::class);
 Route::post('/attend/{shareholder}', AttendanceController::class);
+Route::post('/attend-delegate/{delegate}', DelegateAttendanceController::class);
 Route::get('/barcode', BarcodeSearchController::class);
 Route::get('/attendants', GetAllAttendantsController::class);
 
