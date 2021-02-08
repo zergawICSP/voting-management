@@ -30,9 +30,8 @@ class DelegateAttendanceController extends Controller
 
         try {
             $delegate->is_present = true;
-            $shareholders = $delegate->shareHolders;
-
-        
+            $delegate->barcode = $request->input('barcode');
+            $shareholders = $delegate->shareHolders;        
 
             $shareholders->each(function ($shareholder) {
             $shareholder->is_present = true;
