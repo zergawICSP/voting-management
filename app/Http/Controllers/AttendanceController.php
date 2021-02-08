@@ -32,29 +32,29 @@ class AttendanceController extends Controller
         $meetingAgendas = MeetingAgenda::all();
 
         try {
-            if($shareholder->delegate_id !== null && $shareholder->delegate_id !==0) {
-                $delegate = $shareholder->delegate;
-                $delegate->is_present = true;
-                foreach ($delegate->shareholders as $shareholder) {
+            // if($shareholder->delegate_id !== null && $shareholder->delegate_id !==0) {
+            //     $delegate = $shareholder->delegate;
+            //     $delegate->is_present = true;
+            //     foreach ($delegate->shareholders as $shareholder) {
                     
-                    $shareholder->is_present = true;
-                    foreach ($meetingAgendas as $meetingAgenda) {
-                        $meetingAgenda->yes += $shareholder->no_of_shares;
-                        $meetingAgenda->save();
-                    }
-                    $shareholder->save();
-                }
-                $delegate->barcode = $request->input('barcode');
-                $delegate->save();
-            }else {
-                $shareholder->is_present = true;
-                $shareholder->barcode = $request->input('barcode');
-                foreach ($meetingAgendas as $meetingAgenda) {
-                    $meetingAgenda->yes += $shareholder->no_of_shares;
-                    $meetingAgenda->save();
-                }
-                $shareholder->save(); 
+            //         $shareholder->is_present = true;
+            //         foreach ($meetingAgendas as $meetingAgenda) {
+            //             $meetingAgenda->yes += $shareholder->no_of_shares;
+            //             $meetingAgenda->save();
+            //         }
+            //         $shareholder->save();
+            //     }
+            //     $delegate->barcode = $request->input('barcode');
+            //     $delegate->save();
+            // }else {
+            $shareholder->is_present = true;
+            $shareholder->barcode = $request->input('barcode');
+            foreach ($meetingAgendas as $meetingAgenda) {
+                $meetingAgenda->yes += $shareholder->no_of_shares;
+                $meetingAgenda->save();
             }
+            $shareholder->save(); 
+            // }
         }  catch (Exception $e) {
             return response()->json([
                 'error' => $e

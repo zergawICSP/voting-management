@@ -25,9 +25,7 @@ class SearchController extends Controller
         $sh=[];
 
         foreach ($shareholders as $shareholder) {
-            if (!$shareholder->is_present) {
-                array_push($sh, $shareholder);
-            }
+            array_push($sh, $shareholder);            
         }
 
         return response()->json([
