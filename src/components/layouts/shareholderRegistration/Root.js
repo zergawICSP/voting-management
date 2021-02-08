@@ -10,7 +10,7 @@ import ShareholderRegistrationForm from "./RegisterShareholderForm";
 class Root extends Component {
   render() {
     // Route Guarding
-    // if (!localStorage.getItem("username")) return <Redirect to="/login" />;
+    if (!localStorage.getItem("username")) return <Redirect to="/login" />;
 
     return (
       <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
