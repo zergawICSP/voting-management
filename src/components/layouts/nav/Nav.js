@@ -11,7 +11,7 @@ export default function Nav() {
   return (
     <div className="flex flex-row w-screen py-4">
       <div className="m-auto">
-        {localStorage.getItem("isAdmin") === 1 ? (
+        {localStorage.getItem("isAdmin") === "1" ? (
           <div className="flex flex-row space-x-28 pl-20">
             <NavLink
               to="/register"

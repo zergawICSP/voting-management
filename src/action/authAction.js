@@ -18,7 +18,7 @@ export const authLoginFormAction = (values) => {
         if (response.status === 200) {
           localStorage.setItem("username", response.data.user.username);
           localStorage.setItem("isAdmin", response.data.user.is_admin);
-
+          console.log(localStorage.getItem("isAdmin"));
           // Dispatching
           dispatch({ type: LOGIN_SUCCESS });
 
