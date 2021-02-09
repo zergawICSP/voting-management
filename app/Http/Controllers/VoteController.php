@@ -22,6 +22,12 @@ class VoteController extends Controller
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
         $chosenCandidates = $request->input('candidates');
 
+        if(!$chosenCandidates || count($chosenCandidates) == 0) {
+            return response()->json([
+                'error' => 'At least one candidate must be choosen'
+            ], 400);
+        }
+
         // Check if Shareholder is Empty and Search Barcode in Delegates Table.
 
         if (!$shareholder) 
@@ -89,8 +95,8 @@ class VoteController extends Controller
         }
 
 
-        foreach ($chosenCandidates as $chosenCandidate) {
-            $candidate = Candidate::find($chosenCandidate);
+        foreach ($chosenCandidates as $chosenCandi) {
+            $candidate = Candidate::lockForUpdate()->find($chosenCandi);
             $candidate->no_of_votes += $shareholder->no_of_shares;
             $candidate->save();
             $candidate->shareholders()->attach($shareholder);
