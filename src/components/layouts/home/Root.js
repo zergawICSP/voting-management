@@ -136,20 +136,14 @@ class AppHomePage extends Component {
 
     // Sending collected attendant information
     const sendingCollectedAttendanceData = () => {
-      const {
-        checkedAttendants,
-        scannedBarCodeResult,
-      } = this.state;
+      const { checkedAttendants, scannedBarCodeResult } = this.state;
       if (checkedAttendants.length > 0) {
         if (scannedBarCodeResult !== null && scannedBarCodeResult !== "") {
           let checkedAttantsID;
           checkedAttendants.map(
             (SingleData) => (checkedAttantsID = SingleData.id)
           );
-          submittingAttendantsData(
-            checkedAttantsID,
-            scannedBarCodeResult,
-          );
+          submittingAttendantsData(checkedAttantsID, scannedBarCodeResult);
           this.setState({
             isSearchActivated: false,
             scannedBarCodeResult: null,
@@ -348,15 +342,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submittingAttendantsData: (
-      checkedAttantsID,
-      scannedBarCodeResult,
-    ) =>
+    submittingAttendantsData: (checkedAttantsID, scannedBarCodeResult) =>
       dispatch(
-        submittingAttendantsData(
-          checkedAttantsID,
-          scannedBarCodeResult,
-        )
+        submittingAttendantsData(checkedAttantsID, scannedBarCodeResult)
       ),
   };
 };

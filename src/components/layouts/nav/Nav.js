@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // EXTERNAL IMPORTS
 import { FiSearch } from "react-icons/fi";
@@ -6,8 +6,13 @@ import { FaVoteYea } from "react-icons/fa";
 import { AiOutlineUser, AiOutlinePoweroff } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import { MdViewAgenda } from "react-icons/md";
+import { toast } from "react-toastify";
+
+import { instance } from "../../../api/config";
 
 export default function Nav() {
+
   return (
     <div className="flex flex-row w-screen py-4">
       <div className="m-auto">
@@ -19,6 +24,13 @@ export default function Nav() {
               activeClassName="bg-third text-white"
             >
               <AiOutlineUserAdd size="30" className="group-hover:text-white" />
+            </NavLink>
+            <NavLink
+              to="/init_vote"
+              className="p-4 rounded-full hover:bg-third hover:border-third group"
+              activeClassName="bg-third text-white"
+            >
+              <MdViewAgenda size="30" className="group-hover:text-white" />
             </NavLink>
           </div>
         ) : (

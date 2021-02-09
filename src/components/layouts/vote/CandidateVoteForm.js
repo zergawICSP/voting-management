@@ -74,14 +74,12 @@ class CandidateVoteForm extends Component {
           "Selected Candidates shouldn't excced 11 Candidates. Your choice will be invalid !",
           { position: "bottom-center" }
         );
-      else {
         e.api.getSelectedRows().map((SingleData) => {
           dataValue.push(SingleData.id);
           this.setState({
             checkedCandidates: dataValue,
           });
         });
-      }
     };
 
     //   Handling scanned bar code result
@@ -118,6 +116,7 @@ class CandidateVoteForm extends Component {
     const submitCandidateVoteInformation = () => {
       // do sth here
       const { checkedCandidates, barcodeIDResult } = this.state;
+      console.log(checkedCandidates.length);
       if (checkedCandidates.length > 11) {
         toast.error(
           "Selected Candidates shouldn't excced 11 Candidates. Your choice will be invalid !",

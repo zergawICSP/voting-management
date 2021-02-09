@@ -14,6 +14,7 @@ import HomePage from "./components/layouts/home/Root";
 import VotePage from "./components/layouts/vote/Root";
 import RegistrationPage from "./components/layouts/shareholderRegistration/Root";
 import VoteIndex from "./components/layouts/landing/voteIndex";
+import InitalizeVote from "./components/layouts/agenda/Root";
 import Store from "./store/index_";
 
 // IMAGE IMPORTS
@@ -31,6 +32,7 @@ function App() {
             <Route path="/home" component={HomePage} />
             <Route path="/vote" component={VotePage} />
             <Route path="/register" component={RegistrationPage} />
+            <Route path="/init_vote" component={InitalizeVote} />
           </Switch>
         </div>
       </Router>

@@ -32,7 +32,6 @@ class VoteIndex extends Component {
   }
 
   render() {
-
     // Managing meeting agenda on change
     const handleSelectionTypeChange = (e) => {
       let inputAgendaValue = e.target.value;
@@ -100,19 +99,20 @@ class VoteIndex extends Component {
                     <p className="text-9xl font-bold text-white">
                       {parseFloat(SingleData.yesPercentage.toFixed(2)) + "%"}
                     </p>
-                    <p className="text-4xl text-white">Yes</p>
+                    <p className="text-4xl text-white">እደግፋለሁ</p>
                   </div>
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
                     <p className="text-9xl font-bold text-white">
                       {parseFloat(SingleData.noPercentage.toFixed(2)) + "%"}
                     </p>
-                    <p className="text-4xl text-white">No</p>
+                    <p className="text-4xl text-white">እቃወማለሁ</p>
                   </div>
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
                     <p className="text-9xl font-bold text-white">
-                      {parseFloat(SingleData.neutralPercentage.toFixed(2)) + "%"}
+                      {parseFloat(SingleData.neutralPercentage.toFixed(2)) +
+                        "%"}
                     </p>
-                    <p className="text-4xl text-white">Neutral</p>
+                    <p className="text-4xl text-white">ድምጸ ተኣቅቦ</p>
                   </div>
                 </div>
                 <div className="items-center px-4 w-full">
@@ -138,11 +138,14 @@ class VoteIndex extends Component {
                     {SingleData.name}
                   </p>
                   <p className="text-white text-xl lg:text-lg xl:text-xl">
-                    {parseFloat((SingleData.votePercentage * 100).toFixed(2)) + "%"}
+                    {parseFloat((SingleData.votePercentage * 100).toFixed(2)) +
+                      "%"}
                   </p>
                 </div>
                 <Line
-                  percent={parseFloat((SingleData.votePercentage * 100).toFixed(2))}
+                  percent={parseFloat(
+                    (SingleData.votePercentage * 100).toFixed(2)
+                  )}
                   strokeWidth="4"
                   strokeColor="#D3D3D3"
                   className="px-5"
@@ -173,7 +176,7 @@ class VoteIndex extends Component {
               Choose vote type
             </option>
             <option value="BOARD_MEMBER_SELECTION" className="text-third">
-              Board Member Candidate Vote
+              የዳይሬክተሮች ቦርድ አባላትን መምረጥ
             </option>
 
             {/* Mapping Meeting list from the store */}
