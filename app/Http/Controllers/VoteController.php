@@ -130,6 +130,7 @@ class VoteController extends Controller
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 $meetingAgenda->save();
+                $meetingAgenda->shareHolders()->attach($shareholder);
 
 
                 return response()->json([
@@ -141,7 +142,7 @@ class VoteController extends Controller
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
                 $meetingAgenda->save();
-
+                $meetingAgenda->shareHolders()->attach($shareholder);
 
                 return response()->json([
                     'success' => true
@@ -149,7 +150,7 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-
+                $meetingAgenda->shareHolders()->attach($shareholder);
                 return response()->json([
                     'success' => true
                 ]);
@@ -165,6 +166,7 @@ class VoteController extends Controller
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 $meetingAgenda->save();
+                $meetingAgenda->shareHolders()->attach($shareholder);
                 return response()->json([
                     'success' => true
                 ]);
@@ -174,6 +176,7 @@ class VoteController extends Controller
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
                 $meetingAgenda->save();
+                $meetingAgenda->shareHolders()->attach($shareholder);
 
 
                 return response()->json([
@@ -182,7 +185,7 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-
+                $meetingAgenda->shareHolders()->attach($shareholder);
                 return response()->json([
                     'success' => true
                 ]);
