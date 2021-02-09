@@ -44,10 +44,11 @@ class DelegateAttendanceController extends Controller
 
             $shareholder->save();
 
-            return response()->json([
-                'success' => true
-            ]);
+            
         });
+        return response()->json([
+            'success' => true
+        ]);
 
         $delegate->save();
         } catch (Exception $e) {
