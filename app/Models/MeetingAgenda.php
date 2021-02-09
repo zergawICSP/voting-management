@@ -9,6 +9,8 @@ class MeetingAgenda extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function shareHolders()
     {
         return $this->belongsToMany(ShareHolder::class);

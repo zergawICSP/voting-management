@@ -16,9 +16,26 @@ class GetAllAttendantsController extends Controller
     public function __invoke()
     {
         $attendedShareholders = ShareHolder::where('is_present', true)->get();
+        $shareholders = ShareHolder::all();
+
+        $totalShare = 0;
+        
+        foreach ($shareholders as $shareholder) {
+            $totalShare += $shareholder->no_of_shares;
+        }
+
+        $attendedShareholderShare = 0;
+
+        foreach ($attendedShareholders as $attendedShareholder) {
+            $attendedShareholderShare += $attendedShareholder->no_of_shares;
+        }
+
+        $percentile = ($attendedShareholderShare / $totalShare) * 100;
 
         return response()->json([
-            'no_of_attendants' => count($attendedShareholders)
+            'no_of_attendants' => $attendedShareholderShare,
+            'totalShare' => $totalShare,
+            'percentage' => $percentile
         ]);
     }
 }

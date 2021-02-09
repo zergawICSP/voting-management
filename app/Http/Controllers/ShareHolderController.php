@@ -89,8 +89,32 @@ class ShareHolderController extends Controller
      */
     public function update(Request $request, ShareHolder $shareholder)
     {
-        $shareholder->barcode = $request->input('barcode');
-        $shareholder->save();
+        try {
+            $request->validate([
+                'name' => 'required',
+                'no_of_shares' => 'required|integer|min:1',
+                'phone' => 'required',
+                'barcode' => 'required'
+            ]);            
+        } catch(ValidationException $e) {
+            return response()->json([
+                'errors' => $e->errors()
+            ]);
+        }
+
+        try {
+            $shareholder->update([
+                'name' => $request->input('name'),
+                'no_of_shares' => $request->input('no_of_shares'),
+                'phone' => $request->input('phone'),
+                'barcode' =>$request->input('barcode'),
+                'is_present' => true
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+        }
 
         return response()->json([
             'shareholder' => $shareholder
@@ -103,8 +127,18 @@ class ShareHolderController extends Controller
      * @param  \App\Models\ShareHolder  $shareHolder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ShareHolder $shareHolder)
+    public function destroy(ShareHolder $shareholder)
     {
-        //
+        try {
+            $shareholder->delete();
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+        } 
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

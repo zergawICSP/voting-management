@@ -112,29 +112,79 @@ class VoteController extends Controller
                 ], 400);
             }
         }
-        if($request->input('noField') && !$request->input('neutralField'))
-        {
-            $meetingAgenda->yes -= $shareholder->no_of_shares;
-            $meetingAgenda->no += $shareholder->no_of_shares;
-            $meetingAgenda->save();
+        
+        if(!$shareholder) {
+            $delegate = Delegate::where('barcode', $request->input('barcode'))->first();
 
-            $shareholder->meetingAgendas()->attach($meetingAgenda);
+            $shareholders = $delegate->shareholders;
+
+            foreach ($shareholders as $shareholder ) {
+            if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
+            {
+                $meetingAgenda->yes -= $shareholder->no_of_shares;
+                $meetingAgenda->no += $shareholder->no_of_shares;
+                $meetingAgenda->save();
+
+
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+            if(!$request->input('noField') && $request->input('neutralField') && !$request->input('yesField'))
+            {
+                $meetingAgenda->yes -= $shareholder->no_of_shares;
+                $meetingAgenda->neutral += $shareholder->no_of_shares;
+                $meetingAgenda->save();
+
+
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+            if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
+            {
+
+                return response()->json([
+                    'success' => true
+                ]);
+            }
 
             return response()->json([
-                'success' => true
-            ]);
-        }
-        if(!$request->input('noField') && $request->input('neutralField'))
-        {
-            $meetingAgenda->yes -= $shareholder->no_of_shares;
-            $meetingAgenda->neutral += $shareholder->no_of_shares;
-            $meetingAgenda->save();
+                'error' => 'Exactly One Field Must Be Checked!'
+            ], 400);
+            }
+        } else {
+            if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
+            {
+                $meetingAgenda->yes -= $shareholder->no_of_shares;
+                $meetingAgenda->no += $shareholder->no_of_shares;
+                $meetingAgenda->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+            if(!$request->input('noField') && $request->input('neutralField') && !$request->input('yesField'))
+            {
+                $meetingAgenda->yes -= $shareholder->no_of_shares;
+                $meetingAgenda->neutral += $shareholder->no_of_shares;
+                $meetingAgenda->save();
 
-            $shareholder->meetingAgendas()->attach($meetingAgenda);
+
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+            if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
+            {
+
+                return response()->json([
+                    'success' => true
+                ]);
+            }
 
             return response()->json([
-                'success' => true
-            ]);
-        }
+                'error' => 'Exactly One Field Must Be Checked!'
+            ], 400);
+            }
     }
 }

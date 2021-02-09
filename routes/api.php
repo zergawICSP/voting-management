@@ -9,6 +9,7 @@ use App\Http\Controllers\DelegateAttendanceController;
 use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\DelegateSearchController;
 use App\Http\Controllers\GetAllAttendantsController;
+use App\Http\Controllers\InitializeVoteController;
 use App\Http\Controllers\MeetingAgendaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShareHolderController;
@@ -31,10 +32,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 // API Resource Controller Routes
-Route::apiResource('/shareholders', ShareHolderController::class)->except(['delete']);
+Route::apiResource('/shareholders', ShareHolderController::class);
 Route::apiResource('/candidates', CandidateController::class)->only(['index', 'show']);
 Route::apiResource('/delegates', DelegateController::class)->only(['index', 'show']);
-Route::apiResource('/meeting-agendas', MeetingAgendaController::class)->only(['index', 'show']);
+Route::apiResource('/meeting-agendas', MeetingAgendaController::class)->only(['index', 'show', 'store']);
 
 // Single Action Controller Routes
 Route::get('/search', SearchController::class);
@@ -43,6 +44,7 @@ Route::post('/attend/{shareholder}', AttendanceController::class);
 Route::post('/attend-delegate/{delegate}', DelegateAttendanceController::class);
 Route::get('/barcode', BarcodeSearchController::class);
 Route::get('/attendants', GetAllAttendantsController::class);
+Route::post('/initialize/{meetingAgenda}', InitializeVoteController::class);
 
 // Voting Controller
 Route::post('/vote/{votingAgenda}', [VoteController::class, 'votingAgenda']);

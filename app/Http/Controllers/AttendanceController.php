@@ -29,7 +29,6 @@ class AttendanceController extends Controller
             ], 400);
         }
         
-        $meetingAgendas = MeetingAgenda::all();
 
         try {
             // if($shareholder->delegate_id !== null && $shareholder->delegate_id !==0) {
@@ -49,10 +48,6 @@ class AttendanceController extends Controller
             // }else {
             $shareholder->is_present = true;
             $shareholder->barcode = $request->input('barcode');
-            foreach ($meetingAgendas as $meetingAgenda) {
-                $meetingAgenda->yes += $shareholder->no_of_shares;
-                $meetingAgenda->save();
-            }
             $shareholder->save(); 
             // }
         }  catch (Exception $e) {
