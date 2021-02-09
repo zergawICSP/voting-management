@@ -13,6 +13,7 @@ import LoginPage from "./components/layouts/Login/Root";
 import HomePage from "./components/layouts/home/Root";
 import VotePage from "./components/layouts/vote/Root";
 import RegistrationPage from "./components/layouts/shareholderRegistration/Root";
+import VoteIndex from "./components/layouts/landing/voteIndex";
 import Store from "./store/index_";
 
 // IMAGE IMPORTS
@@ -25,6 +26,7 @@ function App() {
         <div className="App font-Montserrat">
           <Switch>
             <Route path="/" component={AppLandingPage} exact />
+            <Route path="/count_vote" component={VoteIndex} />
             <Route path="/login" component={LoginPage} />
             <Route path="/home" component={HomePage} />
             <Route path="/vote" component={VotePage} />

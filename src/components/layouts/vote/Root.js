@@ -9,8 +9,6 @@ import AppNavigation from "../nav/Nav";
 import AgendaVoteForm from "./AgendaVoteForm";
 import CandidateVoteForm from "./CandidateVoteForm";
 
-// IMAGE IMPORTS
-
 class Root extends Component {
   // Component state value
   state = {

@@ -32,7 +32,6 @@ class AppHomePage extends Component {
     scannedBarCodeResult: null,
     toggelingCamera: false,
     sendingCollectedValue: null,
-    isDelegateChecked: false,
   };
 
   render() {
@@ -46,7 +45,7 @@ class AppHomePage extends Component {
 
     // Local variables
     let dataValues = [];
-    const { submittingAttendantsData, isLoading } = this.props;
+    const { submittingAttendantsData, isAttendantLoading } = this.props;
 
     // Handling onChange
     const handlingOnChange = (e) => {
@@ -54,44 +53,23 @@ class AppHomePage extends Component {
 
       if (inputValue.length > 2) {
         this.setState({ isSearchActivated: true, isSearchLoading: true });
-        if (this.state.isDelegateChecked) {
-          instance
-            .get("/search-delegate?q=" + inputValue)
-            .then((data) => {
-              console.log(data.data);
-              data.data.delegatess.map((SingleValue) =>
-                dataValues.push(SingleValue)
-              );
-              this.setState({
-                isSearchLoading: false,
-                filteredLists: [...dataValues],
-              });
-              console.log(data.data.delegatess);
-            })
-            .catch((error) =>
-              toast.error(error.response.data.error, {
-                position: "bottom-center",
-              })
+        instance
+          .get("/search?q=" + inputValue)
+          .then((data) => {
+            data.data.shareholders.map((SingleValue) =>
+              dataValues.push(SingleValue)
             );
-        } else {
-          instance
-            .get("/search?q=" + inputValue)
-            .then((data) => {
-              data.data.shareholders.map((SingleValue) =>
-                dataValues.push(SingleValue)
-              );
-              this.setState({
-                isSearchLoading: false,
-                filteredLists: [...dataValues],
-              });
-              console.log(data.data.shareholders);
+            this.setState({
+              isSearchLoading: false,
+              filteredLists: [...dataValues],
+            });
+            console.log(data.data.shareholders);
+          })
+          .catch((error) =>
+            toast.error(error.response.data.error, {
+              position: "bottom-center",
             })
-            .catch((error) =>
-              toast.error(error.response.data.error, {
-                position: "bottom-center",
-              })
-            );
-        }
+          );
       } else {
         this.setState({ isSearchActivated: false });
       }
@@ -161,7 +139,6 @@ class AppHomePage extends Component {
       const {
         checkedAttendants,
         scannedBarCodeResult,
-        isDelegateChecked,
       } = this.state;
       if (checkedAttendants.length > 0) {
         if (scannedBarCodeResult !== null && scannedBarCodeResult !== "") {
@@ -172,7 +149,6 @@ class AppHomePage extends Component {
           submittingAttendantsData(
             checkedAttantsID,
             scannedBarCodeResult,
-            isDelegateChecked
           );
           this.setState({
             isSearchActivated: false,
@@ -229,28 +205,12 @@ class AppHomePage extends Component {
                       </small>
                     ) : null}
                   </div>
-                  <div className="text-white flex flex-row justify-center items-center space-x-5">
-                    <input
-                      type="checkbox"
-                      className="rounded-full"
-                      onChange={() => {
-                        this.setState(
-                          {
-                            isDelegateChecked: !this.state.isDelegateChecked,
-                          },
-                          () => console.log(this.state.isDelegateChecked)
-                        );
-                      }}
-                      checked={this.state.isDelegateChecked}
-                    />
-                    <p>Is Attendant a Deligate ?</p>
-                  </div>
                 </div>
               </Form>
             )}
           </Formik>
 
-          {isLoading ? (
+          {isAttendantLoading ? (
             <div className="mt-20">
               <RiseLoader className="text-white" size={15} color="white" />
             </div>
@@ -382,7 +342,7 @@ class AppHomePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.attendant.isLoading,
+    isAttendantLoading: state.attendant.isAttendantLoading,
   };
 };
 
@@ -391,13 +351,11 @@ const mapDispatchToProps = (dispatch) => {
     submittingAttendantsData: (
       checkedAttantsID,
       scannedBarCodeResult,
-      isDelegateChecked
     ) =>
       dispatch(
         submittingAttendantsData(
           checkedAttantsID,
           scannedBarCodeResult,
-          isDelegateChecked
         )
       ),
   };

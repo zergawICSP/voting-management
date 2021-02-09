@@ -33,7 +33,7 @@ class CandidateVoteForm extends Component {
 
   render() {
     // Local variables
-    const { isLoading, submitCandidateVote } = this.props;
+    const { isShareholderCreationLoading, submitCandidateVote } = this.props;
     let dataValue = [];
     // OnGrid ready
     const onGridReady = (params) => {
@@ -150,7 +150,7 @@ class CandidateVoteForm extends Component {
         toggelingBarcodeReaderCamera: false,
         returnedAttendantValue: [],
       });
-      document.getElementById("userBarcodeID").value = null;
+      document.getElementById("userBarcodeID").value = "";
     };
 
     //   Displaying Fetched attendant data
@@ -181,7 +181,7 @@ class CandidateVoteForm extends Component {
         </div>
       );
 
-    if (isLoading)
+    if (isShareholderCreationLoading)
       return <RiseLoader className="text-white mt-5" size={10} color="white" />;
 
     return (
@@ -200,7 +200,7 @@ class CandidateVoteForm extends Component {
               value={
                 this.state.barcodeIDResult !== ""
                   ? this.state.barcodeIDResult
-                  : null
+                  : ""
               }
             />
             <Tooltip title="Scan Barcode">
@@ -223,10 +223,10 @@ class CandidateVoteForm extends Component {
                 onClick={(e) => {
                   e.preventDefault();
                   this.setState({
-                    barcodeIDResult: null,
+                    barcodeIDResult: "",
                     returnedAttendantValue: [],
                   });
-                  document.getElementById("userBarcodeID").value = null;
+                  document.getElementById("userBarcodeID").value = "";
                 }}
               >
                 <BiReset size="20" />
@@ -320,7 +320,7 @@ class CandidateVoteForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.vote.isLoading,
+    isShareholderCreationLoading: state.vote.isShareholderCreationLoading,
   };
 };
 

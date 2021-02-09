@@ -13,8 +13,6 @@ import { Tooltip } from "react-tippy";
 // COMPONENT IMPORTS
 import { submitMeetingVote } from "../../../action/voteAction";
 
-// IMAGE IMPORTS
-
 class AgendaVoteForm extends Component {
   // Component state
   state = {
@@ -26,6 +24,7 @@ class AgendaVoteForm extends Component {
     // form state
     scannedBarCodeResult: "",
     selectedAgendaID: "",
+    yesField: true,
     noField: false,
     neutralField: false,
     selected: "yesField",
@@ -40,7 +39,11 @@ class AgendaVoteForm extends Component {
 
   render() {
     // Props values
-    const { selectedAgendaId, submitMeetingVote, isLoading } = this.props;
+    const {
+      selectedAgendaId,
+      submitMeetingVote,
+      isMeetingVoteLoading,
+    } = this.props;
 
     //   Handling scanned bar code result
     const handleFetchingAttendantInformation = (scannedAttendantBarcodeID) => {
@@ -77,18 +80,21 @@ class AgendaVoteForm extends Component {
     //   Submitting attendant vote
     const submitAttendatVote = () => {
       if (this.state.selected === "noField") {
-        this.setState({ neutralField: false });
+        this.setState({ neutralField: false, yesField: false });
       } else if (this.state.selected === "neutralField") {
-        this.setState({ noField: false });
+        this.setState({ noField: false, yesField: false });
+      } else if (this.state.selected === "yesField") {
+        this.setState({ noField: false, neutralField: false });
       }
       this.setState({ selectedAgendaID: selectedAgendaId }, () => {
         let finalAttendantVote = {
+          yesField: this.state.yesField,
           noField: this.state.noField,
           neutralField: this.state.neutralField,
           barcode: this.state.scannedBarCodeResult,
         };
-        // console.log(finalAttendantVote);
         submitMeetingVote(finalAttendantVote, selectedAgendaId);
+        console.log(finalAttendantVote);
         this.setState({ scannedBarCodeResult: "" });
         clearingData();
       });
@@ -99,10 +105,10 @@ class AgendaVoteForm extends Component {
       this.setState({
         toggelingCamera: false,
         scannedBarCodeResult: "",
-        selected: "noField",
+        selected: "yesField",
         fechedAttendantValue: [],
       });
-      document.getElementById("userBarcode").value = null;
+      // document.getElementById("userBarcode").value = null;
     };
 
     //   Displaying Fetched attendant data
@@ -172,10 +178,10 @@ class AgendaVoteForm extends Component {
                 onClick={(e) => {
                   e.preventDefault();
                   this.setState({
-                    scannedBarCodeResult: null,
+                    scannedBarCodeResult: "",
                     fechedAttendantValue: [],
                   });
-                  document.getElementById("userBarcodeID").value = null;
+                  document.getElementById("userBarcodeID").value = "";
                 }}
               >
                 <BiReset size="20" />
@@ -238,6 +244,17 @@ class AgendaVoteForm extends Component {
                 <div className="flex flex-row justify-evenly items-center">
                   <label>
                     <input
+                      name="yesField"
+                      id="yesField"
+                      type="checkbox"
+                      value="yesField"
+                      checked={this.state.selected === "yesField"}
+                      onChange={this.handleVotSelectionChange}
+                    />
+                    <span className="px-5">Yes</span>
+                  </label>
+                  <label>
+                    <input
                       name="noField"
                       id="noField"
                       type="checkbox"
@@ -259,7 +276,7 @@ class AgendaVoteForm extends Component {
                     <span className="px-5">Neutral</span>
                   </label>
                 </div>
-                {isLoading ? (
+                {isMeetingVoteLoading ? (
                   <RiseLoader
                     className="text-white mt-5"
                     size={10}
@@ -287,7 +304,7 @@ class AgendaVoteForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.vote.isLoading,
+    isMeetingVoteLoading: state.vote.isMeetingVoteLoading,
   };
 };
 

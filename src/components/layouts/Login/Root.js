@@ -14,12 +14,14 @@ class Root extends Component {
     const { isLoggedIn } = this.props;
 
     if (isLoggedIn) {
-      if (localStorage.getItem("isAdmin") === "1") return <Redirect to="/register" />;
+      if (localStorage.getItem("isAdmin") === "1")
+        return <Redirect to="/register" />;
       else return <Redirect to="/home" />;
     }
 
     if (localStorage.getItem("username")) {
-      if (localStorage.getItem("isAdmin") === "1") return <Redirect to="/register" />;
+      if (localStorage.getItem("isAdmin") === "1")
+        return <Redirect to="/register" />;
       else return <Redirect to="/home" />;
     }
 

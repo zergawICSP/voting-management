@@ -17,7 +17,6 @@ function LoginForm({ authLoginFormAction }) {
 
   // submitting form
   const submitingUserLogin = (values) => {
-    // console.log(values);
     authLoginFormAction(values);
   };
 

@@ -1,10 +1,11 @@
 // COMPONENT IMPORT
 import {
+  VOTING_MEETING_AGENDA_LOADING,
+  BOARD_VOTE_LOADING,
   VOTING_MEETING_AGENDA_SUCCESS,
   VOTING_MEETING_AGENDA_ERROR,
   BOARD_VOTE_SUCCESS,
   BOARD_VOTE_ERROR,
-  ISLOADING,
 } from "./types";
 
 // EXTERNAL IMPORT
@@ -16,7 +17,7 @@ export const submitMeetingVote = (
 ) => {
   return (dispatch) => {
     // Dispatching loading indicator
-    dispatch({ type: ISLOADING });
+    dispatch({ type: VOTING_MEETING_AGENDA_LOADING });
 
     // Operation
     instance
@@ -46,13 +47,12 @@ export const submitMeetingVote = (
 
 export const submitCandidateVote = (candidates, barcode) => {
   return (dispatch) => {
-    // console.log(candidates, barcode);
     // Dispatching loading indicator
-    dispatch({ type: ISLOADING });
+    dispatch({ type: BOARD_VOTE_LOADING });
 
     // Operation
     instance
-      .post("/vote/2", { candidates, barcode })
+      .post("/vote/1", { candidates, barcode })
       .then((response) => {
         if (response.status === 200) {
           dispatch({ type: BOARD_VOTE_SUCCESS });

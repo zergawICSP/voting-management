@@ -1,6 +1,7 @@
 // COMPONENT IMPORTS
 import {
-  ISLOADING,
+  BOARD_VOTE_LOADING,
+  VOTING_MEETING_AGENDA_LOADING,
   VOTING_MEETING_AGENDA_SUCCESS,
   VOTING_MEETING_AGENDA_ERROR,
   BOARD_VOTE_ERROR,
@@ -11,30 +12,32 @@ import {
 import { toast } from "react-toastify";
 
 const initialState = {
-  isLoading: false,
+  isMeetingVoteLoading: false,
+  isBoardVoteLoading: false,
 };
 
 const voteReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ISLOADING:
-      console.log("Is Loading . . . ");
-      return { ...state, isLoading: true };
+    case VOTING_MEETING_AGENDA_LOADING:
+      return { ...state, isMeetingVoteLoading: true };
+    case BOARD_VOTE_LOADING:
+      return { ...state, isBoardVoteLoading: true };
     case VOTING_MEETING_AGENDA_SUCCESS:
       toast.success("Attendant Vote Submitted !", {
         position: "bottom-center",
       });
-      return { ...state, isLoading: false };
+      return { ...state, isMeetingVoteLoading: false };
     case VOTING_MEETING_AGENDA_ERROR:
       toast.error("Error: " + action.payload, { position: "bottom-center" });
-      return { ...state, isLoading: false };
+      return { ...state, isMeetingVoteLoading: false };
     case BOARD_VOTE_SUCCESS:
       toast.success("Vote Submitted Successfully", {
         position: "bottom-center",
       });
-      return { ...state, isLoading: false };
+      return { ...state, isBoardVoteLoading: false };
     case BOARD_VOTE_ERROR:
       toast.error("Error: " + action.payload, { position: "bottom-center" });
-      return { ...state, isLoading: false };
+      return { ...state, isBoardVoteLoading: false };
     default:
       return state;
   }
