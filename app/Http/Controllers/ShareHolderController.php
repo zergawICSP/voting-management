@@ -40,7 +40,7 @@ class ShareHolderController extends Controller
             ]);            
         } catch(ValidationException $e) {
             return response()->json([
-                'errors' => $e->errors()
+                'error' => $e->errors()
             ]);
         }
 
@@ -55,7 +55,7 @@ class ShareHolderController extends Controller
             ]);
         } catch(Exception $e) {
             return response()->json([
-                'errors' => $e
+                'error' => $e
             ], 500);
         }
 
@@ -98,7 +98,7 @@ class ShareHolderController extends Controller
             ]);            
         } catch(ValidationException $e) {
             return response()->json([
-                'errors' => $e->errors()
+                'error' => $e->errors()
             ]);
         }
 

@@ -26,7 +26,7 @@ class LoginController extends Controller
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'errors' => $e->errors()
+                'error' => $e->errors()
             ]);
         }
 
@@ -34,7 +34,7 @@ class LoginController extends Controller
 
         if (!$user) {
             return response()->json([
-                'errors' => 'No user with that username found!'
+                'error' => 'No user with that username found!'
             ], 404);
         } else if(!Hash::check($request->input('password'), $user->password)) {
             return response()->json([

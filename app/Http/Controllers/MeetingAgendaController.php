@@ -54,7 +54,7 @@ class MeetingAgendaController extends Controller
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'errors' => $e->errors()
+                'error' => $e->errors()
             ]);
         }
 
