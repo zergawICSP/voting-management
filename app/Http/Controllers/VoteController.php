@@ -117,7 +117,7 @@ class VoteController extends Controller
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'error' => $e->errors()
+                'error' => 'Barcode Field is Required!!!'
             ], 400);
         }
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
