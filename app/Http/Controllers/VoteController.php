@@ -118,7 +118,7 @@ class VoteController extends Controller
         } catch (ValidationException $e) {
             return response()->json([
                 'error' => $e->errors()
-            ]);
+            ], 400);
         }
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
 
