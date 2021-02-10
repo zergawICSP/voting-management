@@ -7,6 +7,7 @@ use App\Models\Delegate;
 use App\Models\MeetingAgenda;
 use App\Models\ShareHolder;
 use App\Models\VotingAgenda;
+use Exception;
 use Illuminate\Http\Request;
 
 class VoteController extends Controller
@@ -129,31 +130,52 @@ class VoteController extends Controller
             {
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->no += $shareholder->no_of_shares;
-                $meetingAgenda->save();
-                $meetingAgenda->shareHolders()->attach($shareholder);
+                try {
+                    $meetingAgenda->save();
+                    $meetingAgenda->shareHolders()->attach($shareholder);
 
 
-                return response()->json([
-                    'success' => true
-                ]);
+                    return response()->json([
+                        'success' => true
+                    ]);
+                } catch (Exception $e) {
+                    return response()->json([
+                        'error' => $e->getMessage()
+                    ], 500);
+                }
             }
             if(!$request->input('noField') && $request->input('neutralField') && !$request->input('yesField'))
             {
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
-                $meetingAgenda->save();
-                $meetingAgenda->shareHolders()->attach($shareholder);
+                try {
+                    $meetingAgenda->save();
+                    $meetingAgenda->shareHolders()->attach($shareholder);
 
-                return response()->json([
-                    'success' => true
-                ]);
+
+                    return response()->json([
+                        'success' => true
+                    ]);
+                } catch (Exception $e) {
+                    return response()->json([
+                        'error' => $e->getMessage()
+                    ], 500);
+                }
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-                $meetingAgenda->shareHolders()->attach($shareholder);
-                return response()->json([
-                    'success' => true
-                ]);
+                try {
+                    $meetingAgenda->shareHolders()->attach($shareholder);
+
+
+                    return response()->json([
+                        'success' => true
+                    ]);
+                } catch (Exception $e) {
+                    return response()->json([
+                        'error' => $e->getMessage()
+                    ], 500);
+                }
             }
 
             return response()->json([
@@ -165,30 +187,52 @@ class VoteController extends Controller
             {
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->no += $shareholder->no_of_shares;
-                $meetingAgenda->save();
-                $meetingAgenda->shareHolders()->attach($shareholder);
-                return response()->json([
-                    'success' => true
-                ]);
+                try {
+                    $meetingAgenda->save();
+                    $meetingAgenda->shareHolders()->attach($shareholder);
+
+
+                    return response()->json([
+                        'success' => true
+                    ]);
+                } catch (Exception $e) {
+                    return response()->json([
+                        'error' => $e->getMessage()
+                    ], 500);
+                }
             }
             if(!$request->input('noField') && $request->input('neutralField') && !$request->input('yesField'))
             {
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
-                $meetingAgenda->save();
-                $meetingAgenda->shareHolders()->attach($shareholder);
+                try {
+                    $meetingAgenda->save();
+                    $meetingAgenda->shareHolders()->attach($shareholder);
 
 
-                return response()->json([
-                    'success' => true
-                ]);
+                    return response()->json([
+                        'success' => true
+                    ]);
+                } catch (Exception $e) {
+                    return response()->json([
+                        'error' => $e->getMessage()
+                    ], 500);
+                }
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-                $meetingAgenda->shareHolders()->attach($shareholder);
-                return response()->json([
-                    'success' => true
-                ]);
+                try {
+                    $meetingAgenda->shareHolders()->attach($shareholder);
+
+
+                    return response()->json([
+                        'success' => true
+                    ]);
+                } catch (Exception $e) {
+                    return response()->json([
+                        'error' => $e->getMessage()
+                    ], 500);
+                }
             }
 
             return response()->json([
