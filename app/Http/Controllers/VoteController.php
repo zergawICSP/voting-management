@@ -9,6 +9,7 @@ use App\Models\ShareHolder;
 use App\Models\VotingAgenda;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class VoteController extends Controller
 {
@@ -110,6 +111,15 @@ class VoteController extends Controller
 
     public function meetingAgenda(Request $request, MeetingAgenda $meetingAgenda)
     {
+        try {
+            $request->validate([
+                'barcode' => 'required'
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'error' => $e->errors()
+            ]);
+        }
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
 
         foreach ($shareholder->meetingAgendas as $agenda) {
