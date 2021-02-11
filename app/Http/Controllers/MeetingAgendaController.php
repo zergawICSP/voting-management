@@ -72,7 +72,7 @@ class MeetingAgendaController extends Controller
                 return response()->json([
                     'error' => 'Server Error',
                     'exception' => $e->getmessage()
-                ]);
+                ], 500);
             }
         } else {
             try {
@@ -87,7 +87,7 @@ class MeetingAgendaController extends Controller
                 return response()->json([
                     'error' => 'Server Error',
                     'exception' => $e->getmessage()
-                ]);
+                ], 500);
             }
         }
 
