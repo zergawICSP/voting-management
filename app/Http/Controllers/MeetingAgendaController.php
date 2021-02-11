@@ -60,27 +60,34 @@ class MeetingAgendaController extends Controller
             ], 400);
         }
 
-        try {
-            if(!$request->input('description')) {
+        if(!$request->input('description')) {
+            try {
                 $meetingAgenda = MeetingAgenda::create([
                     'title' => $request->input('title')
                 ]);
-            } else {
+            } catch(Exception $e) {
+                return response()->json([
+                    'error' => 'Server Error',
+                    'exception' => $e->getmessage()
+                ]);
+            }
+        } else {
+            try {
                 $meetingAgenda = MeetingAgenda::create([
                     'title' => $request->input('title'),
                     'description' => $request->input('description')
                 ]);
+            } catch(Exception $e) {
+                return response()->json([
+                    'error' => 'Server Error',
+                    'exception' => $e->getmessage()
+                ]);
             }
-    
-            return response()->json([
-                '$meetingAgenda' => $meetingAgenda
-            ], 201);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => 'Server Error',
-                'exception' => $e->getMessage()
-            ]);
         }
+
+        return response()->json([
+            '$meetingAgenda' => $meetingAgenda
+        ], 201);
     }
 
     /**
