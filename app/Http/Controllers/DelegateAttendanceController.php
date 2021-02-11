@@ -34,26 +34,28 @@ class DelegateAttendanceController extends Controller
             $shareholders = $delegate->shareHolders;        
 
             $shareholders->each(function ($shareholder) {
-            $shareholder->is_present = true;
-            $meetingAgendas = MeetingAgenda::all();
+                $shareholder->is_present = true;
+                $meetingAgendas = MeetingAgenda::all();
+                
+                foreach ($meetingAgendas as $meetingAgenda ) {
+                    $meetingAgenda->yes += $shareholder->no_of_shares;
+                    $meetingAgenda->save();
+                }
+
+                $shareholder->save();
+
             
-            foreach ($meetingAgendas as $meetingAgenda ) {
-                $meetingAgenda->yes += $shareholder->no_of_shares;
-                $meetingAgenda->save();
-            }
+            });
 
-            $shareholder->save();
+            $delegate->save();
 
-            
-        });
-        return response()->json([
-            'success' => true
-        ]);
-
-        $delegate->save();
+            return response()->json([
+                'success' => true
+            ]);
         } catch (Exception $e) {
             return response()->json([
-                'error' => $e
+                'error' => 'Server Error',
+                'exception' => $e->getMessage()
             ], 500);
         }
     }

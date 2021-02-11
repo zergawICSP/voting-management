@@ -16,6 +16,7 @@ class CreateCandidatesTable extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('english_name');
             $table->string('phone')->nullable();
             $table->integer('no_of_votes')->default(0);
             $table->foreignId('voting_agenda_id')->nullable()->constrained()->cascadeOnDelete();

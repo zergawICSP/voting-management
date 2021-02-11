@@ -21,14 +21,31 @@ class VoteController extends Controller
      */
     public function votingAgenda(Request $request, VotingAgenda $votingAgenda) 
     {
+        try {
+            $request->validate([
+                'barcode' => 'required',
+                'candidates' => 'required|array|min:1'
+            ]);
+        } 
+        
+        catch (ValidationException $e) {
+            return response()->json([
+                'error' => 'Barcode Field must be Filled and At Least One Candidate must be chosen',
+                'exception' => $e->errors()
+            ], 400);
+        }
+
+
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
         $chosenCandidates = $request->input('candidates');
+
 
         if(!$chosenCandidates || count($chosenCandidates) == 0) {
             return response()->json([
                 'error' => 'At least one candidate must be choosen'
             ], 400);
         }
+
 
         // Check if Shareholder is Empty and Search Barcode in Delegates Table.
 
@@ -53,7 +70,9 @@ class VoteController extends Controller
                 }
             }
 
-            $delegatedSh = $delegate->shareholders; // Get The Shareholders for the delegations
+            $delegatedSh = $delegate->shareholders; // Get The delegated shareholders
+
+
 
             /* Update candidate number of votes for each shareholders under
             the delegate and save the related vote and share holder on 
@@ -66,8 +85,12 @@ class VoteController extends Controller
                     $candidate->save();
                     $candidate->shareholders()->attach($dlg);
                 }
+
+                
                 $votingAgenda->shareholders()->attach($dlg->id);
             }
+
+
             $delegate->votingAgendas()->attach($votingAgenda);
             return response()->json([
                 'success' => true
@@ -75,8 +98,10 @@ class VoteController extends Controller
 
         }
 
+
         /* Check if shareholder is delegated or not
          To count or not count the vote */
+
 
         if($shareholder->delegate_id !== null && $shareholder->delegate_id !== 0)
         {
@@ -91,11 +116,14 @@ class VoteController extends Controller
         foreach ($shareholder->votingAgendas as $agenda) {
             if ($agenda->id === $votingAgenda->id) {
                 return response()->json([
-                    'error' => "$shareholder->name has already voted has already voted for this agenda"
+                    'error' => "$shareholder->name has already voted for this agenda"
                 ], 400);
             }
         }
 
+
+        /* Go through the candidates the shareholder voted for and add their 
+        number of shares to the candidates number of votes */
 
         foreach ($chosenCandidates as $chosenCandi) {
             $candidate = Candidate::lockForUpdate()->find($chosenCandi);
@@ -103,11 +131,16 @@ class VoteController extends Controller
             $candidate->save();
             $candidate->shareholders()->attach($shareholder);
         }
+
+
         $votingAgenda->shareholders()->attach($shareholder);
+
+
         return response()->json([
             'success' => true
         ]);
     }
+
 
     public function meetingAgenda(Request $request, MeetingAgenda $meetingAgenda)
     {
@@ -117,7 +150,8 @@ class VoteController extends Controller
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'error' => 'Barcode Field is Required!!!'
+                'error' => 'Barcode Field is Required!!!',
+                'exception' => $e->errors()
             ], 400);
         }
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
@@ -150,7 +184,8 @@ class VoteController extends Controller
                     ]);
                 } catch (Exception $e) {
                     return response()->json([
-                        'error' => $e->getMessage()
+                        'error' => 'Server Error',
+                        'exception' => $e->getMessage()
                     ], 500);
                 }
             }
@@ -168,7 +203,8 @@ class VoteController extends Controller
                     ]);
                 } catch (Exception $e) {
                     return response()->json([
-                        'error' => $e->getMessage()
+                        'error' => 'Server Error',
+                        'exception' => $e->getMessage()
                     ], 500);
                 }
             }
@@ -183,7 +219,8 @@ class VoteController extends Controller
                     ]);
                 } catch (Exception $e) {
                     return response()->json([
-                        'error' => $e->getMessage()
+                        'error' => 'Server Error',
+                        'exception' => $e->getMessage()
                     ], 500);
                 }
             }
@@ -207,7 +244,8 @@ class VoteController extends Controller
                     ]);
                 } catch (Exception $e) {
                     return response()->json([
-                        'error' => $e->getMessage()
+                        'error' => 'Server Error',
+                        'exception' => $e->getMessage()
                     ], 500);
                 }
             }
@@ -225,7 +263,8 @@ class VoteController extends Controller
                     ]);
                 } catch (Exception $e) {
                     return response()->json([
-                        'error' => $e->getMessage()
+                        'error' => 'Server Error',
+                        'exception' => $e->getMessage()
                     ], 500);
                 }
             }
@@ -240,7 +279,8 @@ class VoteController extends Controller
                     ]);
                 } catch (Exception $e) {
                     return response()->json([
-                        'error' => $e->getMessage()
+                        'error' => 'Server Error',
+                        'exception' => $e->getMessage()
                     ], 500);
                 }
             }

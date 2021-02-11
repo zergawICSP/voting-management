@@ -16,7 +16,7 @@ class ShareHolderController extends Controller
      */
     public function index()
     {
-        $shareholders = ShareHolder::paginate(15);
+        $shareholders = ShareHolder::all();
 
         return response()->json([
             'shareholders' => $shareholders
