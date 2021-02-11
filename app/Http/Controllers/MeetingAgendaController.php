@@ -65,6 +65,9 @@ class MeetingAgendaController extends Controller
                 $meetingAgenda = MeetingAgenda::create([
                     'title' => $request->input('title')
                 ]);
+                return response()->json([
+                    '$meetingAgenda' => $meetingAgenda
+                ], 201);
             } catch(Exception $e) {
                 return response()->json([
                     'error' => 'Server Error',
@@ -77,6 +80,9 @@ class MeetingAgendaController extends Controller
                     'title' => $request->input('title'),
                     'description' => $request->input('description')
                 ]);
+                return response()->json([
+                    '$meetingAgenda' => $meetingAgenda
+                ], 201);
             } catch(Exception $e) {
                 return response()->json([
                     'error' => 'Server Error',
@@ -85,9 +91,7 @@ class MeetingAgendaController extends Controller
             }
         }
 
-        return response()->json([
-            '$meetingAgenda' => $meetingAgenda
-        ], 201);
+        
     }
 
     /**
