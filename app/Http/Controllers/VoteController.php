@@ -126,8 +126,15 @@ class VoteController extends Controller
         number of shares to the candidates number of votes */
 
         foreach ($chosenCandidates as $chosenCandi) {
-            $candidate = Candidate::lockForUpdate()->find($chosenCandi);
-            $candidate->no_of_votes += $shareholder->no_of_shares;
+            try {
+                $candidate = Candidate::lockForUpdate()->find($chosenCandi);
+                $candidate->no_of_votes += $shareholder->no_of_shares;
+            } catch(Exception $e) {
+                return response()->json([
+                    'error' => 'One or More invalid shareholder',
+                    'exception' => $e->getMessage()
+                ]);
+            }
             $candidate->save();
             $candidate->shareholders()->attach($shareholder);
         }

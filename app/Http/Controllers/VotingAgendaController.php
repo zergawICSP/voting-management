@@ -16,7 +16,7 @@ class VotingAgendaController extends Controller
     {
         $votingAgendas = VotingAgenda::all();
         return response()->json([
-            'voting-agendas' => $votingAgendas
+            'votingAgendas' => $votingAgendas
         ]);
     }
 
