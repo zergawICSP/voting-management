@@ -49,12 +49,11 @@ class MeetingAgendaController extends Controller
     {
         try {
             $request->validate([
-                'title' => 'required|min:10',
+                'title' => 'required',
                 'description' => 'nullable'
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'title' => $request->input('title'),
                 'error' => "Title field must be at least 10 characters",
                 'exception' => $e->errors()
             ], 400);
