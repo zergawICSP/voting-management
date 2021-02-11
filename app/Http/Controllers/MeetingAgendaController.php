@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MeetingAgenda;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -59,20 +60,27 @@ class MeetingAgendaController extends Controller
             ], 400);
         }
 
-        if(!$request->input('description')) {
-            $meetingAgenda = MeetingAgenda::create([
-                'title' => $request->input('title')
-            ]);
-        } else {
-            $meetingAgenda = MeetingAgenda::create([
-                'title' => $request->input('title'),
-                'description' => $request->input('description')
+        try {
+            if(!$request->input('description')) {
+                $meetingAgenda = MeetingAgenda::create([
+                    'title' => $request->input('title')
+                ]);
+            } else {
+                $meetingAgenda = MeetingAgenda::create([
+                    'title' => $request->input('title'),
+                    'description' => $request->input('description')
+                ]);
+            }
+    
+            return response()->json([
+                '$meetingAgenda' => $meetingAgenda
+            ], 201);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Server Error',
+                'exception' => $e->getMessage()
             ]);
         }
-
-        return response()->json([
-            '$meetingAgenda' => $meetingAgenda
-        ], 201);
     }
 
     /**
