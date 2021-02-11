@@ -30,7 +30,7 @@ function LoginForm({ authLoginFormAction }) {
       onSubmit={(values, { resetForm }) => submitingUserLogin(values)}
     >
       {({ errors, touched, values, resetForm }) => (
-        <Form className="mt-20 px-10 mb-32">
+        <Form className="mt-16 px-10 mb-32">
           <div className="flex flex-col space-y-6">
             <div className="flex flex-col space-y-2">
               <Field
@@ -41,7 +41,7 @@ function LoginForm({ authLoginFormAction }) {
                 type="text"
               />
               {errors.userLoginUserName && touched.userLoginUserName ? (
-                <small className="text-sm text-red-600 text-left">
+                <small className="text-sm text-companyYello text-left">
                   {errors.userLoginUserName}
                 </small>
               ) : null}
@@ -55,14 +55,14 @@ function LoginForm({ authLoginFormAction }) {
                 type="password"
               />
               {errors.userLoginPassword && touched.userLoginPassword ? (
-                <small className="text-sm text-red-600 text-left">
+                <small className="text-sm text-companyYello text-left">
                   {errors.userLoginPassword}
                 </small>
               ) : null}
             </div>
             <button
               type="submit"
-              className="bg-third text-white font-bold text-xl py-2 px-5 rounded-full"
+              className="bg-third text-white font-bold text-xl py-2 px-5 rounded-full hover:bg-companyYello hover:text-secondary"
             >
               Login
             </button>

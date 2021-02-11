@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 
 // EXTERNAL IMPORTS
-import CompanyLogo from "../../../assets/images/Zergaw ISP Logo.png";
 import { toast } from "react-toastify";
-import { Line } from "rc-progress";
 import RaiseLoader from "react-spinners/RiseLoader";
 
 // COMPONENT IMPORTS
 import { instance } from "../../../api/config";
+import { numberFormat } from "../../shared/shareedVariables";
+import LogoHeader from "../nav/LogoHeader";
+
+// IMAGE IMPORT
+import BrandingImage from "../../../assets/images/Zerga ISP Branding.png";
 
 class VoteIndex extends Component {
   state = {
@@ -57,7 +60,7 @@ class VoteIndex extends Component {
                       position: "bottom-center",
                     })
                   );
-              }, 4000);
+              }, 10000);
             } else {
               // Setting the Board Member Candidate State Empty
               this.setState({ selectedCandidatesAndTheirVote: [] }, () => {
@@ -70,7 +73,7 @@ class VoteIndex extends Component {
                         isShiftingLoading: false,
                       });
                     });
-                }, 2000);
+                }, 10000);
               });
             }
           }
@@ -91,23 +94,32 @@ class VoteIndex extends Component {
             console.log(this.state.selectedAgenda);
             return (
               <div
-                className="flex flex-col justify-between items-center space-y-20 w-full mt-44"
+                className="flex flex-col justify-between items-center space-y-20 w-full mt-16 z-40"
                 key={SingleData.id}
               >
                 <div className="flex flex-row justify-between items-center w-screen space-x-3">
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
+                    <p className="text-md font-semibold text-white">
+                      {numberFormat.format(parseFloat(SingleData.yes)) + " Share"}
+                    </p>
                     <p className="text-9xl font-bold text-white">
                       {parseFloat(SingleData.yesPercentage.toFixed(2)) + "%"}
                     </p>
                     <p className="text-4xl text-white">እደግፋለሁ</p>
                   </div>
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
+                    <p className="text-md font-semibold text-white">
+                      {numberFormat.format(parseFloat(SingleData.no)) + " Share"}
+                    </p>
                     <p className="text-9xl font-bold text-white">
                       {parseFloat(SingleData.noPercentage.toFixed(2)) + "%"}
                     </p>
                     <p className="text-4xl text-white">እቃወማለሁ</p>
                   </div>
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
+                    <p className="text-md font-semibold text-white">
+                      {numberFormat.format(parseFloat(SingleData.neutral)) + " Share"}
+                    </p>
                     <p className="text-9xl font-bold text-white">
                       {parseFloat(SingleData.neutralPercentage.toFixed(2)) +
                         "%"}
@@ -130,50 +142,44 @@ class VoteIndex extends Component {
         ? this.state.selectedCandidatesAndTheirVote.map((SingleData) => {
             return (
               <div
-                className="w-1/3 flex flex-col space-y-3 mb-16"
+                className="w-1/6 flex flex-col space-y-2 mb-5 p-4 shadow-lg z-40"
                 key={SingleData.id}
               >
-                <div className="flex flex-row justify-between items-center px-4">
-                  <p className="text-white text-2xl lg:text-xl text-left xl:text-2xl">
+                <div className="flex flex-col justify-between px-4 text-center space-y-3 h-full">
+                  <p className="text-white text-2xl lg:text-xl xl:text-2xl w-full">
                     {SingleData.name}
                   </p>
-                  <p className="text-white text-xl lg:text-lg xl:text-xl">
+                  <p className="text-white text-xl lg:text-lg xl:text-xl font-bold">
                     {parseFloat((SingleData.votePercentage * 100).toFixed(2)) +
                       "%"}
                   </p>
                 </div>
-                <Line
+                {/* <Line
                   percent={parseFloat(
                     (SingleData.votePercentage * 100).toFixed(2)
                   )}
                   strokeWidth="4"
                   strokeColor="#D3D3D3"
                   className="px-5"
-                />
+                /> */}
               </div>
             );
           })
         : null;
 
     return (
-      <div className="min-h-screen bg-gradient-to-bl from-primary to-secondary">
+      <div className="min-h-screen bg-gradient-to-bl from-primary to-secondary relative">
         <div className="pt-3 px-10 flex flex-row justify-between space-x-5 items-center">
-          <div className="flex flex-row space-x-5 items-center">
-            <img src={CompanyLogo} alt="Zergaw ISP Logo" className="w-24" />
-            <div className="flex flex-col space-y-1 text-left">
-              <span className="text-white">POWERED BY</span>
-              <p className="text-white font-bold text-2xl">Zergaw ISP</p>
-            </div>
-          </div>
+          <LogoHeader />
           <select
-            className="px-5 py-4 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none"
+            className="px-5 py-3 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none"
             id="memberVoteType"
             name="memberVoteType"
             type="text"
             onChange={handleSelectionTypeChange}
           >
             <option value="" className="text-third">
-              Choose vote type
+              የሚፈልጉትን ይምረጡ
             </option>
             <option value="BOARD_MEMBER_SELECTION" className="text-third">
               የዳይሬክተሮች ቦርድ አባላትን መምረጥ
@@ -202,16 +208,20 @@ class VoteIndex extends Component {
                 <>{mappingMeetingVote}</>
               </>
             ) : (
-              <div className="flex flex-row flex-wrap w-full px-20 mt-20">
+              <div className="flex flex-row flex-wrap w-full px-20 mt-10">
                 {mappingVoteDisplay}
               </div>
             )
           ) : (
-            <p className="w-screen mt-52 text-3xl font-bold">
-              No Option Selected
-            </p>
+            <p className="w-screen mt-52 text-3xl font-bold">የሚፈልጉትን ይምረጡ !</p>
           )}
         </div>
+        {/* Branding Zergaw ISP */}
+        <img
+          src={BrandingImage}
+          alt="Zergaw ISP Branding"
+          className="absolute bottom-0 left-0 z-0 h-5/6"
+        />
       </div>
     );
   }

@@ -1,29 +1,60 @@
 import React, { Component } from "react";
 
 // EXTERNAL IMPORT
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import { Tooltip } from "react-tippy";
 
 // COMPONENT IMPORT
 import AppNavigation from "../nav/Nav";
-import ShareholderRegistrationForm from "./RegisterShareholderForm";
+import ShareholderView from "./ViewShareholders";
 
 class Root extends Component {
+  // app state value
+  state = {
+    selectedShareholderData: [],
+    isEditingActivated: false,
+  };
+
   render() {
     // Route Guarding
     if (!localStorage.getItem("username")) return <Redirect to="/login" />;
 
+    // callback props function for click event in edit clicked
+    const onEditButtonClicked = (selectedShareholderRow) => {
+      this.setState({ selectedShareholderData: selectedShareholderRow, isEditingActivated: true }, () => {
+        console.log(this.state.selectedShareholderData);
+      });
+    };
+
+    // checking if editing operation is activated
+    if (this.state.isEditingActivated)
+      return (
+        <Redirect
+          to={{
+            pathname: "/admin/register",
+            state: {
+              selectedShareholderData: this.state.selectedShareholderData,
+              isEditingActivated: this.state.isEditingActivated,
+            },
+          }}
+        />
+      );
+
     return (
       <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
         <AppNavigation />
-        <div className="w-4/5 xl:w-2/3 p-5 rounded-2xl shadow-2xl flex flex-col justify-center mt-10 mb-10">
-          <p className="font-bold text-3xl pt-10">Register New Shareholder</p>
-          <ShareholderRegistrationForm />
+
+        <div className="mr-auto ml-10">
+          <Link to="/admin/register">
+              <button className="px-5 py-2 bg-white text-third rounded-full text-md mr-auto">
+                Add Shareholder
+              </button>
+          </Link>
         </div>
 
-        {/* POwered by */}
-        {/* <p className="text-white mt-20 md:mt-0 md:absolute bottom-0 pb-5 font-light">
-          Powered by <span className="font-bold">Zergaw ISP</span>
-        </p> */}
+        <div className="w-full">
+          <ShareholderView onEditButtonClicked={onEditButtonClicked} />
+        </div>
       </div>
     );
   }

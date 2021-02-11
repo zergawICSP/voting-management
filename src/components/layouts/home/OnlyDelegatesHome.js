@@ -19,9 +19,9 @@ import "ag-grid-community/dist/styles/ag-theme-bootstrap.css";
 // COMPONENT IMPORTS
 import AppNavigation from "../nav/Nav";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
-import { submittingAttendantsData } from "../../../action/attendantsAction";
+import { submittingDelegateAttendantsData } from "../../../action/attendantsAction";
 
-class AppHomePage extends Component {
+class OnlyDelegatesHome extends Component {
   // Component State
   state = {
     filteredLists: null,
@@ -45,7 +45,7 @@ class AppHomePage extends Component {
 
     // Local variables
     let dataValues = [];
-    const { submittingAttendantsData, isAttendantLoading } = this.props;
+    const { submittingDelegateAttendantsData, isDelegateAttendantLoading } = this.props;
 
     // Handling onChange
     const handlingOnChange = (e) => {
@@ -54,16 +54,16 @@ class AppHomePage extends Component {
       if (inputValue.length > 2) {
         this.setState({ isSearchActivated: true, isSearchLoading: true });
         instance
-          .get("/search?q=" + inputValue)
+          .get("/search-delegate?q=" + inputValue)
           .then((data) => {
-            data.data.shareholders.map((SingleValue) =>
+            data.data.delegatess.map((SingleValue) =>
               dataValues.push(SingleValue)
             );
             this.setState({
               isSearchLoading: false,
               filteredLists: [...dataValues],
             });
-            console.log(data.data.shareholders);
+            console.log(data.data.delegatess);
           })
           .catch((error) =>
             toast.error(error.response.data.error, {
@@ -143,7 +143,7 @@ class AppHomePage extends Component {
           checkedAttendants.map(
             (SingleData) => (checkedAttantsID = SingleData.id)
           );
-          submittingAttendantsData(checkedAttantsID, scannedBarCodeResult);
+          submittingDelegateAttendantsData(checkedAttantsID, scannedBarCodeResult);
           this.setState({
             isSearchActivated: false,
             scannedBarCodeResult: null,
@@ -171,7 +171,7 @@ class AppHomePage extends Component {
         <AppNavigation />
         <div className="flex flex-col justify-center items-center h-full">
           <p className="text-5xl font-bold text-white mt-40">
-            Search Attendants
+            Search Delegate Attendants
           </p>
 
           {/* Search form */}
@@ -204,7 +204,7 @@ class AppHomePage extends Component {
             )}
           </Formik>
 
-          {isAttendantLoading ? (
+          {isDelegateAttendantLoading ? (
             <div className="mt-20">
               <RiseLoader className="text-white" size={15} color="white" />
             </div>
@@ -326,7 +326,7 @@ class AppHomePage extends Component {
           {/* Footer */}
           {/* Powered by */}
           <p className="text-white mt-52 relative bottom-0 pb-5 font-light">
-            Powered by <span className="font-bold text-companyYello">Zergaw ISP</span>
+            Powered by <span className="font-bold">Zergaw ISP</span>
           </p>
         </div>
       </div>
@@ -336,17 +336,17 @@ class AppHomePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAttendantLoading: state.attendant.isAttendantLoading,
+    isDelegateAttendantLoading: state.attendant.isDelegateAttendantLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submittingAttendantsData: (checkedAttantsID, scannedBarCodeResult) =>
+    submittingDelegateAttendantsData: (checkedAttantsID, scannedBarCodeResult) =>
       dispatch(
-        submittingAttendantsData(checkedAttantsID, scannedBarCodeResult)
+        submittingDelegateAttendantsData(checkedAttantsID, scannedBarCodeResult)
       ),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppHomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(OnlyDelegatesHome);

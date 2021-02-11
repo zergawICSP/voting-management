@@ -10,20 +10,45 @@ import { connect } from "react-redux";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
 // COMPONENT IMPORT
-import { submittingShareholderRegistration } from "../../../action/attendantsAction";
+import {
+  submittingShareholderRegistration,
+  updatingShareholder,
+} from "../../../action/attendantsAction";
+import AppNavigation from "../nav/Nav";
 
 class RegisterShareholderForm extends Component {
   state = {
-    userScannedBarcode: "",
+    userScannedBarcode:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.barcode
+        : "",
     toggelingCamera: "",
-    userFullName: "",
-    userPhoneNumber: "",
-    userNumberOfShares: "",
+    userFullName:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.name
+        : "",
+    userPhoneNumber:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.phone
+        : "",
+    userNumberOfShares:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.no_of_shares
+        : "",
   };
 
   render() {
     // Local variables
-    const { isLoading, submittingShareholderRegistration } = this.props;
+    const {
+      isShareholderCreationLoading,
+      isShareholderUpdationLoading,
+      submittingShareholderRegistration,
+      updatingShareholder,
+    } = this.props;
 
     // Validating name input
     const validateName = (userFullName) => {
@@ -59,7 +84,15 @@ class RegisterShareholderForm extends Component {
             phone: userPhoneNumber,
             barcode: userScannedBarcode,
           };
-          submittingShareholderRegistration(cummulativeFormData);
+          if (
+            this.props.location.state &&
+            typeof this.props.location.state.isEditingActivated !== "undefined"
+          )
+            updatingShareholder(
+              cummulativeFormData,
+              this.props.location.state.selectedShareholderData.id
+            );
+          else submittingShareholderRegistration(cummulativeFormData);
           this.setState({
             userFullName: "",
             userPhoneNumber: "",
@@ -73,43 +106,48 @@ class RegisterShareholderForm extends Component {
         );
       }
     };
+
     return (
-      <div>
-        <form
-          className="mt-10 w-full py-20"
-          onSubmit={submitRegisterShareholderData}
-        >
-          <div className="flex flex-col space-y-6 w-2/4 m-auto text-left">
+      <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
+        <AppNavigation />
+        <p className="text-white font-bold text-xl mt-20">
+          Register New Shareholder
+        </p>
+        <form className="w-1/2 py-10" onSubmit={submitRegisterShareholderData}>
+          <div className="flex flex-col space-y-6 px-16 m-auto text-left">
             <div className="flex flex-col space-y-4">
               <label>Full Name</label>
               <input
-                className="px-5 py-3 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
                 placeholder="Enter Full Name"
                 id="userFullName"
                 name="userFullName"
                 type="text"
+                value={this.state.userFullName}
                 onChange={handleOnChange}
               />
             </div>
             <div className="flex flex-col space-y-4">
               <label>Number of Share</label>
               <input
-                className="px-5 py-3 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
                 placeholder="Enter Number of Share"
                 id="userNumberOfShares"
                 name="userNumberOfShares"
                 type="number"
+                value={this.state.userNumberOfShares}
                 onChange={handleOnChange}
               />
             </div>
             <div className="flex flex-col space-y-4">
               <label>Phone Number</label>
               <input
-                className="px-5 py-3 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
                 placeholder="Enter Phone Number"
                 id="userPhoneNumber"
                 name="userPhoneNumber"
                 type="text"
+                value={this.state.userPhoneNumber}
                 onChange={handleOnChange}
               />
             </div>
@@ -117,7 +155,7 @@ class RegisterShareholderForm extends Component {
               <div className="flex flex-col space-y-2 w-2/3">
                 <label>Barcode</label>
                 <input
-                  className="px-5 py-4 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
                   placeholder="Enter barcode"
                   id="userScannedBarcode"
                   name="userScannedBarcode"
@@ -176,12 +214,12 @@ class RegisterShareholderForm extends Component {
                 />
               )}
             </div>
-            {isLoading ? (
+            {isShareholderCreationLoading || isShareholderUpdationLoading ? (
               <RiseLoader size="15" color="#fff" />
             ) : (
               <button
                 type="submit"
-                className="bg-third text-white font-bold text-xl py-2 px-5 rounded-full"
+                className="bg-third text-white font-bold text-xl py-1 px-6 rounded-full w-full"
               >
                 Submit
               </button>
@@ -195,7 +233,8 @@ class RegisterShareholderForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.attendant.isLoading,
+    isShareholderCreationLoading: state.attendant.isShareholderCreationLoading,
+    isShareholderUpdationLoading: state.attendant.isShareholderUpdationLoading,
   };
 };
 
@@ -203,6 +242,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submittingShareholderRegistration: (shareholderInformation) =>
       dispatch(submittingShareholderRegistration(shareholderInformation)),
+    updatingShareholder: (shareholderInformation, shareholderID) =>
+      dispatch(updatingShareholder(shareholderInformation, shareholderID)),
   };
 };
 

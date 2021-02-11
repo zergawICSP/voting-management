@@ -93,8 +93,17 @@ class AgendaVoteForm extends Component {
           neutralField: this.state.neutralField,
           barcode: this.state.scannedBarCodeResult,
         };
-        submitMeetingVote(finalAttendantVote, selectedAgendaId);
-        console.log(finalAttendantVote);
+        if (
+          this.state.scannedBarCodeResult !== "" &&
+          this.state.selectedAgendaID !== "" &&
+          this.state.scannedBarCodeResult !== null
+        )
+          submitMeetingVote(finalAttendantVote, selectedAgendaId);
+        else
+          toast.error(
+            "One or more fields aren't filled. Please fill them and submit again !",
+            { position: "bottom-center" }
+          );
         this.setState({ scannedBarCodeResult: "" });
         clearingData();
       });
@@ -108,7 +117,6 @@ class AgendaVoteForm extends Component {
         selected: "yesField",
         fechedAttendantValue: [],
       });
-      // document.getElementById("userBarcode").value = null;
     };
 
     //   Displaying Fetched attendant data
@@ -294,7 +302,9 @@ class AgendaVoteForm extends Component {
                   </button>
                 )}
               </div>
-            ) : null}
+            ) : (
+              <p className="mt-10 text-white">No Record Found</p>
+            )}
           </div>
         </form>
       </div>

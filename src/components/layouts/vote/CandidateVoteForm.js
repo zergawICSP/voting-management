@@ -25,11 +25,30 @@ class CandidateVoteForm extends Component {
     returnedAttendantValue: [],
     candiateData: [],
     checkedCandidates: [],
+    candidateVoteType: 0,
 
     // form state
     barcodeIDResult: "",
     toggelingBarcodeReaderCamera: false,
   };
+
+  componentDidMount() {
+    instance
+      .get("/voting-agendas")
+      .then((response) =>
+        response.data.votingAgendas && response.data.votingAgendas.length > 0
+          ? response.data.votingAgendas.map((SingleData) =>
+              this.setState({ candidateVoteType: SingleData.id })
+            )
+          : this.setState({ candidateVoteType: 0 })
+      )
+      .catch((error) =>
+        toast.error(
+          "Unable to load Candidate Vote Type Data: " +
+            error.response.data.error
+        )
+      );
+  }
 
   render() {
     // Local variables
@@ -54,6 +73,8 @@ class CandidateVoteForm extends Component {
         headerName: "Name",
         field: "name",
         checkboxSelection: true,
+        minWidth: 500,
+        maxWidth: 500,
       },
     ];
 
@@ -74,12 +95,12 @@ class CandidateVoteForm extends Component {
           "Selected Candidates shouldn't excced 11 Candidates. Your choice will be invalid !",
           { position: "bottom-center" }
         );
-        e.api.getSelectedRows().map((SingleData) => {
-          dataValue.push(SingleData.id);
-          this.setState({
-            checkedCandidates: dataValue,
-          });
+      e.api.getSelectedRows().map((SingleData) => {
+        dataValue.push(SingleData.id);
+        this.setState({
+          checkedCandidates: dataValue,
         });
+      });
     };
 
     //   Handling scanned bar code result
@@ -115,7 +136,11 @@ class CandidateVoteForm extends Component {
     //   Submitting attendant vote
     const submitCandidateVoteInformation = () => {
       // do sth here
-      const { checkedCandidates, barcodeIDResult } = this.state;
+      const {
+        checkedCandidates,
+        barcodeIDResult,
+        candidateVoteType,
+      } = this.state;
       console.log(checkedCandidates.length);
       if (checkedCandidates.length > 11) {
         toast.error(
@@ -125,9 +150,14 @@ class CandidateVoteForm extends Component {
       } else {
         if (checkedCandidates.length > 0) {
           if (barcodeIDResult !== "" && barcodeIDResult !== null) {
-            submitCandidateVote(checkedCandidates, barcodeIDResult);
-
-            clearingFormData();
+            if (candidateVoteType !== 0) {
+              submitCandidateVote(checkedCandidates, barcodeIDResult, candidateVoteType);
+              clearingFormData();
+            } else
+              toast.error(
+                "Candidate vote agenda not retrived or not found in the store.",
+                { position: "bottom-center" }
+              );
           } else {
             toast.error(
               "One or more fields aren't filled. Please provide and submit again!",
@@ -148,6 +178,7 @@ class CandidateVoteForm extends Component {
         barcodeIDResult: "",
         toggelingBarcodeReaderCamera: false,
         returnedAttendantValue: [],
+        checkedCandidates: [],
       });
       document.getElementById("userBarcodeID").value = "";
     };
@@ -176,7 +207,7 @@ class CandidateVoteForm extends Component {
         })
       ) : (
         <div>
-          <p>No Record Found !</p>
+          <p className="text-white">No Record Found !</p>
         </div>
       );
 
@@ -184,7 +215,7 @@ class CandidateVoteForm extends Component {
       return <RiseLoader className="text-white mt-5" size={10} color="white" />;
 
     return (
-      <div className="flex flex-col justify-center items-center text-white">
+      <div className="flex flex-col justify-center items-center text-white mb-20">
         <form className="w-3/4 mt-5">
           <div className="flex flex-row justify-center items-center space-x-4 w-full">
             <input
@@ -258,7 +289,7 @@ class CandidateVoteForm extends Component {
           </div>
 
           {/* Displaying the barcode scanner only if toggling camera state is true */}
-          <div className="">
+          <div className="w-3/4 m-auto">
             {this.state.toggelingBarcodeReaderCamera && (
               <BarcodeScannerComponent
                 width={500}
@@ -285,19 +316,33 @@ class CandidateVoteForm extends Component {
             ) : this.state.returnedAttendantValue.length > 0 ? (
               <div>
                 {displayingFetchedAttendantData}
-                <div
-                  className="ag-theme-dark w-full shadow-2xl bg-transparent text-white border"
-                  style={{ height: "300px", width: "500px" }}
-                >
-                  <AgGridReact
-                    columnDefs={columnDefs}
-                    defaultColDef={defaultColDef}
-                    onGridReady={onGridReady}
-                    rowSelection={rowSelectionType}
-                    onSelectionChanged={onSelectionChanged}
-                    rowMultiSelectWithClick={true}
-                    className="bg-transparent"
-                  ></AgGridReact>
+                <div className="flex flex-row justify-between items-center">
+                  <div
+                    className="ag-theme-dark w-full shadow-2xl bg-transparent text-white m-auto"
+                    style={{ height: "300px", width: "530px" }}
+                  >
+                    <AgGridReact
+                      columnDefs={columnDefs}
+                      defaultColDef={defaultColDef}
+                      onGridReady={onGridReady}
+                      rowSelection={rowSelectionType}
+                      onSelectionChanged={onSelectionChanged}
+                      rowMultiSelectWithClick={true}
+                      suppressHorizontalScroll={false}
+                      className="bg-transparent"
+                    ></AgGridReact>
+                  </div>
+                  <div>
+                    <p className="text-white">
+                      <span className="text-2xl">
+                        Selected Candidate Item Count:
+                      </span>
+                      <br />
+                      <span className="font-bold text-5xl mt-5">
+                        {parseFloat(this.state.checkedCandidates.length)}
+                      </span>
+                    </p>
+                  </div>
                 </div>
                 <button
                   className="px-3 py-2 bg-white text-third rounded-full mt-5"
@@ -309,7 +354,7 @@ class CandidateVoteForm extends Component {
                   Submit Vote
                 </button>
               </div>
-            ) : null}
+            ) : <p className="mt-10 text-white">No Record Found</p>}
           </div>
         </form>
       </div>
@@ -325,9 +370,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitCandidateVote: (candidateVoteData, selectedAttendantBarcodeID) =>
+    submitCandidateVote: (
+      candidateVoteData,
+      selectedAttendantBarcodeID,
+      candidateVoteType
+    ) =>
       dispatch(
-        submitCandidateVote(candidateVoteData, selectedAttendantBarcodeID)
+        submitCandidateVote(
+          candidateVoteData,
+          selectedAttendantBarcodeID,
+          candidateVoteType
+        )
       ),
   };
 };

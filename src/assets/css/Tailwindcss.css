@@ -1,6 +1,5 @@
 @tailwind base;
 @tailwind components;
-
 @font-face {
     font-family: 'Montserrat';
     src: local('Montserrat'), url(./assets/fonts/Montserrat-Regular.otf) format('otf');
@@ -84,6 +83,17 @@
     border: none !important;
 }
 
+.ag-theme-dark .ag-root-wrapper {
+    overflow-x: hidden !important;
+}
+
+.ag-theme-dark .ag-row {
+    overflow-x: hidden !important;
+}
+
+.ag-theme-blue .ag-root-wrapper {
+    border: none !important;
+}
 /* .ag-theme-dark .ag-root-wrapper {
     background: transparent !important;
     text-align: center !important;

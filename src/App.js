@@ -15,6 +15,9 @@ import VotePage from "./components/layouts/vote/Root";
 import RegistrationPage from "./components/layouts/shareholderRegistration/Root";
 import VoteIndex from "./components/layouts/landing/voteIndex";
 import InitalizeVote from "./components/layouts/agenda/Root";
+import CandidateVote from "./components/layouts/vote/CandidateVoteRoot";
+import RegisterShareholder from "./components/layouts/shareholderRegistration/RegisterShareholderForm";
+import DelegateHome from "./components/layouts/home/OnlyDelegatesHome";
 import Store from "./store/index_";
 
 // IMAGE IMPORTS
@@ -30,9 +33,12 @@ function App() {
             <Route path="/count_vote" component={VoteIndex} />
             <Route path="/login" component={LoginPage} />
             <Route path="/home" component={HomePage} />
+            <Route path="/delegate_home" component={DelegateHome} />
             <Route path="/vote" component={VotePage} />
-            <Route path="/register" component={RegistrationPage} />
+            <Route path="/admin" exact component={RegistrationPage} />
             <Route path="/init_vote" component={InitalizeVote} />
+            <Route path="/candidate_form" component={CandidateVote} />
+            <Route path="/admin/register" component={RegisterShareholder} />
           </Switch>
         </div>
       </Router>

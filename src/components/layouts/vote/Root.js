@@ -52,33 +52,17 @@ class Root extends Component {
       }
     };
 
-    const handleCandidateVoteTypeID = (e) => {
-      let inputSelectedValue = e.target.value;
-      if (inputSelectedValue !== "") {
-        this.setState({
-          selectedCandidateType: inputSelectedValue,
-          isCandidateTypeSelected: true,
-        });
-      } else {
-        this.setState({
-          isCandidateTypeSelected: false,
-          selectedCandidateType: "",
-        });
-      }
-    };
-
     return (
       <div className="flex flex-col min-h-screen bg-gradient-to-bl from-primary to-secondary text-white">
         <AppNavigation />
         <div className="flex flex-col justify-center h-full mb-32">
-          <p className="text-5xl font-bold mt-40">Attendant Vote Count Form</p>
-          <div className="flex flex-row justify-center mt-20 divide-x-2 divider-white divider-solid">
-            <div className="flex flex-col space-y-5 w-1/2">
-              <p className="text-2xl font-semibold">Agenda Vote</p>
+          <p className="text-5xl font-bold mt-40">Meeting Vote Entry Form</p>
+          <div className="m-auto mt-20 w-1/2">
+            <div className="flex flex-col space-y-5 w-full">
               <form className="pt-10">
                 <div className="">
                   <select
-                    className="px-5 py-2 bg-transparent border border-gray-100 rounded-full focus:outline-none focus:text-third w-1/2"
+                    className="px-5 py-3 bg-transparent border border-gray-100 rounded-full focus:outline-none focus:text-third w-3/4"
                     id="agendaName"
                     name="agendaName"
                     onChange={handleAgendaIDSelection}
@@ -112,37 +96,6 @@ class Root extends Component {
                 <AgendaVoteForm
                   selectedAgendaId={this.state.selectedAgendaId}
                 />
-              ) : null}
-
-              {/* End of detail list of form element */}
-            </div>
-            <div className="flex flex-col space-y-5 w-1/2">
-              <p className="text-2xl font-semibold">Candidate Vote</p>
-              <form className="pt-10">
-                <div className="">
-                  <select
-                    className="px-5 py-2 bg-transparent border border-gray-100 rounded-full focus:outline-none focus:text-third w-1/2"
-                    id="agendaName"
-                    name="agendaName"
-                    onChange={handleCandidateVoteTypeID}
-                  >
-                    <option value="" className="text-third">
-                      Choose Candidate Type
-                    </option>
-                    <option
-                      value="BOARD_MEMBER_SELECTION"
-                      className="text-third"
-                    >
-                      Board Member Candidate Vote Count
-                    </option>
-                  </select>
-                </div>
-              </form>
-
-              {/* Detail list of Form elements */}
-
-              {this.state.isCandidateTypeSelected ? (
-                <CandidateVoteForm />
               ) : null}
 
               {/* End of detail list of form element */}

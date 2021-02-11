@@ -45,14 +45,14 @@ export const submitMeetingVote = (
   };
 };
 
-export const submitCandidateVote = (candidates, barcode) => {
+export const submitCandidateVote = (candidates, barcode, candidateVoteType) => {
   return (dispatch) => {
     // Dispatching loading indicator
     dispatch({ type: BOARD_VOTE_LOADING });
 
     // Operation
     instance
-      .post("/vote/1", { candidates, barcode })
+      .post("/vote/" + candidateVoteType, { candidates, barcode })
       .then((response) => {
         if (response.status === 200) {
           dispatch({ type: BOARD_VOTE_SUCCESS });

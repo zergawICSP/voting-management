@@ -3,9 +3,13 @@ import React, { Component } from "react";
 // EXTERNAL IMPORTS
 import { toast } from "react-toastify";
 import { instance } from "../../../api/config";
+import { numberFormat } from "../../shared/shareedVariables";
+
+// COMPONENET IMPORT
+import LogoHeader from "../nav/LogoHeader";
 
 // IMAGE IMPORT
-import CompanyLogo from "../../../assets/images/Zergaw ISP Logo.png";
+import BrandingImage from "../../../assets/images/Zerga ISP Branding.png";
 
 class AppLanding extends Component {
   // Component state
@@ -38,20 +42,15 @@ class AppLanding extends Component {
   }
 
   render() {
+
     return (
-      <div className="min-h-screen bg-gradient-to-bl from-primary to-secondary">
-        <div className="py-10 px-10 flex flex-row space-x-5 items-center">
-          <img src={CompanyLogo} alt="Zergaw ISP Logo" className="w-24" />
-          <div className="flex flex-col space-y-1 text-left">
-            <span className="text-white">POWERED BY</span>
-            <p className="text-white font-bold text-2xl">Zergaw ISP</p>
-          </div>
-        </div>
-        <div className="px-20 mt-20 pb-20 flex flex-row justify-around space-x-10 divide-x-2 divide-solid divide-white lg:mt-5">
+      <div className="min-h-screen bg-gradient-to-bl from-primary to-secondary pt-5">
+        <LogoHeader />
+        <div className="px-20 mt-20 pb-20 flex flex-row justify-around space-x-10 divide-x-2 divide-solid divide-white lg:mt-5 z-40">
           <div className="flex flex-col justify-center items-center text-white w-full">
             <p className="font-extrabold text-9xl">
               {this.state.attendantsCount !== null
-                ? this.state.attendantsCount
+                ? numberFormat.format(this.state.attendantsCount)
                 : 0}
             </p>
             <p className="font-bold text-7xl mt-10 lg:text-7xl">
@@ -69,6 +68,12 @@ class AppLanding extends Component {
             </div>
           </div>
         </div>
+        {/* Branding Zergaw ISP */}
+        <img
+          src={BrandingImage}
+          alt="Zergaw ISP Branding"
+          className="absolute bottom-0 left-0 z-0 h-5/6"
+        />
       </div>
     );
   }
