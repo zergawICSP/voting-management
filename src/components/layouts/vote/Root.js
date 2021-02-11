@@ -82,7 +82,7 @@ class Root extends Component {
                         </option>
                       ))
                     ) : (
-                      <option>No Meeting List Available</option>
+                      <option value="">No Meeting List Available</option>
                     )}
 
                     {/* End of mapping */}
