@@ -54,7 +54,9 @@ class MeetingAgendaController extends Controller
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'error' => $e->errors()
+                'title' => $request->input('title'),
+                'error' => "Title field must be at least 10 characters",
+                'exception' => $e->errors()
             ], 400);
         }
 
