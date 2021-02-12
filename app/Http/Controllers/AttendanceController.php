@@ -21,7 +21,7 @@ class AttendanceController extends Controller
     {
         try {
             $request->validate([
-                'barcode' => 'required|unique:shareholders,barcode'
+                'barcode' => 'required|unique:share_holders,barcode'
             ]);
         } catch (ValidationException $e) {
             return response()->json([
