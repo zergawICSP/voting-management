@@ -47,7 +47,6 @@ class Root extends Component {
               toast.success("Meeting Agenda Initalized", {
                 position: "bottom-center",
               });
-              this.setState({ isLoading: false });
             }
           })
           .catch((error) =>
@@ -55,6 +54,7 @@ class Root extends Component {
               "Error Initalizing Meeting Agenda: " + error.response.data.error
             )
           );
+          this.setState({ isLoading: false });
       } else {
         toast.error(
           "One of more fields aren't filled. Please fill them and submit again !",
@@ -95,7 +95,9 @@ class Root extends Component {
                     </option>
                   ))
                 ) : (
-                  <option className="text-third">No Meeting List Available</option>
+                  <option className="text-third">
+                    No Meeting List Available
+                  </option>
                 )}
                 {/* End of mapping */}
               </select>

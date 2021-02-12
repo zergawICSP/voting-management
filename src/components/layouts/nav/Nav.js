@@ -3,7 +3,6 @@ import React from "react";
 // EXTERNAL IMPORTS
 import { FiSearch } from "react-icons/fi";
 import { FaVoteYea } from "react-icons/fa";
-import { AiOutlineUser, AiOutlinePoweroff } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { MdViewAgenda } from "react-icons/md";
