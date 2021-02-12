@@ -31,7 +31,7 @@ class AttendanceController extends Controller
         
 
         try {
-            // if($shareholder->delegate_id !== null && $shareholder->delegate_id !==0) {
+            // if() {
             //     $delegate = $shareholder->delegate;
             //     $delegate->is_present = true;
             //     foreach ($delegate->shareholders as $shareholder) {
@@ -46,6 +46,11 @@ class AttendanceController extends Controller
             //     $delegate->barcode = $request->input('barcode');
             //     $delegate->save();
             // }else {
+            if($shareholder->delegate_id !== null && $shareholder->delegate_id !==0) {
+                return response()->json([
+                    'error' => 'Shareholder is delegated!!'
+                ], 400);
+            }
             $shareholder->is_present = true;
             $shareholder->barcode = $request->input('barcode');
             $shareholder->save(); 
