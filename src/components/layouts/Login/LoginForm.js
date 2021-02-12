@@ -62,7 +62,7 @@ function LoginForm({ authLoginFormAction }) {
             </div>
             <button
               type="submit"
-              className="bg-third text-white font-bold text-xl py-2 px-5 rounded-full hover:bg-companyYello hover:text-secondary"
+              className="bg-transparent text-white shadow-2xl border border-gray-600 text-xl py-2 px-5 rounded-md hover:bg-companyYello hover:text-secondary"
             >
               Login
             </button>

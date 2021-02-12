@@ -46,7 +46,7 @@ class Root extends Component {
 
         <div className="mr-auto ml-10">
           <Link to="/admin/register">
-              <button className="px-5 py-2 bg-white text-third rounded-full text-md mr-auto">
+              <button className="px-5 py-2 bg-transparent shadow-2xl text-white text-md mr-auto border border-primary rounded-md hover:bg-companyYello hover:text-primary">
                 Add Shareholder
               </button>
           </Link>

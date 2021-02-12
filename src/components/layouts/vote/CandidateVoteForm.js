@@ -345,7 +345,7 @@ class CandidateVoteForm extends Component {
                   </div>
                 </div>
                 <button
-                  className="px-3 py-2 bg-white text-third rounded-full mt-5"
+                  className="px-3 py-2 bg-transparent text-white rounded-md mt-5 shadow-2xl border border-gray-600 hover:bg-companyYello hover:text-primary"
                   onClick={(e) => {
                     e.preventDefault();
                     submitCandidateVoteInformation();

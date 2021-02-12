@@ -4,13 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#33587C",
+        primary: "#0C3B84",
         secondary: "#05244E",
         companyYello: "#FFFF1A",
         third: "#057DF6",
       },
       fontFamily: {
-        'sans': ['Montserrat'],
+        sans: ["Montserrat"],
         Montserrat: ["Montserrat", "sans-serif"],
       },
     },

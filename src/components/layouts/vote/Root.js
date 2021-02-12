@@ -7,7 +7,6 @@ import { instance } from "../../../api/config";
 // COMPONENT IMPORTS
 import AppNavigation from "../nav/Nav";
 import AgendaVoteForm from "./AgendaVoteForm";
-import CandidateVoteForm from "./CandidateVoteForm";
 
 class Root extends Component {
   // Component state value

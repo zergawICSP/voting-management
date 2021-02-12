@@ -79,10 +79,10 @@ class ViewShareholders extends Component {
         field: "id",
         cellRendererFramework: (params) => (
           <button
-            className="px-2 text-white py-1 bg-third rounded-2xl"
+            className="px-2 text-primary py-1 rounded-md shadow-2xl"
             onClick={() => editShareholderOnClick(params)}
           >
-            <AiFillEdit />
+            Edit
           </button>
         ),
       },

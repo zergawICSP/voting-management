@@ -289,7 +289,7 @@ class OnlyDelegatesHome extends Component {
                   </div>
                   <div className="flex flex-row justify-center items-center mt-10">
                     <button
-                      className="px-4 py-2 rounded-full text-third bg-white"
+                      className="px-4 py-2 rounded-md text-white bg-transparent border border-gray-600 shadow-2xl hover:bg-companyYello hover:text-primary"
                       onClick={(e) => {
                         e.preventDefault();
                         sendingCollectedAttendanceData();

@@ -219,7 +219,7 @@ class RegisterShareholderForm extends Component {
             ) : (
               <button
                 type="submit"
-                className="bg-third text-white font-bold text-xl py-1 px-6 rounded-full w-full"
+                className="bg-transparent text-white py-2 px-6 rounded-md w-full border border-gray-600 shadow-2xl hover:bg-companyYello hover:text-primary"
               >
                 Submit
               </button>

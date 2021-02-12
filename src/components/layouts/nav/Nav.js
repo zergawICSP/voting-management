@@ -24,14 +24,20 @@ export default function Nav() {
               className="p-4 rounded-full hover:bg-third hover:border-third group"
               activeClassName="bg-third text-white"
             >
-              <AiOutlineUserAdd size="30" className="group-hover:text-white text-companyYello" />
+              <AiOutlineUserAdd
+                size="30"
+                className="group-hover:text-white text-companyYello"
+              />
             </NavLink>
             <NavLink
               to="/init_vote"
               className="p-4 rounded-full hover:bg-third hover:border-third group"
               activeClassName="bg-third text-white"
             >
-              <MdViewAgenda size="30" className="group-hover:text-white text-companyYello" />
+              <MdViewAgenda
+                size="30"
+                className="group-hover:text-white text-companyYello"
+              />
             </NavLink>
           </div>
         ) : localStorage.getItem("isAdmin") === "2" ? (
@@ -41,7 +47,10 @@ export default function Nav() {
               className="p-4 rounded-full hover:bg-third hover:border-third group"
               activeClassName="bg-third text-white"
             >
-              <FiSearch size="30" className="group-hover:text-white text-companyYello" />
+              <FiSearch
+                size="30"
+                className="group-hover:text-white text-companyYello"
+              />
             </NavLink>
           </div>
         ) : (
@@ -51,7 +60,10 @@ export default function Nav() {
               className="p-4 rounded-full hover:bg-third hover:border-third group"
               activeClassName="bg-third text-white"
             >
-              <FiSearch size="30" className="group-hover:text-white text-companyYello" />
+              <FiSearch
+                size="30"
+                className="group-hover:text-white text-companyYello"
+              />
             </NavLink>
             <NavLink
               to="/vote"
@@ -70,7 +82,7 @@ export default function Nav() {
             >
               <BiUser
                 size="30"
-                    className="group-hover:text-white text-companyYello"
+                className="group-hover:text-white text-companyYello"
               />
             </NavLink>
           </div>
@@ -78,34 +90,15 @@ export default function Nav() {
       </div>
       <div className="group relative inline-block pr-20">
         <button
-          className="inline-flex justify-center items-center p-2 bg-third rounded-full border-none focus:outline-none "
-          type="button"
-          id="options-menu"
-          aria-haspopup="true"
-          aria-expanded="true"
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload();
+          }}
+          className="px-6 py-2 text-white border border-gray-500 shadow-2xl rounded-md hover:bg-companyYello hover:text-primary"
+          role="menuitem"
         >
-          <AiOutlineUser className="text-companyYello" size="25" />
+          Logout
         </button>
-        <div className="absolute hidden group-hover:block right-16 mt-2 w-44 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          <div
-            className="py-1"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
-          >
-            <button
-              onClick={() => {
-                localStorage.clear();
-                window.location.reload();
-              }}
-              className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex flex-row justify-around items-center"
-              role="menuitem"
-            >
-              <AiOutlinePoweroff />
-              Logout
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

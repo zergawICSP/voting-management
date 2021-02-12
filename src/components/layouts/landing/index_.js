@@ -32,7 +32,9 @@ class AppLanding extends Component {
           console.log(response.data);
           this.setState({
             attendantsCount: parseFloat(response.data.no_of_attendants),
-            precentageOfAttendants: parseFloat(response.data.percentage.toFixed(2))
+            precentageOfAttendants: parseFloat(
+              response.data.percentage.toFixed(2)
+            ),
           });
         })
         .catch((error) =>
@@ -42,7 +44,6 @@ class AppLanding extends Component {
   }
 
   render() {
-
     return (
       <div className="min-h-screen bg-gradient-to-bl from-primary to-secondary pt-5">
         <LogoHeader />

@@ -70,7 +70,7 @@ class RegisterAgenda extends Component {
           ) : (
             <button
               type="submit"
-              className="bg-third text-white py-2 px-5 rounded-full w-full mt-5"
+              className="bg-transparent text-white py-2 px-5 rounded-md w-full mt-5 hover:text-primary hover:bg-companyYello border border-gray-600 shadow-2xl"
             >
               Submit
             </button>

@@ -94,6 +94,10 @@
 .ag-theme-blue .ag-root-wrapper {
     border: none !important;
 }
+
+.ag-theme-blue input{
+    color:black !important
+}
 /* .ag-theme-dark .ag-root-wrapper {
     background: transparent !important;
     text-align: center !important;

@@ -289,7 +289,7 @@ class AppHomePage extends Component {
                   </div>
                   <div className="flex flex-row justify-center items-center mt-10">
                     <button
-                      className="px-4 py-2 rounded-full text-third bg-white"
+                      className="px-4 py-2 rounded-md text-white bg-transparent border border-gray-600 shadow-2xl hover:bg-companyYello hover:text-primary"
                       onClick={(e) => {
                         e.preventDefault();
                         sendingCollectedAttendanceData();
@@ -326,7 +326,8 @@ class AppHomePage extends Component {
           {/* Footer */}
           {/* Powered by */}
           <p className="text-white mt-52 relative bottom-0 pb-5 font-light">
-            Powered by <span className="font-bold text-companyYello">Zergaw ISP</span>
+            Powered by{" "}
+            <span className="font-bold text-companyYello">Zergaw ISP</span>
           </p>
         </div>
       </div>
