@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 import { instance } from "../../../api/config";
 import RiseLoader from "react-spinners/RiseLoader";
 
-// COMPONENT IMPORT
-
 class RegisterAgenda extends Component {
   state = {
     newAgendaTitle: "",

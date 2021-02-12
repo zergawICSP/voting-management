@@ -98,6 +98,13 @@ class Root extends Component {
               ) : null}
 
               {/* End of detail list of form element */}
+
+              {/* Footer */}
+              {/* Powered by */}
+              <p className="text-white mt-52 relative bottom-0 pb-5 font-light">
+                Powered by{" "}
+                <span className="font-bold text-companyYello">Zergaw ISP</span>
+              </p>
             </div>
           </div>
         </div>

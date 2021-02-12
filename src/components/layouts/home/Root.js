@@ -105,7 +105,7 @@ class AppHomePage extends Component {
     };
 
     // Row selection type - whether it is single, multiple or both
-    const rowSelectionType = "multiple";
+    const rowSelectionType = "single";
 
     // Checking if the row is selectable
     const isRowSelectable = (node) => {

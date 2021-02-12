@@ -12,13 +12,13 @@ import { connect } from "react-redux";
 import { instance } from "../../../api/config";
 import { Tooltip } from "react-tippy";
 import { Redirect } from "react-router-dom";
+import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-bootstrap.css";
 
 // COMPONENT IMPORTS
 import AppNavigation from "../nav/Nav";
-import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import { submittingDelegateAttendantsData } from "../../../action/attendantsAction";
 
 class OnlyDelegatesHome extends Component {
@@ -326,7 +326,7 @@ class OnlyDelegatesHome extends Component {
           {/* Footer */}
           {/* Powered by */}
           <p className="text-white mt-52 relative bottom-0 pb-5 font-light">
-            Powered by <span className="font-bold">Zergaw ISP</span>
+            Powered by <span className="font-bold text-companyYello">Zergaw ISP</span>
           </p>
         </div>
       </div>
