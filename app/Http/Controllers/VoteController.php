@@ -161,6 +161,12 @@ class VoteController extends Controller
                 'exception' => $e->errors()
             ], 400);
         }
+
+        if(!$meetingAgenda->is_initialized) {
+            return response()->json([
+                'error' => 'Meeting Agenda is not yet initialized!!!'
+            ], 400);
+        }
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
 
         foreach ($shareholder->meetingAgendas as $agenda) {

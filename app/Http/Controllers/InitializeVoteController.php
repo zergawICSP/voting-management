@@ -26,6 +26,7 @@ class InitializeVoteController extends Controller
 
         foreach ($attendedShareholders as $attendedShareholder ) {
             $meetingAgenda->yes += $attendedShareholder->no_of_shares;
+            $meetingAgenda->is_intialized = true;
         }
         
         try {
