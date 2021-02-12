@@ -17,6 +17,7 @@ class CreateMeetingAgendasTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
+            $table->boolean('is_initialized')->default(false);
             $table->integer('yes')->default(0);
             $table->integer('no')->default(0);
             $table->integer('neutral')->default(0);

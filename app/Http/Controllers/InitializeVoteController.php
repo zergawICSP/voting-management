@@ -24,20 +24,26 @@ class InitializeVoteController extends Controller
             ], 400);
         } 
 
-        foreach ($attendedShareholders as $attendedShareholder ) {
-            $meetingAgenda->yes += $attendedShareholder->no_of_shares;
+        if (!$meetingAgenda->is_initialized) { 
+            try {
+                $meetingAgenda->is_initialized = true;
+                foreach ($attendedShareholders as $attendedShareholder ) {
+                    $meetingAgenda->yes += $attendedShareholder->no_of_shares;
+                }
+                $meetingAgenda->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            } catch (Exception $e) {
+                return response()->json([
+                    'error' => $e->getMessage()
+                ], 500);
+            }
         }
-        
-        try {
-            $meetingAgenda->save();
-            return response()->json([
-                'success' => true
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 500);
-        }
+
+        return response()->json([
+            'error' => 'Meeting Agenda Has Already Been Initialized'
+        ], 400);
 
         
     }
