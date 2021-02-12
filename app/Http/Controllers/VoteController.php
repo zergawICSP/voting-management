@@ -162,7 +162,7 @@ class VoteController extends Controller
             ], 400);
         }
 
-        if(!$meetingAgenda->is_initialized) {
+        if($meetingAgenda->yes === 0) {
             return response()->json([
                 'error' => 'Meeting Agenda is not yet initialized!!!'
             ], 400);
