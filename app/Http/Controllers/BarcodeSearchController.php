@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ShareHolder;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class BarcodeSearchController extends Controller
 {
@@ -15,6 +16,15 @@ class BarcodeSearchController extends Controller
      */
     public function __invoke(Request $request)
     {
+        try {
+            $request->validate([
+                'barcode' => 'required'
+            ]);
+        } catch(ValidationException $e) {
+            return response()->json([
+                'barcode' => 'Barcode is required!'
+            ], 400);
+        }
         $shareholder = ShareHolder::where('barcode', $request->query('barcode'))->get()->first();
 
         return response()->json([

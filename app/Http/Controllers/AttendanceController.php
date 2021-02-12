@@ -21,11 +21,11 @@ class AttendanceController extends Controller
     {
         try {
             $request->validate([
-                'barcode' => 'required'
+                'barcode' => 'required|unique:shareholders,barcode'
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'error' => $e->errors()
+                'error' => 'Barcode field is required and must be unique!'
             ], 400);
         }
         
