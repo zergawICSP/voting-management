@@ -51,7 +51,7 @@ class Root extends Component {
           })
           .catch((error) =>
             toast.error(
-              "Error Initalizing Meeting Agenda: " + error.response.data.error
+              "Error Initalizing Meeting Agenda: " + error.response.data.error, {position: "bottom-center"}
             )
           );
           this.setState({ isLoading: false });
