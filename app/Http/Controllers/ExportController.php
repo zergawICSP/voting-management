@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AgendaExport;
 use App\Exports\CandidateExport;
 use App\Exports\ShareholderExport;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller
 {
     public function shareholdersExport()
     {
-        return Excel::download(new ShareholderExport, 'shareholders.xlsx');
+        return new ShareholderExport;
     }
     public function candidateExport()
     {
-        return Excel::download(new CandidateExport, 'candidates.xlsx');
+        return new CandidateExport;
+    }
+    public function meetingAgendaExport()
+    {
+        return new AgendaExport;
     }
 }

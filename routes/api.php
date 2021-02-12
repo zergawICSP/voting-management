@@ -53,6 +53,7 @@ Route::post('/initialize/{meetingAgenda}', InitializeVoteController::class);
 Route::prefix('/export')->group(function () {
     Route::get('/shareholders', [ExportController::class, 'shareholdersExport']);
     Route::get('/candidates', [ExportController::class, 'candidateExport']);
+    Route::get('/meeting-agenda', [ExportController::class, 'meetingAgendaExport']);
 });
 
 // Voting Controller
