@@ -104,7 +104,7 @@ class Root extends Component {
                 <RiseLoader size="15" color="#fff" />
               ) : (
                 <button
-                  className="px-5 py-2 bg-third text-white rounded-full"
+                  className="px-5 py-2 bg-transparent text-white rounded-md border border-gray-600 hover:bg-companyYello hover:text-primary shadow-2xl"
                   onClick={() => onButtonClick()}
                 >
                   Initalize Agenda
