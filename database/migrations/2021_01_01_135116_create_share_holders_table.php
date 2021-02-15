@@ -19,6 +19,7 @@ class CreateShareHoldersTable extends Migration
             $table->integer('no_of_shares');
             $table->string('phone')->nullable();
             $table->boolean('is_present')->default(false);
+            $table->timestamp('attended_time')->nullable();
             $table->foreignId('delegate_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('barcode')->nullable();
             $table->timestamps();

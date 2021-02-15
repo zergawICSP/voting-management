@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MeetingAgenda;
 use App\Models\ShareHolder;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -52,6 +53,7 @@ class AttendanceController extends Controller
                 ], 400);
             }
             $shareholder->is_present = true;
+            $shareholder->attended_time = Carbon::now();
             $shareholder->barcode = $request->input('barcode');
             $shareholder->save(); 
             // }

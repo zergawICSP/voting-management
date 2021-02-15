@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MeetingAgenda;
 use App\Models\ShareHolder;
+use Carbon\Carbon;
 use Exception;
 
 class InitializeVoteController extends Controller
@@ -27,6 +28,7 @@ class InitializeVoteController extends Controller
         if (!$meetingAgenda->is_initialized) { 
             try {
                 $meetingAgenda->is_initialized = true;
+                $meetingAgenda->initialized_time = Carbon::now();
                 foreach ($attendedShareholders as $attendedShareholder ) {
                     $meetingAgenda->yes += $attendedShareholder->no_of_shares;
                 }

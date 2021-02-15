@@ -7,6 +7,7 @@ use App\Models\Delegate;
 use App\Models\MeetingAgenda;
 use App\Models\ShareHolder;
 use App\Models\VotingAgenda;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -180,6 +181,15 @@ class VoteController extends Controller
         if(!$shareholder) {
             $delegate = Delegate::where('barcode', $request->input('barcode'))->first();
 
+            $attendedTime = Carbon::createFromTimeString($delegate->attended_time);
+            $initialized_time = Carbon::createFromTimeString($meetingAgenda->initialized_time);
+
+            if($attendedTime->greaterThan($initialized_time)) {
+                return response()->json([
+                    'error' => "$delegate->name came after agenda was initialized!"
+                ], 400);
+            }
+
             $shareholders = $delegate->shareholders;
 
             foreach ($shareholders as $shareholder ) {
@@ -190,7 +200,6 @@ class VoteController extends Controller
                 try {
                     $meetingAgenda->save();
                     $meetingAgenda->shareHolders()->attach($shareholder);
-
 
                     return response()->json([
                         'success' => true
@@ -243,6 +252,14 @@ class VoteController extends Controller
             ], 400);
             }
         } else {
+            $attendedTime = Carbon::createFromTimeString($shareholder->attended_time);
+            $initialized_time = Carbon::createFromTimeString($meetingAgenda->initialized_time);
+
+            if($attendedTime->greaterThan($initialized_time)) {
+                return response()->json([
+                    'error' => "$shareholder->name came after agenda was initialized!"
+                ], 400);
+            }
             if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
             {
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
