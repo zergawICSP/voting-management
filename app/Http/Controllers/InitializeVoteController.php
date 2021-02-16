@@ -29,8 +29,10 @@ class InitializeVoteController extends Controller
             try {
                 $meetingAgenda->is_initialized = true;
                 $meetingAgenda->initialized_time = Carbon::now();
+                
                 foreach ($attendedShareholders as $attendedShareholder ) {
                     $meetingAgenda->yes += $attendedShareholder->no_of_shares;
+                    $meetingAgenda->korem += $attendedShareholder->no_of_shares;
                 }
                 $meetingAgenda->save();
                 return response()->json([

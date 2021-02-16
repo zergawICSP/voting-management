@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MeetingAgenda;
+use App\Models\ShareHolder;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -29,10 +30,7 @@ class MeetingAgendaController extends Controller
                 $meetingAgenda->yesPercentage = 0;
                 $meetingAgenda->noPercentage = 0;
                 $meetingAgenda->neutralPercentage = 0;
-            }
-
-
-            
+            }            
         });
 
         return response()->json([
@@ -102,23 +100,38 @@ class MeetingAgendaController extends Controller
      */
     public function show(MeetingAgenda $meetingAgenda)
     {
+        $shareholders = ShareHolder::all();
         $totalVote = $meetingAgenda->yes + $meetingAgenda->no + $meetingAgenda->neutral;
+        $totalShare = 0;
 
-        if ($totalVote !== 0) {
+        foreach($shareholders as $shareholder) {
+            $totalShare += $shareholder->no_of_shares;
+        }
+
+        
+
+        if ($totalVote !== 0 && $totalShare !== 0) {
             $meetingAgenda->yesPercentage = ($meetingAgenda->yes / $totalVote) * 100;
             $meetingAgenda->noPercentage = ($meetingAgenda->no / $totalVote) * 100;
             $meetingAgenda->neutralPercentage = ($meetingAgenda->neutral / $totalVote) * 100;
+            $meetingAgenda->koremPercentage = ($meetingAgenda->korem / $totalShare) * 100;
+            $meetingAgenda->totalShare = $totalShare;
             return response()->json([
                 'agenda' => $meetingAgenda
             ]);
         }
 
+        $meetingAgenda->koremPercentage = 0;
         $meetingAgenda->yesPercentage = 0;
         $meetingAgenda->noPercentage = 0;
         $meetingAgenda->neutralPercentage = 0;
+        $meetingAgenda->totalShare = $totalShare;
 
         return response()->json([
-            'agenda' => $meetingAgenda
+            'agenda' => [
+                $meetingAgenda,
+                $totalShare
+            ]
         ]);
 
         
