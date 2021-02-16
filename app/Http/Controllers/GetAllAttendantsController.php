@@ -30,7 +30,11 @@ class GetAllAttendantsController extends Controller
             $attendedShareholderShare += $attendedShareholder->no_of_shares;
         }
 
-        $percentile = ($attendedShareholderShare / $totalShare) * 100;
+        if ($totalShare !== 0) {
+            $percentile = ($attendedShareholderShare / $totalShare) * 100;
+        } else {            
+            $percentile = 0;
+        }
 
         return response()->json([
             'no_of_attendants' => $attendedShareholderShare,

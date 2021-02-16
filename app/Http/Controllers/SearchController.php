@@ -16,20 +16,32 @@ class SearchController extends Controller
     public function __invoke(Request $request)
     {
         $query = $request->query('q');
-        $shareholders = ShareHolder::where('name', 'LIKE', "%$query%")->get();
+        if(is_numeric($query)) {
+            $shareholders = [];
+            array_push($shareholders, ShareHolder::find($query));
 
-        $shareholders->each(function($shareholder) {
-            $shareholder->name = trim($shareholder->name);
-        });
-
-        $sh=[];
-
-        foreach ($shareholders as $shareholder) {
-            array_push($sh, $shareholder);            
+            return response()->json([
+                'shareholders' => $shareholders
+            ]);
+            
+        } else {
+            $shareholders = ShareHolder::where('name', 'LIKE', "%$query%")->get();
+            $shareholders->each(function($shareholder) {
+                $shareholder->name = trim($shareholder->name);
+            });
+    
+            $sh=[];
+    
+            foreach ($shareholders as $shareholder) {
+                array_push($sh, $shareholder);            
+            }
+    
+            return response()->json([
+                'shareholders' => $sh
+            ]);
         }
+        
 
-        return response()->json([
-            'shareholders' => $sh
-        ]);
+        
     }
 }
