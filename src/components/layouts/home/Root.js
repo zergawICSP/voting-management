@@ -51,32 +51,60 @@ class AppHomePage extends Component {
     const handlingOnChange = (e) => {
       let inputValue = e.target.value;
 
-      if (inputValue.length > 2) {
-        this.setState({ isSearchActivated: true, isSearchLoading: true });
-        instance
-          .get("/search?q=" + inputValue)
-          .then((data) => {
-            data.data.shareholders.map((SingleValue) =>
-              dataValues.push(SingleValue)
-            );
-            this.setState({
-              isSearchLoading: false,
-              filteredLists: [...dataValues],
-            });
-            console.log(data.data.shareholders);
-          })
-          .catch((error) =>
-            toast.error(error.response.data.error, {
-              position: "bottom-center",
+      if (inputValue.match(/\d/)) {
+        // checking if the user enters a number or letter
+        if (inputValue.length > 0) {
+          // checking if the user enters morethan a letter
+          this.setState({ isSearchActivated: true, isSearchLoading: true });
+          instance
+            .get("/search?q=" + inputValue)
+            .then((data) => {
+              data.data.shareholders.map((SingleValue) =>
+                dataValues.push(SingleValue)
+              );
+              this.setState({
+                isSearchLoading: false,
+                filteredLists: [...dataValues],
+              });
+              console.log(data.data.shareholders);
             })
-          );
+            .catch((error) =>
+              toast.error(error.response.data.error, {
+                position: "bottom-center",
+              })
+            );
+        } else {
+          this.setState({ isSearchActivated: false });
+        }
       } else {
-        this.setState({ isSearchActivated: false });
+        if (inputValue.length > 2) {
+          this.setState({ isSearchActivated: true, isSearchLoading: true });
+          instance
+            .get("/search?q=" + inputValue)
+            .then((data) => {
+              data.data.shareholders.map((SingleValue) =>
+                dataValues.push(SingleValue)
+              );
+              this.setState({
+                isSearchLoading: false,
+                filteredLists: [...dataValues],
+              });
+              console.log(data.data.shareholders);
+            })
+            .catch((error) =>
+              toast.error(error.response.data.error, {
+                position: "bottom-center",
+              })
+            );
+        } else {
+          this.setState({ isSearchActivated: false });
+        }
       }
     };
 
     // OnGrid ready
     const onGridReady = (params) => {
+      console.log(this.state.filteredLists);
       params.api.applyTransaction({ add: this.state.filteredLists });
     };
 
@@ -87,10 +115,10 @@ class AppHomePage extends Component {
 
     // Column Headers
     const columnDefs = [
+      { headerName: "ID", field: "id", checkboxSelection: true },
       {
         headerName: "Name",
         field: "name",
-        checkboxSelection: true,
       },
       { headerName: "Total Share Amount", field: "no_of_shares" },
       {

@@ -151,7 +151,11 @@ class CandidateVoteForm extends Component {
         if (checkedCandidates.length > 0) {
           if (barcodeIDResult !== "" && barcodeIDResult !== null) {
             if (candidateVoteType !== 0) {
-              submitCandidateVote(checkedCandidates, barcodeIDResult, candidateVoteType);
+              submitCandidateVote(
+                checkedCandidates,
+                barcodeIDResult,
+                candidateVoteType
+              );
               clearingFormData();
             } else
               toast.error(
@@ -354,7 +358,9 @@ class CandidateVoteForm extends Component {
                   Submit Vote
                 </button>
               </div>
-            ) : <p className="mt-10 text-white">No Record Found</p>}
+            ) : (
+              <p className="mt-10 text-white">No Record Found</p>
+            )}
           </div>
         </form>
       </div>

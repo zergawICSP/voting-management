@@ -97,40 +97,60 @@ class VoteIndex extends Component {
                 className="flex flex-col justify-between items-center space-y-20 w-full mt-16 z-40"
                 key={SingleData.id}
               >
-                <div className="flex flex-row justify-between items-center w-screen space-x-3">
-                  <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
-                    <p className="text-md font-semibold text-white">
-                      {numberFormat.format(parseFloat(SingleData.yes)) + " Share"}
-                    </p>
-                    <p className="text-9xl font-bold text-white">
-                      {parseFloat(SingleData.yesPercentage.toFixed(2)) + "%"}
-                    </p>
-                    <p className="text-4xl text-white">እደግፋለሁ</p>
-                  </div>
-                  <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
-                    <p className="text-md font-semibold text-white">
-                      {numberFormat.format(parseFloat(SingleData.no)) + " Share"}
-                    </p>
-                    <p className="text-9xl font-bold text-white">
-                      {parseFloat(SingleData.noPercentage.toFixed(2)) + "%"}
-                    </p>
-                    <p className="text-4xl text-white">እቃወማለሁ</p>
-                  </div>
-                  <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
-                    <p className="text-md font-semibold text-white">
-                      {numberFormat.format(parseFloat(SingleData.neutral)) + " Share"}
-                    </p>
-                    <p className="text-9xl font-bold text-white">
-                      {parseFloat(SingleData.neutralPercentage.toFixed(2)) +
-                        "%"}
-                    </p>
-                    <p className="text-4xl text-white">ድምጸ ተኣቅቦ</p>
+                <div className="items-center px-4 w-full">
+                  <p className="text-white text-7xl font-bold">
+                    {"የጉባኤው አጀንዳ፡ " + SingleData.title}
+                  </p>
+                </div>
+                <div className="items-center w-full mt-20 bg-third p-5">
+                  <div className="flex flex-row justify-center items-center w-full">
+                    <div className="flex flex-col justify-center items-center text-white w-1/2 space-y-3">
+                      <p className="text-5xl">{numberFormat.format(parseFloat(SingleData.totalShare))}</p>
+                      <p className="text-4xl">አጠቃላይ የአክሲዮን መጠን</p>
+                    </div>
+                    <div className="flex flex-col justify-center items-center text-white w-1/2 space-y-3">
+                      <p className="text-5xl">{numberFormat.format(parseFloat(SingleData.korem)) + "( " + parseFloat(SingleData.koremPercentage).toFixed(2) + "% )"}</p>
+                      <p className="text-4xl">አጀንዳውን የታደመው የአክሲዮን መጠን</p>
+                    </div>
                   </div>
                 </div>
-                <div className="items-center px-4 w-full">
-                  <p className="text-white text-3xl font-bold">
-                    {SingleData.title}
-                  </p>
+                <div className="flex flex-row justify-between items-center w-screen space-x-3 mt-20">
+                  <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
+                    <p className="text-7xl text-white">ድጋፍ</p>
+                    <p className="text-7xl font-bold text-white mt-20">
+                      {numberFormat.format(parseFloat(SingleData.yes)) +
+                        " አክሲዮን"}
+                    </p>
+                    <p className="text-5xl font-bold text-white">
+                      {"(" +
+                        parseFloat(SingleData.yesPercentage.toFixed(2)) +
+                        "%)"}
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
+                    <p className="text-7xl text-white">ተቃውሞ</p>
+                    <p className="text-7xl font-bold text-white mt-20">
+                      {numberFormat.format(parseFloat(SingleData.no)) +
+                        " አክሲዮን"}
+                    </p>
+                    <p className="text-5xl font-bold text-white">
+                      {"(" +
+                        parseFloat(SingleData.noPercentage.toFixed(2)) +
+                        "%)"}
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
+                    <p className="text-7xl text-white">ድምጸ ተአቅቦ</p>
+                    <p className="text-7xl font-bold text-white mt-20">
+                      {numberFormat.format(parseFloat(SingleData.neutral)) +
+                        " አክሲዮን"}
+                    </p>
+                    <p className="text-5xl font-bold text-white">
+                      {"(" +
+                        parseFloat(SingleData.neutralPercentage.toFixed(2)) +
+                        "%)"}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
@@ -181,9 +201,9 @@ class VoteIndex extends Component {
             <option value="" className="text-third">
               የሚፈልጉትን ይምረጡ
             </option>
-            <option value="BOARD_MEMBER_SELECTION" className="text-third">
+            {/* <option value="BOARD_MEMBER_SELECTION" className="text-third">
               የዳይሬክተሮች ቦርድ አባላትን መምረጥ
-            </option>
+            </option> */}
 
             {/* Mapping Meeting list from the store */}
             {this.state.meetingAgendaList.length > 0 ? (

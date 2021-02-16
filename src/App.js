@@ -18,6 +18,7 @@ import InitalizeVote from "./components/layouts/agenda/Root";
 import CandidateVote from "./components/layouts/vote/CandidateVoteRoot";
 import RegisterShareholder from "./components/layouts/shareholderRegistration/RegisterShareholderForm";
 import DelegateHome from "./components/layouts/home/OnlyDelegatesHome";
+import ManageDelegate from "./components/layouts/delegate/Root";
 import Store from "./store/index_";
 
 // IMAGE IMPORTS
@@ -39,6 +40,7 @@ function App() {
             <Route path="/init_vote" component={InitalizeVote} />
             <Route path="/candidate_form" component={CandidateVote} />
             <Route path="/admin/register" component={RegisterShareholder} />
+            <Route path="/delegate" component={ManageDelegate} />
           </Switch>
         </div>
       </Router>

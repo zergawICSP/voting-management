@@ -1,102 +1,103 @@
 @tailwind base;
 @tailwind components;
 @font-face {
-    font-family: 'Montserrat';
-    src: local('Montserrat'), url(./assets/fonts/Montserrat-Regular.otf) format('otf');
+  font-family: "Montserrat";
+  src: local("Montserrat"),
+    url(./assets/fonts/Montserrat-Regular.otf) format("otf");
 }
 
 @tailwind utilities;
 /* Ag_Grid Css Customization */
 
 .ag-theme-bootstrap {
-    /* overflow-y: scroll !important; */
-    height: auto !important;
+  /* overflow-y: scroll !important; */
+  height: auto !important;
 }
 
 .ag-theme-bootstrap .ag-header-row {
-    color: white !important;
-    height: 27px !important;
+  color: white !important;
+  height: 27px !important;
 }
 
 .ag-theme-bootstrap .ag-header-icon {
-    color: white !important;
+  color: white !important;
 }
 
 .ag-theme-bootstrap .ag-header-cell {
-    color: white !important;
-    font-weight: bold !important;
-    padding-top: 10px !important;
-    margin-bottom: 30px !important;
-    margin: auto !important;
-    text-align: center !important;
+  color: white !important;
+  font-weight: bold !important;
+  padding-top: 10px !important;
+  margin-bottom: 30px !important;
+  margin: auto !important;
+  text-align: center !important;
 }
 
 .ag-theme-bootstrap .ag-selection-checkbox {
-    color: white !important;
-    border-color: white !important;
+  color: white !important;
+  border-color: white !important;
 }
 
 .ag-theme-bootstrap .ag-checkbox-input-wrapper {
-    color: white !important;
-    border-color: white !important;
+  color: white !important;
+  border-color: white !important;
 }
 
 .ag-theme-bootstrap .ag-checkbox-input-wrapper::after {
-    color: white !important;
+  color: white !important;
 }
 
 .ag-theme-bootstrap .ag-root-wrapper {
-    background: transparent !important;
-    text-align: center !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    font-family: 'Montserrat' !important;
-    color: white !important;
-    font-size: 17px !important;
+  background: transparent !important;
+  text-align: center !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-family: "Montserrat" !important;
+  color: white !important;
+  font-size: 17px !important;
 }
 
 .ag-theme-bootstrap .ag-row {
-    position: relative !important;
-    background: transparent !important;
-    text-align: left !important;
-    margin-top: 20px !important;
-    font-family: 'Montserrat' !important;
-    color: white !important;
-    height: 27px !important;
+  position: relative !important;
+  background: transparent !important;
+  text-align: left !important;
+  margin-top: 20px !important;
+  font-family: "Montserrat" !important;
+  color: white !important;
+  height: 27px !important;
 }
 
 .ag-theme-bootstrap .ag-row .ag-cell {
-    height: 50px !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+  height: 50px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 .ag-theme-bootstrap .ag-row-cell {
-    height: 50px !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+  height: 50px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 /* For the Dark Theme */
 
 .ag-theme-dark {
-    border: none !important;
+  border: none !important;
 }
 
 .ag-theme-dark .ag-root-wrapper {
-    overflow-x: hidden !important;
+  overflow-x: hidden !important;
 }
 
 .ag-theme-dark .ag-row {
-    overflow-x: hidden !important;
+  overflow-x: hidden !important;
 }
 
 .ag-theme-blue .ag-root-wrapper {
-    border: none !important;
+  border: none !important;
 }
 
-.ag-theme-blue input{
-    color:black !important
+.ag-theme-blue input {
+  color: black !important;
 }
 /* .ag-theme-dark .ag-root-wrapper {
     background: transparent !important;

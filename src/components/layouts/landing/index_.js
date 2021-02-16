@@ -19,6 +19,7 @@ class AppLanding extends Component {
     MeetingVote: [],
     attendantsCount: null,
     precentageOfAttendants: null,
+    totalShare: null,
     isLoading: false,
   };
 
@@ -35,6 +36,7 @@ class AppLanding extends Component {
             precentageOfAttendants: parseFloat(
               response.data.percentage.toFixed(2)
             ),
+            totalShare: parseFloat(response.data.totalShare),
           });
         })
         .catch((error) =>
@@ -49,22 +51,36 @@ class AppLanding extends Component {
         <LogoHeader />
         <div className="px-20 mt-20 pb-20 flex flex-row justify-around space-x-10 divide-x-2 divide-solid divide-white lg:mt-5 z-40">
           <div className="flex flex-col justify-center items-center text-white w-full">
-            <p className="font-extrabold text-9xl">
-              {this.state.attendantsCount !== null
-                ? numberFormat.format(this.state.attendantsCount)
-                : 0}
-            </p>
-            <p className="font-bold text-7xl mt-10 lg:text-7xl">
-              Attendant Share
-            </p>
-            <div className="mt-20">
+            <div className="flex flex-row w-full justify-center items-center m-auto">
+              <div className="flex flex-col justify-center items-center w-1/2">
+                <p className="font-extrabold text-8xl">
+                  {this.state.attendantsCount !== null
+                    ? numberFormat.format(this.state.attendantsCount)
+                    : 0}
+                </p>
+                <p className="font-bold text-7xl mt-10 lg:text-7xl">
+                  በእለቱ የታደመው የአክሲዮን መጠን
+                </p>
+              </div>
+              <div className="flex flex-col justify-center items-center w-1/2">
+                <p className="font-extrabold text-8xl">
+                  {this.state.totalShare !== null
+                    ? numberFormat.format(this.state.totalShare)
+                    : 0}
+                </p>
+                <p className="font-bold text-7xl mt-10 lg:text-7xl">
+                  አጠቃላይ የአክሲዮን መጠን
+                </p>
+              </div>
+            </div>
+            <div className="mt-32">
               <p className="font-extrabold text-9xl">
                 {this.state.precentageOfAttendants !== null
                   ? this.state.precentageOfAttendants + "%"
                   : 0}
               </p>
               <p className="font-bold text-7xl mt-10 lg:text-7xl">
-                Percent of Total Share
+                ኮረም (የታደመው አክሲዮን ከአጠቃላይ አክሲዮን)
               </p>
             </div>
           </div>

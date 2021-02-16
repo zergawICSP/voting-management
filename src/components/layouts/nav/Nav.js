@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { MdViewAgenda } from "react-icons/md";
 import { BiUser } from "react-icons/bi";
+import {RiMapPinUserFill} from "react-icons/ri";
 
 // COMPONENT IMPORT
 import LogoHeader from "./LogoHeader";
@@ -24,6 +25,16 @@ export default function Nav() {
               activeClassName="bg-third text-white"
             >
               <AiOutlineUserAdd
+                size="30"
+                className="group-hover:text-white text-companyYello"
+              />
+            </NavLink>
+            <NavLink
+              to="/delegate"
+              className="p-4 rounded-full hover:bg-third hover:border-third group"
+              activeClassName="bg-third text-white"
+            >
+              <RiMapPinUserFill
                 size="30"
                 className="group-hover:text-white text-companyYello"
               />
@@ -74,7 +85,7 @@ export default function Nav() {
                 className="group-hover:text-white text-companyYello"
               />
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/candidate_form"
               className="p-4 rounded-full hover:bg-third hover:border-third group"
               activeClassName="bg-third text-white"
@@ -83,7 +94,7 @@ export default function Nav() {
                 size="30"
                 className="group-hover:text-white text-companyYello"
               />
-            </NavLink>
+            </NavLink> */}
           </div>
         )}
       </div>

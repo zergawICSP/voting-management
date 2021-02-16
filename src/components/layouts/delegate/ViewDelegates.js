@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-// EXTERNAL IMPORT
+// EXTERNAL IMPORTS
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
@@ -11,35 +11,30 @@ import "ag-grid-community/dist/styles/ag-theme-blue.css";
 // COMPONENT IMPORTS
 import { instance } from "../../../api/config";
 
-class ViewShareholders extends Component {
-  // app state variable
+export default class ViewDelegates extends Component {
   state = {
-    updatedShareholderList: [],
-    selectedEditableData: [],
+    updatedDelegateList: []
   };
 
   render() {
-    // props value
-    const { onEditButtonClicked } = this.props;
-
     // Ag_Grid related values
     const onGridReady = (params) => {
       instance
-        .get("/shareholders")
+        .get("/delegates")
         .then((response) => {
           this.setState({
-            updatedShareholderList: response.data.shareholders,
+            updatedDelegateList: response.data.delegates,
           });
-          console.log(this.state.updatedShareholderList);
+          console.log(response);
         })
         .then(() =>
           params.api.applyTransaction({
-            add: this.state.updatedShareholderList,
+            add: this.state.updatedDelegateList,
           })
         )
         .catch((error) =>
           toast.warning(
-            "Error While Loading Shareholder. Please Refresh the Page. Error Report: " +
+            "Error While Loading Delegates. Please Refresh the Page. Error Report: " +
               error.response.data.error
           )
         );
@@ -58,35 +53,12 @@ class ViewShareholders extends Component {
     const columnDefs = [
       { headerName: "Name", field: "name", checkboxSelection: true },
       {
-        headerName: "Total No of Share",
-        field: "no_of_shares",
-      },
-      { headerName: "Phone Number", field: "phone" },
-      {
         headerName: "Is Present",
         field: "is_present",
         valueGetter: gettingPresentValue,
       },
-      {
-        headerName: "Delegation",
-        field: "delegate_id",
-        valueGetter: gettingIsAttendantDelegated,
-      },
       { headerName: "Barcode ID", field: "barcode" },
-      {
-        headerName: "Action",
-        field: "id",
-        cellRendererFramework: (params) => (
-          <button
-            className="px-2 text-primary py-1 rounded-md shadow-2xl"
-            onClick={() => editShareholderOnClick(params)}
-          >
-            Edit
-          </button>
-        ),
-      },
     ];
-
     const defaultColDef = {
       flex: 1,
       filter: true,
@@ -100,11 +72,6 @@ class ViewShareholders extends Component {
     // operation when the row is selected
     const onSelectionChanged = (e) => {
       console.log(e.api.getSelectedRows());
-    };
-
-    // operation on edit btn click
-    const editShareholderOnClick = (params) => {
-      onEditButtonClicked(params.data); // passing selected data to the parent component
     };
 
     // route guarding
@@ -131,5 +98,3 @@ class ViewShareholders extends Component {
     );
   }
 }
-
-export default ViewShareholders;
