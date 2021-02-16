@@ -17,11 +17,14 @@ class SearchController extends Controller
     {
         $query = $request->query('q');
         if(is_numeric($query)) {
-            $shareholders = [];
-            array_push($shareholders, ShareHolder::find($query));
+            $shareholder = [];
+            
+            if($shareholder) {
+                array_push($shareholders, ShareHolder::find($query));
+            }
 
             return response()->json([
-                'shareholders' => $shareholders
+                'shareholders' => $shareholder
             ]);
             
         } else {
