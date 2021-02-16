@@ -19,8 +19,8 @@ class SearchController extends Controller
         if(is_numeric($query)) {
             $shareholder = [];
             
-            if($shareholder) {
-                array_push($shareholders, ShareHolder::find($query));
+            if(ShareHolder::find($query)) {
+                array_push($shareholder, ShareHolder::find($query));
             }
 
             return response()->json([
