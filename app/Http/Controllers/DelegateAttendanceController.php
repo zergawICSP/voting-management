@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Delegate;
 use App\Models\MeetingAgenda;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -32,6 +33,7 @@ class DelegateAttendanceController extends Controller
         try {
             $delegate->is_present = true;
             $delegate->barcode = $request->input('barcode');
+            $delegate->attended_time = Carbon::now();
             $shareholders = $delegate->shareHolders;        
 
             $shareholders->each(function ($shareholder) {
