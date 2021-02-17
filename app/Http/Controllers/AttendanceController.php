@@ -22,7 +22,7 @@ class AttendanceController extends Controller
     {
         try {
             $request->validate([
-                'barcode' => 'required|unique:share_holders,barcode'
+                'barcode' => 'required|unique:share_holders,barcode|unique:delegates,barcode'
             ]);
         } catch (ValidationException $e) {
             return response()->json([

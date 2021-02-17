@@ -20,11 +20,12 @@ class DelegateAttendanceController extends Controller
     {
         try {
             $request->validate([
-                'barcode' => 'required'
+                'barcode' => 'required|unique:delegates,barcode|unique:share_holders,barcode'
             ]);
         } catch (ValidationException $e){
             return response()->json([
-                'error' => $e->errors()
+                'error' => 'Barcode must be unique',
+                'exception' => $e->errors()
             ], 400);
         }
 
