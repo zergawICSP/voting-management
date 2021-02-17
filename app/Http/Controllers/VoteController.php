@@ -199,7 +199,7 @@ class VoteController extends Controller
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'no']);
 
                     return response()->json([
                         'success' => true
@@ -217,7 +217,7 @@ class VoteController extends Controller
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'neutral']);
 
 
                     return response()->json([
@@ -233,7 +233,7 @@ class VoteController extends Controller
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
                 try {
-                    $meetingAgenda->shareHolders()->attach($shareholder);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'yes']);
 
 
                     return response()->json([
@@ -266,7 +266,7 @@ class VoteController extends Controller
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'no']);
 
 
                     return response()->json([
@@ -285,7 +285,7 @@ class VoteController extends Controller
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'neutral']);
 
 
                     return response()->json([
@@ -301,7 +301,7 @@ class VoteController extends Controller
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
                 try {
-                    $meetingAgenda->shareHolders()->attach($shareholder);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'yes']);
 
 
                     return response()->json([

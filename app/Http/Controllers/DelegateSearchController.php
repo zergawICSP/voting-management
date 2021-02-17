@@ -16,6 +16,18 @@ class DelegateSearchController extends Controller
     public function __invoke(Request $request)
     {
         $query = $request->query('q');
+
+        if(is_numeric($request->query('q'))) {
+            $delegate = [];
+            
+            if(Delegate::find($query)) {
+                array_push($delegate, Delegate::find($query));
+            }
+
+            return response()->json([
+                'delegatess' => $delegate
+            ]);
+        }
         $delegates = Delegate::where('name', 'LIKE', "%$query%")->get();
 
         $delegates->each(function($delegates) {

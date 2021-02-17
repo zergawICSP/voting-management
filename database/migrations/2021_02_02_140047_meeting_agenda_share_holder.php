@@ -16,6 +16,7 @@ class MeetingAgendaShareholder extends Migration
         Schema::create('meeting_agenda_share_holder', function (Blueprint $table) {
             $table->foreignId('meeting_agenda_id')->constrained()->onDelete('cascade');
             $table->foreignId('share_holder_id')->constrained()->onDelete('cascade');
+            $table->string('answer');
         });
     }
 

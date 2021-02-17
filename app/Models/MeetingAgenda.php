@@ -13,6 +13,6 @@ class MeetingAgenda extends Model
 
     public function shareHolders()
     {
-        return $this->belongsToMany(ShareHolder::class);
+        return $this->belongsToMany(ShareHolder::class)->withPivot('answer');
     }
 }
