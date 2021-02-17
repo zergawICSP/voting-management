@@ -191,19 +191,19 @@ class VoteController extends Controller
             {
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->no += $shareholder->no_of_shares;
-                try {
+                // try {
                     $meetingAgenda->save();
                     $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'no']);
 
-                    return response()->json([
-                        'success' => true
-                    ]);
-                } catch (Exception $e) {
-                    return response()->json([
-                        'error' => 'Server Error',
-                        'exception' => $e->getMessage()
-                    ], 500);
-                }
+                    // return response()->json([
+                    //     'success' => true
+                    // ]);
+                // } catch (Exception $e) {
+                    // return response()->json([
+                    //     'error' => 'Server Error',
+                    //     'exception' => $e->getMessage()
+                    // ], 500);
+                // }
             }
             if(!$request->input('noField') && $request->input('neutralField') && !$request->input('yesField'))
             {
@@ -244,6 +244,18 @@ class VoteController extends Controller
             return response()->json([
                 'error' => 'Exactly One Field Must Be Checked!'
             ], 400);
+            }
+            try {
+                $meetingAgenda->save();
+
+                return response()->json([
+                    'success' => true
+                ]);
+            } catch(Exception $e) {
+                return response()->json([
+                    'error' => 'Server Error',
+                    'exception' => $e->getMessage()
+                ], 500);
             }
         } else {
             foreach ($shareholder->meetingAgendas as $agenda) {
