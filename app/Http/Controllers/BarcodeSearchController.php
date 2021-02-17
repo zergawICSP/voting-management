@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Delegate;
 use App\Models\ShareHolder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -26,6 +27,14 @@ class BarcodeSearchController extends Controller
             ], 400);
         }
         $shareholder = ShareHolder::where('barcode', $request->query('barcode'))->get()->first();
+
+        if(!$shareholder) {
+            $delegate = Delegate::where('barcode', $request->query('barcode'))->first();
+
+            return response()->json([
+                'shareholder' => $delegate
+            ]);
+        }
 
         return response()->json([
             'shareholder' => $shareholder
