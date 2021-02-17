@@ -192,7 +192,7 @@ class VoteController extends Controller
                 $meetingAgenda->yes -= $shareholder->no_of_shares;
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 // try {
-                    $meetingAgenda->save();
+                    // $meetingAgenda->save();
                     $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'no']);
 
                     // return response()->json([
@@ -241,10 +241,6 @@ class VoteController extends Controller
                 }
             }
 
-            return response()->json([
-                'error' => 'Exactly One Field Must Be Checked!'
-            ], 400);
-            }
             try {
                 $meetingAgenda->save();
 
@@ -257,6 +253,12 @@ class VoteController extends Controller
                     'exception' => $e->getMessage()
                 ], 500);
             }
+
+            return response()->json([
+                'error' => 'Exactly One Field Must Be Checked!'
+            ], 400);
+            }
+            
         } else {
             foreach ($shareholder->meetingAgendas as $agenda) {
                 if ($agenda->id === $meetingAgenda->id) {
