@@ -170,13 +170,7 @@ class VoteController extends Controller
         }
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
 
-        foreach ($shareholder->meetingAgendas as $agenda) {
-            if ($agenda->id === $meetingAgenda->id) {
-                return response()->json([
-                    'error' => "$shareholder->name has already voted for this agenda"
-                ], 400);
-            }
-        }
+        
         
         if(!$shareholder) {
             $delegate = Delegate::where('barcode', $request->input('barcode'))->first();
@@ -252,6 +246,13 @@ class VoteController extends Controller
             ], 400);
             }
         } else {
+            foreach ($shareholder->meetingAgendas as $agenda) {
+                if ($agenda->id === $meetingAgenda->id) {
+                    return response()->json([
+                        'error' => "$shareholder->name has already voted for this agenda"
+                    ], 400);
+                }
+            }
             $attendedTime = Carbon::createFromTimeString($shareholder->attended_time);
             $initialized_time = Carbon::createFromTimeString($meetingAgenda->initialized_time);
 
