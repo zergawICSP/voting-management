@@ -186,6 +186,16 @@ class VoteController extends Controller
 
             $shareholders = $delegate->shareholders;
 
+            foreach($shareholders as $shareholder) {
+                foreach ($shareholder->meetingAgendas as $agenda) {
+                    if($agenda->id === $meetingAgenda->id) {
+                        return response()->json([
+                            'error' => "$delegate->name has already voted for this agenda"
+                        ], 400);
+                    }
+                }
+            }
+
             
             if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
             {
