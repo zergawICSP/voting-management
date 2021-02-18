@@ -57,17 +57,37 @@ class AgendaVoteForm extends Component {
         instance
           .get("/barcode?barcode=" + scannedAttendantBarcodeID)
           .then((response) => {
-            if (response.data.shareholder !== null) {
-              this.setState({
-                fechedAttendantValue: [response.data.shareholder],
-                isFetchingActivated: false,
-              });
+            console.log(response);
+            if (response.status === 200) {
+              if (response.data.shareholder !== null) {
+                this.setState({
+                  fechedAttendantValue: [response.data.shareholder],
+                  isFetchingActivated: false,
+                });
+              } else {
+                this.setState({
+                  fechedAttendantValue: [],
+                  isFetchingActivated: false,
+                });
+              }
             } else {
               this.setState({
                 fechedAttendantValue: [],
                 isFetchingActivated: false,
               });
+              toast.error("Error: " + response.data.error, {
+                position: "bottom-center",
+              });
             }
+          })
+          .catch((error) => {
+            this.setState({
+              fechedAttendantValue: [],
+              isFetchingActivated: false,
+            });
+            toast.error("Error: " + error.response.data.error, {
+              position: "bottom-center",
+            });
           });
       } else {
         toast.error(
@@ -121,32 +141,28 @@ class AgendaVoteForm extends Component {
 
     //   Displaying Fetched attendant data
     const displayingFetchedAttendantData =
-      this.state.fechedAttendantValue.length > 0 ? (
-        this.state.fechedAttendantValue.map((SingleValue) => {
-          console.log(this.state.fechedAttendantValue);
-          return (
-            <div>
-              <p className="font-bold text-md">Attendant Information</p>
-              <div className="flex flex-row justify-evenly items-center mt-5 mb-5 space-x-4">
-                <p className="text-md">
-                  Name:{" "}
-                  <span className="font-bold">{" " + SingleValue.name}</span>
-                </p>
-                <p className="text-md">
-                  Total Share value:{" "}
-                  <span className="font-bold">
-                    {" " + SingleValue.no_of_shares}
-                  </span>
-                </p>
+      this.state.fechedAttendantValue.length > 0
+        ? this.state.fechedAttendantValue.map((SingleValue) => {
+            console.log(this.state.fechedAttendantValue);
+            return (
+              <div>
+                <p className="font-bold text-md">Attendant Information</p>
+                <div className="flex flex-row justify-evenly items-center mt-5 mb-5 space-x-4">
+                  <p className="text-md">
+                    Name:{" "}
+                    <span className="font-bold">{" " + SingleValue.name}</span>
+                  </p>
+                  <p className="text-md">
+                    Total Share value:{" "}
+                    <span className="font-bold">
+                      {" " + SingleValue.no_of_shares}
+                    </span>
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })
-      ) : (
-        <div>
-          <p>No Record Found !</p>
-        </div>
-      );
+            );
+          })
+        : null;
 
     return (
       <div className="flex flex-col justify-center items-center text-white">
@@ -302,9 +318,7 @@ class AgendaVoteForm extends Component {
                   </button>
                 )}
               </div>
-            ) : (
-              <p className="mt-10 text-white">No Record Found</p>
-            )}
+            ) : null}
           </div>
         </form>
       </div>

@@ -20,6 +20,7 @@ export const submitMeetingVote = (
     dispatch({ type: VOTING_MEETING_AGENDA_LOADING });
 
     // Operation
+    console.log(meetingAgendaVoteData, selectedMeetingAgenda);
     instance
       .post(
         "/vote-meeting-agenda/" + selectedMeetingAgenda,
