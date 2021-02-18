@@ -31,10 +31,18 @@ class BarcodeSearchController extends Controller
         if(!$shareholder) {
             $delegate = Delegate::where('barcode', $request->query('barcode'))->first();
             // $delegatedShareholders = $delegate->shareholders;
+
+            if(!$delegate) {
+                return response()->json([
+                    'error' => 'No Delegate or Shareholder found with this barcode'
+                ], 400);
+            }
             
 
-            foreach($delegate->shareholders as $delegatedShareholder) {
-                $delegate->no_of_shares += $delegatedShareholder->no_of_shares;
+            if(count($delegate->shareholders) > 0) {
+                foreach($delegate->shareholders as $delegatedShareholder) {
+                    $delegate->no_of_shares += $delegatedShareholder->no_of_shares;
+                }
             }
 
 
