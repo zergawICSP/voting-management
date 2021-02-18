@@ -58,7 +58,7 @@ class AppLanding extends Component {
                     ? numberFormat.format(this.state.attendantsCount)
                     : 0}
                 </p>
-                <p className="font-bold text-7xl mt-10 lg:text-7xl">
+                <p className="font-bold text-5xl mt-10 xl:text-7xl">
                   በእለቱ የታደመው የአክሲዮን መጠን
                 </p>
               </div>

@@ -101,7 +101,7 @@ class Root extends Component {
 
               {/* Footer */}
               {/* Powered by */}
-              <p className="text-white mt-52 relative bottom-0 pb-5 font-light">
+              <p className="text-white pt-24 relative bottom-0 pb-5 font-light">
                 Powered by{" "}
                 <span className="font-bold text-companyYello">Zergaw ISP</span>
               </p>

@@ -12,7 +12,6 @@ const authReducer = (state = initialState, action) => {
       toast.success("Logged in Successfully !", { position: "bottom-center" });
       return { ...state, isLoginLoading: false, isLoggedIn: true };
     case LOGIN_FAILURE:
-      console.log(action.payload);
       toast.error("Error while trying to log in: " + action.payload, { position: "bottom-center" });
       return { ...state, isLoginLoading: false };
     default:

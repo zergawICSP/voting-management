@@ -45,33 +45,63 @@ class OnlyDelegatesHome extends Component {
 
     // Local variables
     let dataValues = [];
-    const { submittingDelegateAttendantsData, isDelegateAttendantLoading } = this.props;
+    const {
+      submittingDelegateAttendantsData,
+      isDelegateAttendantLoading,
+    } = this.props;
 
     // Handling onChange
     const handlingOnChange = (e) => {
       let inputValue = e.target.value;
 
-      if (inputValue.length > 2) {
-        this.setState({ isSearchActivated: true, isSearchLoading: true });
-        instance
-          .get("/search-delegate?q=" + inputValue)
-          .then((data) => {
-            data.data.delegatess.map((SingleValue) =>
-              dataValues.push(SingleValue)
-            );
-            this.setState({
-              isSearchLoading: false,
-              filteredLists: [...dataValues],
-            });
-            console.log(data.data.delegatess);
-          })
-          .catch((error) =>
-            toast.error(error.response.data.error, {
-              position: "bottom-center",
+      if (inputValue.match(/\d/)) {
+        //checking if the user enters a number or letter
+        if (inputValue.length > 0) {
+          // checking if the user enters morethan a letter
+          this.setState({ isSearchActivated: true, isSearchLoading: true });
+          instance
+            .get("/search-delegate?q=" + inputValue)
+            .then((data) => {
+              data.data.delegatess.map((SingleValue) =>
+                dataValues.push(SingleValue)
+              );
+              this.setState({
+                isSearchLoading: false,
+                filteredLists: [...dataValues],
+              });
+              console.log(data.data.delegatess);
             })
-          );
+            .catch((error) =>
+              toast.error(error.response.data.error, {
+                position: "bottom-center",
+              })
+            );
+        } else {
+          this.setState({ isSearchActivated: false });
+        }
       } else {
-        this.setState({ isSearchActivated: false });
+        if (inputValue.length > 2) {
+          this.setState({ isSearchActivated: true, isSearchLoading: true });
+          instance
+            .get("/search-delegate?q=" + inputValue)
+            .then((data) => {
+              data.data.delegatess.map((SingleValue) =>
+                dataValues.push(SingleValue)
+              );
+              this.setState({
+                isSearchLoading: false,
+                filteredLists: [...dataValues],
+              });
+              console.log(data.data.delegatess);
+            })
+            .catch((error) =>
+              toast.error(error.response.data.error, {
+                position: "bottom-center",
+              })
+            );
+        } else {
+          this.setState({ isSearchActivated: false });
+        }
       }
     };
 
@@ -88,9 +118,13 @@ class OnlyDelegatesHome extends Component {
     // Column Headers
     const columnDefs = [
       {
+        headerName: "ID",
+        field: "id",
+        checkboxSelection: true,
+      },
+      {
         headerName: "Name",
         field: "name",
-        checkboxSelection: true,
       },
       { headerName: "Total Share Amount", field: "no_of_shares" },
       {
@@ -143,7 +177,10 @@ class OnlyDelegatesHome extends Component {
           checkedAttendants.map(
             (SingleData) => (checkedAttantsID = SingleData.id)
           );
-          submittingDelegateAttendantsData(checkedAttantsID, scannedBarCodeResult);
+          submittingDelegateAttendantsData(
+            checkedAttantsID,
+            scannedBarCodeResult
+          );
           this.setState({
             isSearchActivated: false,
             scannedBarCodeResult: null,
@@ -326,7 +363,8 @@ class OnlyDelegatesHome extends Component {
           {/* Footer */}
           {/* Powered by */}
           <p className="text-white mt-52 relative bottom-0 pb-5 font-light">
-            Powered by <span className="font-bold text-companyYello">Zergaw ISP</span>
+            Powered by{" "}
+            <span className="font-bold text-companyYello">Zergaw ISP</span>
           </p>
         </div>
       </div>
@@ -342,7 +380,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submittingDelegateAttendantsData: (checkedAttantsID, scannedBarCodeResult) =>
+    submittingDelegateAttendantsData: (
+      checkedAttantsID,
+      scannedBarCodeResult
+    ) =>
       dispatch(
         submittingDelegateAttendantsData(checkedAttantsID, scannedBarCodeResult)
       ),

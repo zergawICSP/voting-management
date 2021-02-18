@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 // COMPONENT IMPORT
 import { authLoginFormAction } from "../../../action/authAction";
 
-function LoginForm({ authLoginFormAction }) {
+function LoginForm({ authLoginFormAction, isLoginLoading }) {
   // Getting yup validation
   const LoginFormValidationSchema = Yup.object().shape({
     userLoginUserName: Yup.string().required("Username is required"),
@@ -60,12 +60,22 @@ function LoginForm({ authLoginFormAction }) {
                 </small>
               ) : null}
             </div>
-            <button
-              type="submit"
-              className="bg-transparent text-white shadow-2xl border border-gray-600 text-xl py-2 px-5 rounded-md hover:bg-companyYello hover:text-secondary"
-            >
-              Login
-            </button>
+            {isLoginLoading ? (
+              <button
+                type="submit"
+                className="bg-transparent text-white shadow-2xl border border-gray-600 text-xl py-2 px-5 rounded-md"
+                disabled
+              >
+                Login
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="bg-transparent text-white shadow-2xl border border-gray-600 text-xl py-2 px-5 rounded-md hover:bg-companyYello hover:text-secondary"
+              >
+                Login
+              </button>
+            )}
           </div>
         </Form>
       )}
@@ -80,4 +90,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+const mapStateToProps = state => {
+  return {
+    isLoginLoading: state.auth.isLoginLoading
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
