@@ -10,6 +10,7 @@ use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\DelegateSearchController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\GetAllAttendantsController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\InitializeVoteController;
 use App\Http\Controllers\MeetingAgendaController;
 use App\Http\Controllers\SearchController;
@@ -54,6 +55,11 @@ Route::prefix('/export')->group(function () {
     Route::get('/shareholders', [ExportController::class, 'shareholdersExport']);
     Route::get('/candidates', [ExportController::class, 'candidateExport']);
     Route::get('/meeting-agenda', [ExportController::class, 'meetingAgendaExport']);
+});
+
+// Excel Import End-Points
+Route::prefix('/import')->group(function () {
+    Route::post('/shareholders', [ImportController::class, 'importShareholders']);
 });
 
 // Voting Controller

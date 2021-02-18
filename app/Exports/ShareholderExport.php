@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\MeetingAgenda;
 use App\Models\ShareHolder;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -26,7 +27,7 @@ class ShareholderExport implements FromCollection, WithHeadings, ShouldAutoSize,
 
     public function collection()
     {
-        $shareholders = ShareHolder::all();
+        $shareholders = ShareHolder::all(['id', 'name', 'no_of_shares','phone', 'is_present', 'delegate_id', 'barcode']);
 
         $shareholders->each(function($shareholder){
             $shareholder->name = trim($shareholder->name);
@@ -40,25 +41,35 @@ class ShareholderExport implements FromCollection, WithHeadings, ShouldAutoSize,
             {
                 $shareholder->is_present = 'Absent';
             }
-            $shareholder->chosenCandidate = $shareholder->candidates->pluck('english_name');
+            $meetingAgendas = MeetingAgenda::all();
+            foreach($meetingAgendas as $meetingAgenda) {
+               if(!$shareholder->meetingAgendas->find($meetingAgenda->id)){
+                    $shareholder->$meetingAgenda = '-';
+               } else {
+                   $shareholder->$meetingAgenda = $shareholder->meetingAgendas->find($meetingAgenda->id)->pivot->answer;
+               }
+            }
         });
 
         return $shareholders;
     }
 
+    
+
     public function headings(): array
     {
-        return [
+        $headings = [
             'id',
             'name',
             'no of shares', 
             'phone',
             'is present',
             'delegate',
-            'barcode',
-            'created_at',
-            'updated_at',
-            'chosenCandidate'
+            'barcode'            
         ];
+        foreach(MeetingAgenda::all() as $agenda) {
+            array_push($headings, $agenda->title);
+        }
+        return $headings;
     }
 }
