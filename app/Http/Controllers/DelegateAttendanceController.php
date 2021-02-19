@@ -30,7 +30,7 @@ class DelegateAttendanceController extends Controller
             ], 400);
         }
 
-        ini_set('maximum_excution_time', '300');
+        ini_set('max_execution_time', -1);
         try {
             $delegate->is_present = true;
             $delegate->barcode = $request->input('barcode');
