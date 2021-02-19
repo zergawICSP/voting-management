@@ -199,10 +199,12 @@ class VoteController extends Controller
             
             if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
             {
+                $meetingAgenda->yes -= $delegate->no_of_shares;
+                $meetingAgenda->no += $delegate->no_of_shares;
                 foreach($shareholders as $shareholder) {
                     $meetingAgenda->yes -= $shareholder->no_of_shares;
                     $meetingAgenda->no += $shareholder->no_of_shares;
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'no']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እቃወማለሁ']);
                 }
                 try {
                     $meetingAgenda->save();
@@ -219,10 +221,12 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && $request->input('neutralField') && !$request->input('yesField'))
             {
+                $meetingAgenda->yes -= $delegate->no_of_shares;
+                $meetingAgenda->neutral += $delegate->no_of_shares;
                 foreach($shareholders as $shareholder) {
                     $meetingAgenda->yes -= $shareholder->no_of_shares;
                     $meetingAgenda->neutral += $shareholder->no_of_shares;
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'neutral']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'ድምጸ ተዐቅቦ']);
                 }
                 try {
                     $meetingAgenda->save();
@@ -241,7 +245,7 @@ class VoteController extends Controller
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
                 foreach($shareholders as $shareholder) {
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'yes']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እደግፋለሁ']);
                 }
                 try {
 
@@ -283,7 +287,7 @@ class VoteController extends Controller
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'no']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እቃወማለሁ']);
 
 
                     return response()->json([
@@ -302,7 +306,7 @@ class VoteController extends Controller
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'neutral']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'ድምጸ ተዐቅቦ']);
 
 
                     return response()->json([
@@ -318,7 +322,7 @@ class VoteController extends Controller
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
                 try {
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'yes']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እደግፋለሁ']);
 
 
                     return response()->json([

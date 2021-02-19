@@ -38,16 +38,7 @@ class DelegateAttendanceController extends Controller
 
             $shareholders->each(function ($shareholder) {
                 $shareholder->is_present = true;
-                $meetingAgendas = MeetingAgenda::all();
-                
-                foreach ($meetingAgendas as $meetingAgenda ) {
-                    $meetingAgenda->yes += $shareholder->no_of_shares;
-                    $meetingAgenda->save();
-                }
-
                 $shareholder->save();
-
-            
             });
 
             $delegate->save();
