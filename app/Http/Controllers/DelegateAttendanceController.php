@@ -30,6 +30,7 @@ class DelegateAttendanceController extends Controller
             ], 400);
         }
 
+        ini_set('maximum_excution_time', '300');
         try {
             $delegate->is_present = true;
             $delegate->barcode = $request->input('barcode');
@@ -41,16 +42,17 @@ class DelegateAttendanceController extends Controller
                 $shareholder->save();
             });
 
-            $delegate->save();
-
-            return response()->json([
-                'success' => true
-            ]);
+            
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Server Error',
                 'exception' => $e->getMessage()
             ], 500);
         }
+        $delegate->save();
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

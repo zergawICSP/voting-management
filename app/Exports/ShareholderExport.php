@@ -29,6 +29,8 @@ class ShareholderExport implements FromCollection, WithHeadings, ShouldAutoSize,
     {
         $shareholders = ShareHolder::all(['id', 'name', 'no_of_shares','phone', 'is_present', 'delegate_id', 'barcode']);
 
+        ini_set('memory_limit', -1);
+
         $shareholders->each(function($shareholder){
             $shareholder->name = trim($shareholder->name);
             $shareholder->phone = $shareholder->phone;
