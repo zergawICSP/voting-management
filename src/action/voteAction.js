@@ -17,32 +17,32 @@ export const submitMeetingVote = (
 ) => {
   return (dispatch) => {
     // Dispatching loading indicator
-    dispatch({ type: VOTING_MEETING_AGENDA_LOADING });
+    // dispatch({ type: VOTING_MEETING_AGENDA_LOADING });
 
     // Operation
-    console.log(meetingAgendaVoteData, selectedMeetingAgenda);
-    instance
-      .post(
-        "/vote-meeting-agenda/" + selectedMeetingAgenda,
-        meetingAgendaVoteData
-      )
-      .then((response) => {
-        console.log(response.data);
-        if (response.status === 200) {
-          dispatch({ type: VOTING_MEETING_AGENDA_SUCCESS });
-        } else {
-          dispatch({
-            type: VOTING_MEETING_AGENDA_ERROR,
-            payload: response.status + ": Bad Request",
-          });
-        }
-      })
-      .catch((error) =>
-        dispatch({
-          type: VOTING_MEETING_AGENDA_ERROR,
-          payload: error.response.data.error,
-        })
-      );
+    console.log(meetingAgendaVoteData);
+    // instance
+    //   .post(
+    //     "/vote-meeting-agenda/" + selectedMeetingAgenda,
+    //     meetingAgendaVoteData
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     if (response.status === 200) {
+    //       dispatch({ type: VOTING_MEETING_AGENDA_SUCCESS });
+    //     } else {
+    //       dispatch({
+    //         type: VOTING_MEETING_AGENDA_ERROR,
+    //         payload: response.status + ": Bad Request",
+    //       });
+    //     }
+    //   })
+    //   .catch((error) =>
+    //     dispatch({
+    //       type: VOTING_MEETING_AGENDA_ERROR,
+    //       payload: error.response.data.error,
+    //     })
+    //   );
   };
 };
 

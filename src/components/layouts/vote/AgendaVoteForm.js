@@ -112,6 +112,7 @@ class AgendaVoteForm extends Component {
           noField: this.state.noField,
           neutralField: this.state.neutralField,
           barcode: this.state.scannedBarCodeResult,
+          userID: localStorage.getItem("userID")
         };
         if (
           this.state.scannedBarCodeResult !== "" &&
