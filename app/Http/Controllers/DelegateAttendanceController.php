@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Delegate;
 use App\Models\MeetingAgenda;
+use App\Models\ShareHolder;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\Process\Process;
 
 class DelegateAttendanceController extends Controller
 {
@@ -35,12 +37,14 @@ class DelegateAttendanceController extends Controller
             $delegate->is_present = true;
             $delegate->barcode = $request->input('barcode');
             $delegate->attended_time = Carbon::now();
-            $shareholders = $delegate->shareHolders;        
+            $shareholders = $delegate->shareHolders;     
+            
 
-            $shareholders->each(function ($shareholder) {
-                $shareholder->is_present = true;
-                $shareholder->save();
-            });
+            // $shareholders->each(function ($shareholder) {
+            //     $shareholder->is_present = true;
+            //     $shareholder->save();
+            // });
+            ShareHolder::where('delegate_id', $delegate->id)->update(['is_present' => true]);
 
             
         } catch (Exception $e) {

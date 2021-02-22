@@ -10,6 +10,7 @@ use App\Models\VotingAgenda;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class VoteController extends Controller
@@ -154,7 +155,8 @@ class VoteController extends Controller
     {
         try {
             $request->validate([
-                'barcode' => 'required'
+                'barcode' => 'required',
+                'userID' => 'required'
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -169,8 +171,9 @@ class VoteController extends Controller
             ], 400);
         }
         $shareholder = ShareHolder::where('barcode', $request->input('barcode'))->first();
+        MeetingAgenda::where('id', $meetingAgenda)->sharedLock();
 
-        
+        ini_set('memory_limit', -1);
         
         if(!$shareholder) {
             $delegate = Delegate::where('barcode', $request->input('barcode'))->first();
@@ -188,7 +191,7 @@ class VoteController extends Controller
 
             foreach($shareholders as $shareholder) {
                 foreach ($shareholder->meetingAgendas as $agenda) {
-                    if($agenda->id === $meetingAgenda->id) {
+                    if($agenda->pivot->user_id !== 0) {
                         return response()->json([
                             'error' => "$delegate->name has already voted for this agenda"
                         ], 400);
@@ -199,13 +202,13 @@ class VoteController extends Controller
             
             if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
             {
-                $meetingAgenda->yes -= $delegate->no_of_shares;
-                $meetingAgenda->no += $delegate->no_of_shares;
-                foreach($shareholders as $shareholder) {
-                    $meetingAgenda->yes -= $shareholder->no_of_shares;
-                    $meetingAgenda->no += $shareholder->no_of_shares;
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እቃወማለሁ']);
-                }
+                
+                $totalShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('delegate_id', $delegate->id)->get();
+                $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
+                $meetingAgenda->yes -= $totalShare;
+                $meetingAgenda->no += $totalShare;
+                $meetingAgenda->shareHolders()->detach($shareholders);
+                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
                 try {
                     $meetingAgenda->save();
 
@@ -221,13 +224,12 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && $request->input('neutralField') && !$request->input('yesField'))
             {
-                $meetingAgenda->yes -= $delegate->no_of_shares;
-                $meetingAgenda->neutral += $delegate->no_of_shares;
-                foreach($shareholders as $shareholder) {
-                    $meetingAgenda->yes -= $shareholder->no_of_shares;
-                    $meetingAgenda->neutral += $shareholder->no_of_shares;
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'ድምጸ ተዐቅቦ']);
-                }
+                $totalShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('delegate_id', $delegate->id)->get();
+                $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
+                $meetingAgenda->yes -= $totalShare;
+                $meetingAgenda->neutral += $totalShare;
+                $meetingAgenda->shareHolders()->detach($shareholders);
+                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'ድምጸ ተዐቅቦ', 'user_id' => $request->input('userID')]);
                 try {
                     $meetingAgenda->save();
 
@@ -244,9 +246,9 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-                foreach($shareholders as $shareholder) {
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እደግፋለሁ']);
-                }
+                $meetingAgenda->shareHolders()->detach($shareholders);
+                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እደግፋለሁ', 'user_id' => $request->input('userID')]);
+                
                 try {
 
                     return response()->json([

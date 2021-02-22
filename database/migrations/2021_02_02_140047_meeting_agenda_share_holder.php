@@ -17,6 +17,7 @@ class MeetingAgendaShareholder extends Migration
             $table->foreignId('meeting_agenda_id')->constrained()->onDelete('cascade');
             $table->foreignId('share_holder_id')->constrained()->onDelete('cascade');
             $table->string('answer');
+            $table->unsignedBigInteger('user_id');
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Delegate;
 use App\Models\MeetingAgenda;
 use App\Models\ShareHolder;
 use Carbon\Carbon;
@@ -18,6 +19,7 @@ class InitializeVoteController extends Controller
     public function __invoke(MeetingAgenda $meetingAgenda)
     {
         $attendedShareholders = ShareHolder::where('is_present', true)->get();
+        $attendedDelegates = Delegate::where('is_present', true)->get();
 
         if(count($attendedShareholders) === 0) {
             return response()->json([
@@ -30,10 +32,17 @@ class InitializeVoteController extends Controller
                 $meetingAgenda->is_initialized = true;
                 $meetingAgenda->initialized_time = Carbon::now();
                 
+                foreach($attendedDelegates as $attendedDelegate) {
+                    $meetingAgenda->yes += $attendedDelegate->no_of_shares;
+                    $meetingAgenda->korem += $attendedDelegate->no_of_shares;
+                }
+                
                 foreach ($attendedShareholders as $attendedShareholder ) {
                     $meetingAgenda->yes += $attendedShareholder->no_of_shares;
                     $meetingAgenda->korem += $attendedShareholder->no_of_shares;
+                    
                 }
+                $meetingAgenda->shareHolders()->attach($attendedShareholders, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
                 $meetingAgenda->save();
                 return response()->json([
                     'success' => true

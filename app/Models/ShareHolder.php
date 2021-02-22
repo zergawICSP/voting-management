@@ -17,7 +17,7 @@ class ShareHolder extends Model
 
     public function meetingAgendas()
     {
-        return $this->belongsToMany(MeetingAgenda::class)->withPivot('answer');
+        return $this->belongsToMany(MeetingAgenda::class)->withPivot(['answer', 'user_id']);
     }
     public function votingAgendas()
     {
