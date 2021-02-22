@@ -49,26 +49,26 @@ class AppLanding extends Component {
     return (
       <div className="min-h-screen bg-gradient-to-bl from-primary to-secondary pt-5">
         <LogoHeader />
-        <div className="px-20 mt-20 pb-20 flex flex-row justify-around space-x-10 divide-x-2 divide-solid divide-white lg:mt-5 z-40">
+        <div className="px-10 mt-24 pb-20 flex flex-row justify-around space-x-10 divide-x-2 divide-solid divide-white lg:mt-5 z-40">
           <div className="flex flex-col justify-center items-center text-white w-full">
-            <div className="flex flex-row w-full justify-center items-center m-auto">
+            <div className="flex flex-row w-full justify-center items-start m-auto">
               <div className="flex flex-col justify-center items-center w-1/2">
-                <p className="font-extrabold text-8xl">
+                <p className="font-extrabold text-6xl">
                   {this.state.attendantsCount !== null
                     ? numberFormat.format(this.state.attendantsCount)
                     : 0}
                 </p>
-                <p className="font-bold text-5xl mt-10 xl:text-7xl">
+                <p className="font-bold text-5xl mt-10 xl:text-6xl">
                   በእለቱ የታደመው የአክሲዮን መጠን
                 </p>
               </div>
               <div className="flex flex-col justify-center items-center w-1/2">
-                <p className="font-extrabold text-8xl">
+                <p className="font-extrabold text-6xl">
                   {this.state.totalShare !== null
                     ? numberFormat.format(this.state.totalShare)
                     : 0}
                 </p>
-                <p className="font-bold text-7xl mt-10 lg:text-7xl">
+                <p className="font-bold text-5xl mt-10 lg:text-6xl">
                   አጠቃላይ የአክሲዮን መጠን
                 </p>
               </div>
@@ -79,8 +79,9 @@ class AppLanding extends Component {
                   ? this.state.precentageOfAttendants + "%"
                   : 0}
               </p>
-              <p className="font-bold text-7xl mt-10 lg:text-7xl">
-                ኮረም (የታደመው አክሲዮን ከአጠቃላይ አክሲዮን)
+              <p className="font-bold text-5xl mt-10 lg:text-6xl">
+                ኮረም <br />
+                (የታደመው አክሲዮን ከአጠቃላይ አክሲዮን)
               </p>
             </div>
           </div>
