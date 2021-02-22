@@ -8,18 +8,19 @@
 
 @tailwind utilities;
 /* Ag_Grid Css Customization */
-
+ 
 .ag-theme-bootstrap {
-  /* overflow-y: scroll !important; */
-  height: auto !important;
+  min-height: 400px !important;
+  text-align: left !important;
 }
+
 
 .ag-theme-bootstrap .ag-header-row {
-  color: white !important;
   height: 27px !important;
+  font-weight: bold !important;
 }
 
-.ag-theme-bootstrap .ag-header-icon {
+/* .ag-theme-bootstrap .ag-header-icon {
   color: white !important;
 }
 
@@ -44,9 +45,9 @@
 
 .ag-theme-bootstrap .ag-checkbox-input-wrapper::after {
   color: white !important;
-}
+} */
 
-.ag-theme-bootstrap .ag-root-wrapper {
+/* .ag-theme-bootstrap .ag-root-wrapper {
   background: transparent !important;
   text-align: center !important;
   padding-top: 10px !important;
@@ -54,8 +55,8 @@
   font-family: "Montserrat" !important;
   color: white !important;
   font-size: 17px !important;
-}
-
+} */
+/*
 .ag-theme-bootstrap .ag-row {
   position: relative !important;
   background: transparent !important;
@@ -76,65 +77,5 @@
   height: 50px !important;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
-}
-
-/* For the Dark Theme */
-
-.ag-theme-dark {
-  border: none !important;
-}
-
-.ag-theme-dark .ag-root-wrapper {
-  overflow-x: hidden !important;
-}
-
-.ag-theme-dark .ag-row {
-  overflow-x: hidden !important;
-}
-
-.ag-theme-blue .ag-root-wrapper {
-  border: none !important;
-}
-
-.ag-theme-blue input {
-  color: black !important;
-}
-/* .ag-theme-dark .ag-root-wrapper {
-    background: transparent !important;
-    text-align: center !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    font-family: 'Montserrat' !important;
-    color: white !important;
-    font-size: 17px !important;
-    border: none !important;
-    overflow: scroll !important;
-}
-
-.ag-theme-dark .ag-row {
-    position: relative !important;
-    background: transparent !important;
-    text-align: left !important;
-    margin-top: 15px !important;
-    font-family: 'Montserrat' !important;
-    color: white !important;
-    height: 20px !important;
-}
-
-.ag-theme-bootstrap .ag-header-row {
-    color: white !important;
-    height: 27px !important;
-    background: transparent !important;
-    border: none !important;
-}
-
-.ag-theme-bootstrap .ag-header-cell {
-    color: white !important;
-    font-weight: bold !important;
-    padding-top: 10px !important;
-    margin-bottom: 30px !important;
-    margin: auto !important;
-    text-align: center !important;
-    background: transparent !important;
-    border: none !important;
 } */
+

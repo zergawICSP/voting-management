@@ -104,7 +104,7 @@ class AppHomePage extends Component {
 
     // OnGrid ready
     const onGridReady = (params) => {
-      console.log(this.state.filteredLists);
+      params.api.sizeColumnsToFit();
       params.api.applyTransaction({ add: this.state.filteredLists });
     };
 
@@ -125,11 +125,13 @@ class AppHomePage extends Component {
         headerName: "Is Present",
         field: "is_present",
         valueGetter: gettingPresentValue,
+        minWidth: 130,
       },
     ];
 
     const defaultColDef = {
       flex: 1,
+      resizable: true
     };
 
     // Row selection type - whether it is single, multiple or both
@@ -252,6 +254,7 @@ class AppHomePage extends Component {
                     onSelectionChanged={onSelectionChanged}
                     rowMultiSelectWithClick={true}
                     isRowSelectable={isRowSelectable}
+                    debounceVerticalScrollbar={true}
                     className="bg-transparent"
                   ></AgGridReact>
                 </div>
