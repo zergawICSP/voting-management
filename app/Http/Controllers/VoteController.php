@@ -207,8 +207,8 @@ class VoteController extends Controller
                 $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
                 $meetingAgenda->yes -= $totalShare;
                 $meetingAgenda->no += $totalShare;
-                $meetingAgenda->shareHolders()->detach($shareholders);
-                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                // $meetingAgenda->shareHolders()->detach($shareholders);
+                // $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
                 try {
                     $meetingAgenda->save();
 
@@ -228,8 +228,8 @@ class VoteController extends Controller
                 $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
                 $meetingAgenda->yes -= $totalShare;
                 $meetingAgenda->neutral += $totalShare;
-                $meetingAgenda->shareHolders()->detach($shareholders);
-                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'ድምጸ ተዐቅቦ', 'user_id' => $request->input('userID')]);
+                // $meetingAgenda->shareHolders()->detach($shareholders);
+                // $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'ድምጸ ተዐቅቦ', 'user_id' => $request->input('userID')]);
                 try {
                     $meetingAgenda->save();
 
@@ -246,8 +246,8 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-                $meetingAgenda->shareHolders()->detach($shareholders);
-                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እደግፋለሁ', 'user_id' => $request->input('userID')]);
+                // $meetingAgenda->shareHolders()->detach($shareholders);
+                // $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እደግፋለሁ', 'user_id' => $request->input('userID')]);
                 
                 try {
 
