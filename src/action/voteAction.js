@@ -21,28 +21,28 @@ export const submitMeetingVote = (
 
     // Operation
     console.log(meetingAgendaVoteData);
-    // instance
-    //   .post(
-    //     "/vote-meeting-agenda/" + selectedMeetingAgenda,
-    //     meetingAgendaVoteData
-    //   )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     if (response.status === 200) {
-    //       dispatch({ type: VOTING_MEETING_AGENDA_SUCCESS });
-    //     } else {
-    //       dispatch({
-    //         type: VOTING_MEETING_AGENDA_ERROR,
-    //         payload: response.status + ": Bad Request",
-    //       });
-    //     }
-    //   })
-    //   .catch((error) =>
-    //     dispatch({
-    //       type: VOTING_MEETING_AGENDA_ERROR,
-    //       payload: error.response.data.error,
-    //     })
-    //   );
+    instance
+      .post(
+        "/vote-meeting-agenda/" + selectedMeetingAgenda,
+        meetingAgendaVoteData
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === 200) {
+          dispatch({ type: VOTING_MEETING_AGENDA_SUCCESS });
+        } else {
+          dispatch({
+            type: VOTING_MEETING_AGENDA_ERROR,
+            payload: response.status + ": Bad Request",
+          });
+        }
+      })
+      .catch((error) =>
+        dispatch({
+          type: VOTING_MEETING_AGENDA_ERROR,
+          payload: error.response.data.error,
+        })
+      );
   };
 };
 
