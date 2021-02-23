@@ -49,7 +49,7 @@ class AttendanceController extends Controller
             // }else {
             if($shareholder->delegate_id !== null && $shareholder->delegate_id !==0) {
                 return response()->json([
-                    'error' => 'Shareholder is delegated!!'
+                    'error' => "Shareholder is delegated by {$shareholder->delegate->name}!!"
                 ], 400);
             }
             $shareholder->is_present = true;
