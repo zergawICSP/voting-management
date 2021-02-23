@@ -269,7 +269,7 @@ class VoteController extends Controller
             
         } else {
             foreach ($shareholder->meetingAgendas as $agenda) {
-                if ($agenda->id === $meetingAgenda->id) {
+                if ($agenda->pivot->user_id !== 0) {
                     return response()->json([
                         'error' => "$shareholder->name has already voted for this agenda"
                     ], 400);
