@@ -19,7 +19,7 @@ class InitializeVoteController extends Controller
      */
     public function __invoke(MeetingAgenda $meetingAgenda)
     {
-        $attendedShareholders = ShareHolder::where('is_present', true)->get()->pluck('id');
+        $attendedShareholders = ShareHolder::where('is_present', true)->get()->pluck('id')->toArray();
         $attendedDelegates = Delegate::where('is_present', true)->get();
 
         if(count($attendedShareholders) === 0) {
