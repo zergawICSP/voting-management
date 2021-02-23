@@ -289,7 +289,7 @@ class VoteController extends Controller
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እቃወማለሁ']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
 
 
                     return response()->json([
@@ -308,7 +308,7 @@ class VoteController extends Controller
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'ድምጸ ተዐቅቦ']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'ድምጸ ተዐቅቦ', 'user_id' => $request->input('userID')]);
 
 
                     return response()->json([
@@ -324,7 +324,7 @@ class VoteController extends Controller
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
                 try {
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እደግፋለሁ']);
+                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እደግፋለሁ', 'user_id' => $request->input('userID')]);
 
 
                     return response()->json([
