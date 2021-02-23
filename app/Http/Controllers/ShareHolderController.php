@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShareHolder;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -51,7 +52,8 @@ class ShareHolderController extends Controller
                 'no_of_shares' => $request->input('no_of_shares'),
                 'phone' => $request->input('phone'),
                 'barcode' =>$request->input('barcode'),
-                'is_present' => true
+                'is_present' => true,
+                'attended_time' => Carbon::now()
             ]);
         } catch(Exception $e) {
             return response()->json([
