@@ -7,6 +7,7 @@ use App\Models\MeetingAgenda;
 use App\Models\ShareHolder;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class InitializeVoteController extends Controller
 {
@@ -31,17 +32,22 @@ class InitializeVoteController extends Controller
             try {
                 $meetingAgenda->is_initialized = true;
                 $meetingAgenda->initialized_time = Carbon::now();
+                $totalShareholdersShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('is_present', true)->get();
+                $totalDelegatesShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('is_present', true)->get();
+                $totalShare = (int)$totalShareholdersShare[0]->total_share + (int)$totalDelegatesShare;
+                $meetingAgenda->yes += $totalShare;
+                $meetingAgenda->korem += $totalShare;
                 
-                foreach($attendedDelegates as $attendedDelegate) {
-                    $meetingAgenda->yes += $attendedDelegate->no_of_shares;
-                    $meetingAgenda->korem += $attendedDelegate->no_of_shares;
-                }
+                // foreach($attendedDelegates as $attendedDelegate) {
+                //     $meetingAgenda->yes += $attendedDelegate->no_of_shares;
+                //     $meetingAgenda->korem += $attendedDelegate->no_of_shares;
+                // }
                 
-                foreach ($attendedShareholders as $attendedShareholder ) {
-                    $meetingAgenda->yes += $attendedShareholder->no_of_shares;
-                    $meetingAgenda->korem += $attendedShareholder->no_of_shares;
+                // foreach ($attendedShareholders as $attendedShareholder ) {
+                //     $meetingAgenda->yes += $attendedShareholder->no_of_shares;
+                //     $meetingAgenda->korem += $attendedShareholder->no_of_shares;
                     
-                }
+                // }
                 $meetingAgenda->shareHolders()->attach($attendedShareholders, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
                 $meetingAgenda->save();
                 return response()->json([
