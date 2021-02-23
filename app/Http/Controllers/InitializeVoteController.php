@@ -43,12 +43,13 @@ class InitializeVoteController extends Controller
                 //     $meetingAgenda->korem += $attendedDelegate->no_of_shares;
                 // }
                 
-                // foreach ($attendedShareholders as $attendedShareholder ) {
-                //     $meetingAgenda->yes += $attendedShareholder->no_of_shares;
-                //     $meetingAgenda->korem += $attendedShareholder->no_of_shares;
+                foreach ($attendedShareholders as $attendedShareholder ) {
+                    // $meetingAgenda->yes += $attendedShareholder->no_of_shares;
+                    // $meetingAgenda->korem += $attendedShareholder->no_of_shares;
+                    $attendedShareholder->meetingAgendas()->attach($meetingAgenda, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
                     
-                // }
-                $meetingAgenda->shareHolders()->attach($attendedShareholders, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
+                }
+                // $meetingAgenda->shareHolders()->attach($attendedShareholders, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
                 $meetingAgenda->save();
                 return response()->json([
                     'success' => true
