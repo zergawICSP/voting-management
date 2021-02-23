@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Delegate;
 use App\Models\ShareHolder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class BarcodeSearchController extends Controller
@@ -39,11 +40,13 @@ class BarcodeSearchController extends Controller
             }
             
 
-            if(count($delegate->shareholders) > 0) {
-                foreach($delegate->shareholders as $delegatedShareholder) {
-                    $delegate->no_of_shares += $delegatedShareholder->no_of_shares;
-                }
-            }
+            // if(count($delegate->shareholders) > 0) {
+            //     foreach($delegate->shareholders as $delegatedShareholder) {
+            //         $delegate->no_of_shares += $delegatedShareholder->no_of_shares;
+            //     }
+            // }
+            $totalShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('delegate_id', $delegate->id)->get();
+            $delegate->no_of_shares = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
 
 
             return response()->json([
