@@ -17,7 +17,7 @@ export const submitMeetingVote = (
 ) => {
   return (dispatch) => {
     // Dispatching loading indicator
-    // dispatch({ type: VOTING_MEETING_AGENDA_LOADING });
+    dispatch({ type: VOTING_MEETING_AGENDA_LOADING });
 
     // Operation
     console.log(meetingAgendaVoteData);

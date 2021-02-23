@@ -99,6 +99,7 @@ class AgendaVoteForm extends Component {
 
     //   Submitting attendant vote
     const submitAttendatVote = () => {
+      console.log("Selected State: " + this.state.selected);
       if (this.state.selected === "noField") {
         this.setState({ neutralField: false, yesField: false });
       } else if (this.state.selected === "neutralField") {
@@ -112,7 +113,7 @@ class AgendaVoteForm extends Component {
           noField: this.state.noField,
           neutralField: this.state.neutralField,
           barcode: this.state.scannedBarCodeResult,
-          userID: localStorage.getItem("userID")
+          userID: localStorage.getItem("userID"),
         };
         if (
           this.state.scannedBarCodeResult !== "" &&
