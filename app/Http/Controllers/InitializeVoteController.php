@@ -49,7 +49,7 @@ class InitializeVoteController extends Controller
                     // $attendedShareholder->meetingAgendas()->attach($meetingAgenda, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
                     
                 }
-                ini_set('max_execution_time', 0);
+                ini_set('max_execution_time', -1);
                 $meetingAgenda->shareHolders()->attach($attendedShareholders, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
                 $meetingAgenda->save();
                 return response()->json([
