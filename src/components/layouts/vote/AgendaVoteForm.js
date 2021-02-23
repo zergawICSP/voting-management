@@ -141,6 +141,8 @@ class AgendaVoteForm extends Component {
         noField: false,
         neutralField: false,
         fechedAttendantValue: [],
+      }, () => {
+        console.log("After Clearing: " + this.state);
       });
     };
 
