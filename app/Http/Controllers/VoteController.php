@@ -189,15 +189,15 @@ class VoteController extends Controller
 
             $shareholders = $delegate->shareholders;
 
-            foreach($shareholders as $shareholder) {
-                foreach ($shareholder->meetingAgendas as $agenda) {
-                    if($agenda->pivot->user_id !== 0 && $agenda->id === $meetingAgenda->id) {
-                        return response()->json([
-                            'error' => "$delegate->name has already voted for this agenda"
-                        ], 400);
-                    }
-                }
-            }
+            // foreach($shareholders as $shareholder) {
+            //     foreach ($shareholder->meetingAgendas as $agenda) {
+            //         if($agenda->pivot->user_id !== 0 && $agenda->id === $meetingAgenda->id) {
+            //             return response()->json([
+            //                 'error' => "$delegate->name has already voted for this agenda"
+            //             ], 400);
+            //         }
+            //     }
+            // }
 
             
             if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
@@ -205,17 +205,12 @@ class VoteController extends Controller
                 
                 $totalShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('delegate_id', $delegate->id)->get();
                 $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
-                // $meetingAgenda->yes -= $totalShare;
-                // $meetingAgenda->no += $totalShare;
+                $meetingAgenda->yes -= $totalShare;
+                $meetingAgenda->no += $totalShare;
                 $meetingAgenda->shareHolders()->detach($shareholders);
                 $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
                 try {
-                    // $meetingAgenda->save();
-                    // $meetingAgenda->update([
-                    //     'yes' => $meetingAgenda->yes - $totalShare,
-                    //     'no' => $meetingAgenda->no + $totalShare
-                    // ]);
-
+                    $meetingAgenda->save();
                     return response()->json([
                         'success' => true
                     ]);
