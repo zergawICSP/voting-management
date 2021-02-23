@@ -33,7 +33,7 @@ class InitializeVoteController extends Controller
                 $meetingAgenda->is_initialized = true;
                 $meetingAgenda->initialized_time = Carbon::now();
                 $totalShareholdersShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('is_present', true)->get();
-                $totalDelegatesShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('is_present', true)->get();
+                $totalDelegatesShare = DB::table('delegates')->select(DB::raw('sum(no_of_shares) as total_share'))->where('is_present', true)->get();
                 $totalShare = (int)$totalShareholdersShare[0]->total_share + (int)$totalDelegatesShare[0]->total_share;
                 $meetingAgenda->yes += $totalShare;
                 $meetingAgenda->korem += $totalShare;
@@ -48,7 +48,7 @@ class InitializeVoteController extends Controller
                 //     $meetingAgenda->korem += $attendedShareholder->no_of_shares;
                     
                 // }
-                $meetingAgenda->shareHolders()->attach(ShareHolder::where('is_present', true)->get(), ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
+                // $meetingAgenda->shareHolders()->attach($attendedShareholders, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
                 $meetingAgenda->save();
                 return response()->json([
                     'success' => true
