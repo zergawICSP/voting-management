@@ -14,6 +14,7 @@ class ShareholdersImport implements ToModel
     */
     public function model(array $row)
     {
+        ini_set('max_execution_time', 0);
         if(is_numeric($row[4])) {
             return new ShareHolder([
                 // 'id' => $row[0],
