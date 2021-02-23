@@ -205,12 +205,16 @@ class VoteController extends Controller
                 
                 $totalShare = DB::table('share_holders')->select(DB::raw('sum(no_of_shares) as total_share'))->where('delegate_id', $delegate->id)->get();
                 $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
-                $meetingAgenda->yes -= $totalShare;
-                $meetingAgenda->no += $totalShare;
+                // $meetingAgenda->yes -= $totalShare;
+                // $meetingAgenda->no += $totalShare;
                 $meetingAgenda->shareHolders()->detach($shareholders);
                 $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
                 try {
-                    $meetingAgenda->save();
+                    // $meetingAgenda->save();
+                    $meetingAgenda->update([
+                        'yes' => $meetingAgenda->yes - $totalShare,
+                        'no' => $meetingAgenda->no + $totalShare
+                    ]);
 
                     return response()->json([
                         'success' => true
