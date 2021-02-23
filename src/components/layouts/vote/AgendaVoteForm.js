@@ -137,6 +137,9 @@ class AgendaVoteForm extends Component {
         toggelingCamera: false,
         scannedBarCodeResult: "",
         selected: "yesField",
+        yesField: true,
+        noField: false,
+        neutralField: false,
         fechedAttendantValue: [],
       });
     };
