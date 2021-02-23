@@ -50,7 +50,7 @@ class InitializeVoteController extends Controller
                     
                 // }
                 
-                $meetingAgenda->shareHolders()->attach($attendedShareholders, ['answer' => 'እደግፋለሁ', 'user_id' => 0]);
+                $meetingAgenda->shareHolders()->attach($attendedShareholders);
                 $meetingAgenda->save();
                 return response()->json([
                     'success' => true
