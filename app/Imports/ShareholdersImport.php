@@ -16,7 +16,8 @@ class ShareholdersImport implements ToModel
     {
         if(is_numeric($row[4])) {
             return new ShareHolder([
-                // 'name' => $row[1],
+                // 'id' => $row[0],
+                'name' => $row[1],
                 'no_of_shares' => $row[2],
                 'phone' => $row[3],
                 'delegate_id' => $row[4]
