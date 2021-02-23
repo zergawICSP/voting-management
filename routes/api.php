@@ -17,6 +17,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShareHolderController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VotingAgendaController;
+use App\Imports\UserImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,7 @@ Route::prefix('/export')->group(function () {
 // Excel Import End-Points
 Route::prefix('/import')->group(function () {
     Route::post('/shareholders', [ImportController::class, 'importShareholders']);
+    Route::post('/users', [ImportController::class, 'importUsers']);
 });
 
 // Voting Controller
