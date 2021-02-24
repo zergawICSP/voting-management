@@ -113,6 +113,11 @@ class AppHomePage extends Component {
       return params.data.is_present ? "Present" : "Not Present";
     };
 
+    // Getting the address from three fields
+    const gettingAddress = function(params){
+      return params.data.city ? params.data.woreda_kebele + ", " + params.data.subcity + ", " + params.data.city : "";
+    }
+
     // Column Headers
     const columnDefs = [
       { headerName: "ID", field: "id", checkboxSelection: true },
@@ -121,6 +126,8 @@ class AppHomePage extends Component {
         field: "name",
       },
       { headerName: "Total Share Amount", field: "no_of_shares" },
+      {headerName: "Phone No.", field: "phone"},
+      {headerName: "Address", field: "city", valueGetter: gettingAddress},
       {
         headerName: "Is Present",
         field: "is_present",

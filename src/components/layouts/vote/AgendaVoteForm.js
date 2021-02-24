@@ -133,17 +133,20 @@ class AgendaVoteForm extends Component {
 
     // Clearing data
     const clearingData = () => {
-      this.setState({
-        toggelingCamera: false,
-        scannedBarCodeResult: "",
-        selected: "yesField",
-        yesField: true,
-        noField: false,
-        neutralField: false,
-        fechedAttendantValue: [],
-      }, () => {
-        console.log("After Clearing: " + this.state);
-      });
+      this.setState(
+        {
+          toggelingCamera: false,
+          scannedBarCodeResult: "",
+          selected: "yesField",
+          yesField: true,
+          noField: false,
+          neutralField: false,
+          fechedAttendantValue: [],
+        },
+        () => {
+          console.log("After Clearing: " + this.state);
+        }
+      );
     };
 
     //   Displaying Fetched attendant data
@@ -266,54 +269,52 @@ class AgendaVoteForm extends Component {
           </div>
 
           {/* Displaying fetched attendant data only if the fetched attendant data state is loaded */}
-          <div className="mt-10">
-            {this.state.isFetchingActivated ? (
-              <RiseLoader className="text-white" size={10} color="white" />
-            ) : this.state.fechedAttendantValue.length > 0 ? (
-              <div>
-                {displayingFetchedAttendantData}
-                <div className="flex flex-row justify-evenly items-center">
-                  <label>
-                    <input
-                      name="yesField"
-                      id="yesField"
-                      type="checkbox"
-                      value="yesField"
-                      checked={this.state.selected === "yesField"}
-                      onChange={this.handleVotSelectionChange}
-                    />
-                    <span className="px-5">Yes</span>
-                  </label>
-                  <label>
-                    <input
-                      name="noField"
-                      id="noField"
-                      type="checkbox"
-                      value="noField"
-                      checked={this.state.selected === "noField"}
-                      onChange={this.handleVotSelectionChange}
-                    />
-                    <span className="px-5">No</span>
-                  </label>
-                  <label>
-                    <input
-                      name="neutralField"
-                      id="neutralField"
-                      type="checkbox"
-                      value="neutralField"
-                      checked={this.state.selected === "neutralField"}
-                      onChange={this.handleVotSelectionChange}
-                    />
-                    <span className="px-5">Neutral</span>
-                  </label>
-                </div>
-                {isMeetingVoteLoading ? (
-                  <RiseLoader
-                    className="text-white mt-5"
-                    size={10}
-                    color="white"
-                  />
-                ) : (
+          {isMeetingVoteLoading ? (
+            <div className="mt-10">
+              <RiseLoader className="text-white" size={15} color="white" />
+            </div>
+          ) : (
+            <div className="mt-10">
+              {this.state.isFetchingActivated ? (
+                <RiseLoader className="text-white" size={10} color="white" />
+              ) : this.state.fechedAttendantValue.length > 0 ? (
+                <div>
+                  {displayingFetchedAttendantData}
+                  <div className="flex flex-row justify-evenly items-center">
+                    <label>
+                      <input
+                        name="yesField"
+                        id="yesField"
+                        type="checkbox"
+                        value="yesField"
+                        checked={this.state.selected === "yesField"}
+                        onChange={this.handleVotSelectionChange}
+                      />
+                      <span className="px-5">Yes</span>
+                    </label>
+                    <label>
+                      <input
+                        name="noField"
+                        id="noField"
+                        type="checkbox"
+                        value="noField"
+                        checked={this.state.selected === "noField"}
+                        onChange={this.handleVotSelectionChange}
+                      />
+                      <span className="px-5">No</span>
+                    </label>
+                    <label>
+                      <input
+                        name="neutralField"
+                        id="neutralField"
+                        type="checkbox"
+                        value="neutralField"
+                        checked={this.state.selected === "neutralField"}
+                        onChange={this.handleVotSelectionChange}
+                      />
+                      <span className="px-5">Neutral</span>
+                    </label>
+                  </div>
                   <button
                     className="px-3 py-2 bg-transparent text-white rounded-md mt-5 border border-gray-600 hover:bg-companyYello hover:text-primary shadow-2xl"
                     onClick={(e) => {
@@ -323,10 +324,10 @@ class AgendaVoteForm extends Component {
                   >
                     Submit Vote
                   </button>
-                )}
-              </div>
-            ) : null}
-          </div>
+                </div>
+              ) : null}
+            </div>
+          )}
         </form>
       </div>
     );

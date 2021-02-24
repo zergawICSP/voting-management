@@ -215,7 +215,7 @@ class RegisterShareholderForm extends Component {
               )}
             </div>
             {isShareholderCreationLoading || isShareholderUpdationLoading ? (
-              <RiseLoader size="15" color="#fff" />
+              <RiseLoader size="15" color="#fff" className="w-full" />
             ) : (
               <button
                 type="submit"
