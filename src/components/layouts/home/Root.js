@@ -127,7 +127,7 @@ class AppHomePage extends Component {
       },
       { headerName: "Total Share Amount", field: "no_of_shares" },
       {headerName: "Phone No.", field: "phone"},
-      {headerName: "Address", field: "city", valueGetter: gettingAddress},
+      {headerName: "Woreda/Kebele, Subcity, city", valueGetter: gettingAddress},
       {
         headerName: "Is Present",
         field: "is_present",

@@ -51,12 +51,11 @@ export const submittingDelegateAttendantsData = (
   return (dispatch) => {
     // Dispatching loading indicator
     dispatch({ type: DELEGATE_ATTENDANCE_LOADING });
-    console.log(checkedAttendantsID, barcode);
+
     // Operation
     instance
       .post("/attend-delegate/" + checkedAttendantsID, { barcode: barcode })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           dispatch({ type: SEND_DELEGATE_ATTENDANCE_DATA_SUCCESS });
         } else {
@@ -84,7 +83,6 @@ export const submittingShareholderRegistration = (newShareholderData) => {
     instance
       .post("/shareholders", newShareholderData)
       .then((response) => {
-        console.log(response.data);
         if (response.status === 201)
           dispatch({ type: ADD_NEW_SHAREHOLDER_SUCCESS });
         else

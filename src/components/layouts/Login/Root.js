@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // EXTERNAL IMPORTS
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { hashString } from "react-hash-string";
 
 // COMPONENT IMPORTS
 import LoginForm from "./LoginForm";
@@ -16,17 +17,17 @@ class Root extends Component {
     const { isLoggedIn } = this.props;
 
     if (isLoggedIn) {
-      if (localStorage.getItem("isAdmin") === "1")
+      if (localStorage.getItem("isAdmin") === hashString(`"1"`).toString())
         return <Redirect to="/admin" />;
-      else if (localStorage.getItem("isAdmin") === "2")
+      else if (localStorage.getItem("isAdmin") === hashString(`"2"`).toString())
         return <Redirect to="/delegate_home" />;
       else return <Redirect to="/home" />;
     }
 
     if (localStorage.getItem("username")) {
-      if (localStorage.getItem("isAdmin") === "1")
+      if (localStorage.getItem("isAdmin") === hashString(`"1"`).toString())
         return <Redirect to="/admin" />;
-      else if (localStorage.getItem("isAdmin") === "2")
+      else if (localStorage.getItem("isAdmin") === hashString(`"2"`).toString())
         return <Redirect to="/delegate_home" />;
       else return <Redirect to="/home" />;
     }

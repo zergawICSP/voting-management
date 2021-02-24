@@ -20,6 +20,10 @@
   font-weight: bold !important;
 }
 
+.ag-theme-bootstrap .ag-header-row .ag-header-cell{
+  border-right: 0.5px solid rgb(167, 167, 167) !important;
+}
+
 /* .ag-theme-bootstrap .ag-header-icon {
   color: white !important;
 }

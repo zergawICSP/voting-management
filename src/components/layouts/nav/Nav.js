@@ -6,8 +6,8 @@ import { FaVoteYea } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { MdViewAgenda } from "react-icons/md";
-import { BiUser } from "react-icons/bi";
 import {RiMapPinUserFill} from "react-icons/ri";
+import { hashString } from "react-hash-string";
 
 // COMPONENT IMPORT
 import LogoHeader from "./LogoHeader";
@@ -17,7 +17,7 @@ export default function Nav() {
     <div className="flex flex-row w-screen py-4 justify-between">
       <LogoHeader />
       <div className="m-auto">
-        {localStorage.getItem("isAdmin") === "1" ? (
+        {localStorage.getItem("isAdmin") === hashString(`"1"`).toString() ? (
           <div className="flex flex-row space-x-28 -ml-28">
             <NavLink
               to="/admin"
@@ -50,7 +50,7 @@ export default function Nav() {
               />
             </NavLink>
           </div>
-        ) : localStorage.getItem("isAdmin") === "2" ? (
+        ) : localStorage.getItem("isAdmin") === hashString(`"2"`).toString() ? (
           <div className="flex flex-row space-x-28 -ml-20">
             <NavLink
               to="/delegate_home"

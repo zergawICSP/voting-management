@@ -20,14 +20,12 @@ export const submitMeetingVote = (
     dispatch({ type: VOTING_MEETING_AGENDA_LOADING });
 
     // Operation
-    console.log(meetingAgendaVoteData);
     instance
       .post(
         "/vote-meeting-agenda/" + selectedMeetingAgenda,
         meetingAgendaVoteData
       )
       .then((response) => {
-        console.log(response.data);
         if (response.status === 200) {
           dispatch({ type: VOTING_MEETING_AGENDA_SUCCESS });
         } else {
