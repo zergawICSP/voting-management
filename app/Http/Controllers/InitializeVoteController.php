@@ -51,7 +51,7 @@ class InitializeVoteController extends Controller
                 // }
                 
                 // $meetingAgenda->shareHolders()->attach($attendedShareholders);
-                foreach(array_chunk($attendedShareholders, 1000) as $shareholders) {
+                foreach(array_chunk($attendedShareholders, 5000) as $shareholders) {
                     $meetingAgenda->shareHolders()->attach($shareholders);
                 }
                 $meetingAgenda->save();

@@ -228,8 +228,7 @@ class VoteController extends Controller
                 $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
                 $meetingAgenda->yes -= $totalShare;
                 $meetingAgenda->neutral += $totalShare;
-                $meetingAgenda->shareHolders()->detach($shareholders);
-                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'ድምጸ ተዐቅቦ', 'user_id' => $request->input('userID')]);
+                $meetingAgenda->shareHolders()->updateExistingPivot($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
                 try {
                     $meetingAgenda->save();
 
@@ -246,8 +245,7 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-                $meetingAgenda->shareHolders()->detach($shareholders);
-                $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እደግፋለሁ', 'user_id' => $request->input('userID')]);
+                $meetingAgenda->shareHolders()->updateExistingPivot($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
                 
                 try {
 
@@ -289,8 +287,9 @@ class VoteController extends Controller
                 $meetingAgenda->no += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->detach($shareholder);
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                    // $meetingAgenda->shareHolders()->detach($shareholder);
+                    // $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                    $meetingAgenda->shareHolders()->updateExistingPivot($shareholder, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
 
 
                     return response()->json([
@@ -309,8 +308,9 @@ class VoteController extends Controller
                 $meetingAgenda->neutral += $shareholder->no_of_shares;
                 try {
                     $meetingAgenda->save();
-                    $meetingAgenda->shareHolders()->detach($shareholder);
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'ድምጸ ተዐቅቦ', 'user_id' => $request->input('userID')]);
+                    // $meetingAgenda->shareHolders()->detach($shareholder);
+                    // $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'ድምጸ ተዐቅቦ', 'user_id' => $request->input('userID')]);
+                    $meetingAgenda->shareHolders()->updateExistingPivot($shareholder, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
 
 
                     return response()->json([
@@ -326,9 +326,9 @@ class VoteController extends Controller
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
                 try {
-                    $meetingAgenda->shareHolders()->detach($shareholder);
-                    $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እደግፋለሁ', 'user_id' => $request->input('userID')]);
-
+                    // $meetingAgenda->shareHolders()->detach($shareholder);
+                    // $meetingAgenda->shareHolders()->attach($shareholder, ['answer' => 'እደግፋለሁ', 'user_id' => $request->input('userID')]);
+                    $meetingAgenda->shareHolders()->updateExistingPivot($shareholder, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
 
                     return response()->json([
                         'success' => true
