@@ -15,4 +15,8 @@ class MeetingAgenda extends Model
     {
         return $this->belongsToMany(ShareHolder::class)->withPivot(['answer', 'user_id']);
     }
+    public function delegates()
+    {
+        return $this->belongsToMany(Delegate::class)->withPivot(['answer', 'user_id']);
+    }
 }

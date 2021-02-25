@@ -20,7 +20,7 @@ class CreateShareHoldersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
             $table->string('subcity')->nullable();
-            $table->string('woreda/kebele')->nullable();
+            $table->string('woreda_kebele')->nullable();
             $table->boolean('is_present')->default(false);
             $table->timestamp('attended_time')->nullable();
             $table->foreignId('delegate_id')->nullable()->constrained()->onDelete('cascade');

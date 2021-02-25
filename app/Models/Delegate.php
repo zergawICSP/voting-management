@@ -19,4 +19,8 @@ class Delegate extends Model
     {
         return $this->belongsToMany(VotingAgenda::class);
     }
+    public function meetingAgendas()
+    {
+        return $this->belongsToMany(MeetingAgenda::class)->withPivot(['answer', 'user_id']);
+    }
 }

@@ -187,7 +187,8 @@ class VoteController extends Controller
                 ], 400);
             }
 
-            $shareholders = $delegate->shareholders;
+            $shareholders = $delegate->shareholders->pluck('id')->toArray();
+            // dd($shareholders);
 
             // foreach($shareholders as $shareholder) {
             //     foreach ($shareholder->meetingAgendas as $agenda) {
@@ -198,6 +199,14 @@ class VoteController extends Controller
             //         }
             //     }
             // }
+            foreach ($delegate->meetingAgendas as $agenda) {
+                if($agenda->pivot->user_id !== 0 && $agenda->id === $meetingAgenda->id) {
+                    return response()->json([
+                        'error' => "$delegate->name has already voted for this agenda"
+                    ], 400);
+                }
+            }
+            
 
             
             if($request->input('noField') && !$request->input('neutralField') && !$request->input('yesField'))
@@ -209,7 +218,10 @@ class VoteController extends Controller
                 $meetingAgenda->no += $totalShare;
                 // $meetingAgenda->shareHolders()->detach($shareholders);
                 // $meetingAgenda->shareHolders()->attach($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
-                $meetingAgenda->shareHolders()->updateExistingPivot($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                $meetingAgenda->delegates()->updateExistingPivot($delegate, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                foreach(array_chunk($shareholders, 5000) as $delegatedShareholders) {
+                    $meetingAgenda->shareHolders()->updateExistingPivot($delegatedShareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                }
                 try {
                     $meetingAgenda->save();
                     return response()->json([
@@ -228,7 +240,10 @@ class VoteController extends Controller
                 $totalShare = (int)$totalShare[0]->total_share + $delegate->no_of_shares;
                 $meetingAgenda->yes -= $totalShare;
                 $meetingAgenda->neutral += $totalShare;
-                $meetingAgenda->shareHolders()->updateExistingPivot($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                $meetingAgenda->delegates()->updateExistingPivot($delegate, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                foreach(array_chunk($shareholders, 5000) as $delegatedShareholders) {
+                    $meetingAgenda->shareHolders()->updateExistingPivot($delegatedShareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                }
                 try {
                     $meetingAgenda->save();
 
@@ -245,7 +260,10 @@ class VoteController extends Controller
             }
             if(!$request->input('noField') && !$request->input('neutralField') && $request->input('yesField'))
             {
-                $meetingAgenda->shareHolders()->updateExistingPivot($shareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                $meetingAgenda->delegates()->updateExistingPivot($delegate, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                foreach(array_chunk($shareholders, 5000) as $delegatedShareholders) {
+                    $meetingAgenda->shareHolders()->updateExistingPivot($delegatedShareholders, ['answer' => 'እቃወማለሁ', 'user_id' => $request->input('userID')]);
+                }
                 
                 try {
 
