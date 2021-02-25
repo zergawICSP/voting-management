@@ -16,7 +16,30 @@ class ShareholdersImport implements ToModel
     {
         // ini_set('max_execution_time', 0);
         // ini_set('memory_limit', -1);
-        if(is_numeric($row[4]) && $row[5] && $row[6] && $row[7]) {
+        // if($row[5] || $row[6] || $row[7]){
+        //     if(is_numeric($row[4])) {
+        //         return new ShareHolder([
+        //             'id' => $row[0],
+        //             'name' => $row[1],
+        //             'no_of_shares' => $row[2],
+        //             'phone' => $row[3],
+        //             'delegate_id' => $row[4],
+        //             'city' => $row[5],
+        //             'subcity' => $row[6],
+        //             'woreda_kebele' => $row[7]
+        //         ]);
+        //     }
+        //     return new ShareHolder([
+        //         'id' => $row[0],
+        //         'name' => $row[1],
+        //         'no_of_shares' => $row[2],
+        //         'phone' => $row[3],
+        //         'city' => $row[5],
+        //         'subcity' => $row[6],
+        //         'woreda_kebele' => $row[7]
+        //     ]);
+        // }
+        if(is_numeric($row[4])) {
             return new ShareHolder([
                 'id' => $row[0],
                 'name' => $row[1],
@@ -28,20 +51,14 @@ class ShareholdersImport implements ToModel
                 'woreda_kebele' => $row[7]
             ]);
         }
-        if (is_numeric($row[4]) && !$row[5] && !$row[6] && !$row[7]) {
-            return new ShareHolder([
-                'id' => $row[0],
-                'name' => $row[1],
-                'no_of_shares' => $row[2],
-                'phone' => $row[3],
-                'delegate_id' => $row[4],
-            ]);
-        }
         return new ShareHolder([
             'id' => $row[0],
             'name' => $row[1],
             'no_of_shares' => $row[2],
-            'phone' => $row[3]            
+            'phone' => $row[3],
+            'city' => $row[5],
+            'subcity' => $row[6],
+            'woreda_kebele' => $row[7]
         ]);
     }
 }
