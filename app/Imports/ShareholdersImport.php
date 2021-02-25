@@ -22,14 +22,20 @@ class ShareholdersImport implements ToModel
                 'name' => $row[1],
                 'no_of_shares' => $row[2],
                 'phone' => $row[3],
-                'delegate_id' => $row[4]
+                'delegate_id' => $row[4],
+                'city' => $row[5],
+                'subcity' => $row[6],
+                'woreda_kebele' => $row[7]
             ]);
         }
         return new ShareHolder([
             'id' => $row[0],
             'name' => $row[1],
             'no_of_shares' => $row[2],
-            'phone' => $row[3]
+            'phone' => $row[3],
+            'city' => $row[5],
+            'subcity' => $row[6],
+            'woreda_kebele' => $row[7]
         ]);
     }
 }
