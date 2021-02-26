@@ -76,7 +76,7 @@ class AppLanding extends Component {
             <div className="mt-32">
               <p className="font-extrabold text-9xl">
                 {this.state.precentageOfAttendants !== null
-                  ? this.state.precentageOfAttendants + "%"
+                  ? parseFloat(this.state.precentageOfAttendants).toFixed(2) + "%"
                   : 0}
               </p>
               <p className="font-bold text-5xl mt-10 lg:text-6xl">

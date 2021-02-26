@@ -99,57 +99,84 @@ class VoteIndex extends Component {
               >
                 <div className="items-center px-4 w-full">
                   <p className="text-white text-7xl font-bold">
-                    {"የጉባኤው አጀንዳ፡ " + SingleData.title}
+                    {typeof SingleData.title === "undefined"
+                      ? "----"
+                      : "የጉባኤው አጀንዳ፡- " + SingleData.title}
                   </p>
-                </div>
-                <div className="items-center w-full mt-20 bg-third p-5">
-                  <div className="flex flex-row justify-center items-center w-full">
-                    <div className="flex flex-col justify-center items-center text-white w-1/2 space-y-3">
-                      <p className="text-5xl">{numberFormat.format(parseFloat(SingleData.totalShare))}</p>
-                      <p className="text-4xl">አጠቃላይ የአክሲዮን መጠን</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-center text-white w-1/2 space-y-3">
-                      <p className="text-5xl">{numberFormat.format(parseFloat(SingleData.korem)) + "( " + parseFloat(SingleData.koremPercentage).toFixed(2) + "% )"}</p>
-                      <p className="text-4xl">አጀንዳውን የታደመው የአክሲዮን መጠን</p>
-                    </div>
-                  </div>
                 </div>
                 <div className="flex flex-row justify-between items-center w-screen space-x-3 mt-20">
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
                     <p className="text-7xl text-white">ድጋፍ</p>
                     <p className="text-7xl font-bold text-white mt-20">
-                      {numberFormat.format(parseFloat(SingleData.yes)) +
-                        " አክሲዮን"}
+                      {typeof SingleData.yes === "undefined"
+                        ? 0
+                        : numberFormat.format(parseFloat(SingleData.yes)) +
+                          " አክሲዮን"}
                     </p>
                     <p className="text-5xl font-bold text-white">
-                      {"(" +
-                        parseFloat(SingleData.yesPercentage.toFixed(2)) +
-                        "%)"}
+                      {"("}
+                      {typeof SingleData.yesPercentage === "undefined"
+                        ? 0
+                        : parseFloat(SingleData.yesPercentage).toFixed(2)}
+                      {"%)"}
                     </p>
                   </div>
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
                     <p className="text-7xl text-white">ተቃውሞ</p>
                     <p className="text-7xl font-bold text-white mt-20">
-                      {numberFormat.format(parseFloat(SingleData.no)) +
-                        " አክሲዮን"}
+                      {typeof SingleData.no === "undefined"
+                        ? 0
+                        : numberFormat.format(parseFloat(SingleData.no)) +
+                          " አክሲዮን"}
                     </p>
                     <p className="text-5xl font-bold text-white">
-                      {"(" +
-                        parseFloat(SingleData.noPercentage.toFixed(2)) +
-                        "%)"}
+                      {"("}
+                      {typeof SingleData.noPercentage === "undefined"
+                        ? 0
+                        : parseFloat(SingleData.noPercentage).toFixed(2)}
+                      {"%)"}
                     </p>
                   </div>
                   <div className="flex flex-col justify-center items-center space-y-10 w-1/3">
                     <p className="text-7xl text-white">ድምጸ ተአቅቦ</p>
                     <p className="text-7xl font-bold text-white mt-20">
-                      {numberFormat.format(parseFloat(SingleData.neutral)) +
-                        " አክሲዮን"}
+                      {typeof SingleData.neutral === "undefined"
+                        ? 0
+                        : numberFormat.format(parseFloat(SingleData.neutral)) +
+                          " አክሲዮን"}
                     </p>
                     <p className="text-5xl font-bold text-white">
-                      {"(" +
-                        parseFloat(SingleData.neutralPercentage.toFixed(2)) +
-                        "%)"}
+                      {"("}
+                      {typeof SingleData.neutralPercentage === "undefined"
+                        ? 0
+                        : parseFloat(SingleData.neutralPercentage).toFixed(2)}
+                      {"%)"}
                     </p>
+                  </div>
+                </div>
+                <div className="items-center w-full mt-20 bg-secondary p-5">
+                  <div className="flex flex-row justify-center items-center w-full">
+                    <div className="flex flex-col justify-center items-center text-white w-1/2 space-y-3">
+                      <p className="text-5xl">
+                        {typeof SingleData.totalShare === "undefined"
+                          ? 0
+                          : numberFormat.format(
+                              parseFloat(SingleData.totalShare)
+                            )}
+                      </p>
+                      <p className="text-4xl">አጠቃላይ የአክሲዮን መጠን</p>
+                    </div>
+                    <div className="flex flex-col justify-center items-center text-white w-1/2 space-y-3">
+                      <p className="text-5xl">
+                        {typeof SingleData.korem === "undefined"
+                          ? 0
+                          : numberFormat.format(parseFloat(SingleData.korem)) +
+                            "( " +
+                            parseFloat(SingleData.koremPercentage).toFixed(2) +
+                            "% )"}
+                      </p>
+                      <p className="text-4xl">አጀንዳውን የታደመው የአክሲዮን መጠን</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -170,7 +197,7 @@ class VoteIndex extends Component {
                     {SingleData.name}
                   </p>
                   <p className="text-white text-xl lg:text-lg xl:text-xl font-bold">
-                    {parseFloat((SingleData.votePercentage * 100).toFixed(2)) +
+                    {parseFloat(SingleData.votePercentage * 100).toFixed(2) +
                       "%"}
                   </p>
                 </div>
