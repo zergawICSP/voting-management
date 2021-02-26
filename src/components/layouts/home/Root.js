@@ -115,7 +115,7 @@ class AppHomePage extends Component {
 
     // Checking if the data field is not empty
     const gettingDataFieldValue = (input) => {
-      if (input !== null) return input;
+      if (input !== null) return input + ", ";
       else return "";
     };
 
@@ -123,9 +123,9 @@ class AppHomePage extends Component {
     const gettingAddress = function (params) {
       return params.data.city
         ? gettingDataFieldValue(params.data.woreda_kebele) +
-            ", " +
+            "" +
             gettingDataFieldValue(params.data.subcity) +
-            ", " +
+            "" +
             gettingDataFieldValue(params.data.city)
         : "";
     };
