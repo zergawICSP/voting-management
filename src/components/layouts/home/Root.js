@@ -113,10 +113,22 @@ class AppHomePage extends Component {
       return params.data.is_present ? "Present" : "Not Present";
     };
 
+    // Checking if the data field is not empty
+    const gettingDataFieldValue = (input) => {
+      if (input !== null) return input;
+      else return "";
+    };
+
     // Getting the address from three fields
-    const gettingAddress = function(params){
-      return params.data.city ? params.data.woreda_kebele + ", " + params.data.subcity + ", " + params.data.city : "";
-    }
+    const gettingAddress = function (params) {
+      return params.data.city
+        ? gettingDataFieldValue(params.data.woreda_kebele) +
+            ", " +
+            gettingDataFieldValue(params.data.subcity) +
+            ", " +
+            gettingDataFieldValue(params.data.city)
+        : "";
+    };
 
     // Column Headers
     const columnDefs = [
@@ -126,8 +138,11 @@ class AppHomePage extends Component {
         field: "name",
       },
       { headerName: "Total Share Amount", field: "no_of_shares" },
-      {headerName: "Phone No.", field: "phone"},
-      {headerName: "Woreda/Kebele, Subcity, city", valueGetter: gettingAddress},
+      { headerName: "Phone No.", field: "phone" },
+      {
+        headerName: "Woreda/Kebele, Subcity, city",
+        valueGetter: gettingAddress,
+      },
       {
         headerName: "Is Present",
         field: "is_present",
@@ -138,7 +153,7 @@ class AppHomePage extends Component {
 
     const defaultColDef = {
       flex: 1,
-      resizable: true
+      resizable: true,
     };
 
     // Row selection type - whether it is single, multiple or both
