@@ -54,6 +54,7 @@ Route::post('/initialize/{meetingAgenda}', InitializeVoteController::class);
 // Excel Export End-Points
 Route::prefix('/export')->group(function () {
     Route::get('/shareholders', [ExportController::class, 'shareholdersExport']);
+    Route::get('/delegates', [ExportController::class, 'delegateExport']);
     Route::get('/candidates', [ExportController::class, 'candidateExport']);
     Route::get('/meeting-agenda', [ExportController::class, 'meetingAgendaExport']);
 });
