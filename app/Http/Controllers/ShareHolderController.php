@@ -37,7 +37,7 @@ class ShareHolderController extends Controller
                 'name' => 'required',
                 'no_of_shares' => 'required|integer|min:1',
                 'phone' => 'required',
-                'barcode' => 'required'
+                'barcode' => 'nullable'
             ]);            
         } catch(ValidationException $e) {
             return response()->json([
@@ -96,7 +96,7 @@ class ShareHolderController extends Controller
                 'name' => 'required',
                 'no_of_shares' => 'required|integer|min:1',
                 'phone' => 'required',
-                'barcode' => 'required'
+                'barcode' => 'nullable'
             ]);            
         } catch(ValidationException $e) {
             return response()->json([
@@ -135,7 +135,8 @@ class ShareHolderController extends Controller
             $shareholder->delete();
         } catch (Exception $e) {
             return response()->json([
-                'error' => $e->getMessage()
+                'errors' => "There was a problem deleting the shareholder!",
+                'error_message' => $e->getMessage()
             ], 500);
         } 
 

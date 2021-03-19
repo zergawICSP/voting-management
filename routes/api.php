@@ -63,6 +63,7 @@ Route::prefix('/export')->group(function () {
 Route::prefix('/import')->group(function () {
     Route::post('/shareholders', [ImportController::class, 'importShareholders']);
     Route::post('/users', [ImportController::class, 'importUsers']);
+    Route::post('/meeting-agendas', [ImportController::class, 'importMeetingAgendas']);
 });
 
 // Voting Controller

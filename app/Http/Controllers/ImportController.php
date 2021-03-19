@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\AgendaImport;
 use App\Imports\ShareholdersImport;
 use App\Imports\UserImport;
 use Illuminate\Http\Request;
@@ -25,6 +26,18 @@ class ImportController extends Controller
     public function importUsers(Request $request)
     {
         if (Excel::import(new UserImport, $request->file('users'), null, ExcelExcel::CSV)) {
+            return response()->json([
+                'success' => true
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'uploading failed'
+            ], 500);
+        }
+    }
+    public function importMeetingAgendas(Request $request)
+    {
+        if (Excel::import(new AgendaImport, $request->file('meeting-agendas'), null, ExcelExcel::CSV)) {
             return response()->json([
                 'success' => true
             ]);
