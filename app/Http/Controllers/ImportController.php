@@ -14,10 +14,15 @@ class ImportController extends Controller
 {
     public function importShareholders(Request $request)
     {
-        if($request->hasFile('shareholders')) {
-            return response()->json(['success' => true]);
+        try {
+            $request->validate([
+                'shareholders' => 'required|file|mime:csv'
+            ]);
+        } catch(ValidationException $e) {
+            return response()->json([
+                'error' => $e->errors()
+            ], 400);
         }
-        else { return  response()->json(['success' => false], 500);}
         if (Excel::import(new ShareholdersImport, $request->file('shareholders'), null, ExcelExcel::CSV)) {
             return response()->json([
                 'success' => true
