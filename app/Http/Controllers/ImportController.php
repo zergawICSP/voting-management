@@ -16,7 +16,7 @@ class ImportController extends Controller
     {
         try {
             $request->validate([
-                'shareholders' => 'required|file|mime:csv'
+                'shareholders' => 'required|file|mimes:csv'
             ]);
         } catch(ValidationException $e) {
             return response()->json([
