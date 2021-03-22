@@ -6,6 +6,7 @@ use App\Imports\AgendaImport;
 use App\Imports\ShareholdersImport;
 use App\Imports\UserImport;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -13,6 +14,16 @@ class ImportController extends Controller
 {
     public function importShareholders(Request $request)
     {
+        try {
+            $request->validate([
+                'shareholders' => 'required|file|mimes:csv'
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'error' => 'File Must Be Of Type CSV!',
+                'error_message' => $e->errors()
+            ]);
+        }
         if (Excel::import(new ShareholdersImport, $request->file('shareholders'), null, ExcelExcel::CSV)) {
             return response()->json([
                 'success' => true
