@@ -22,7 +22,7 @@ class ImportController extends Controller
             return response()->json([
                 'error' => 'File Must Be Of Type CSV!',
                 'error_message' => $e->errors()
-            ]);
+            ], 400);
         }
         if (Excel::import(new ShareholdersImport, $request->file('shareholders'), null, ExcelExcel::CSV)) {
             return response()->json([
