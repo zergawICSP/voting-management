@@ -15,9 +15,9 @@ class ImportController extends Controller
     public function importShareholders(Request $request)
     {
         if($request->hasFile('shareholders')) {
-            return true;
+            return response()->json(['success' => true]);
         }
-        else { return  false;}
+        else { return  response()->json(['success' => false], 500);}
         if (Excel::import(new ShareholdersImport, $request->file('shareholders'), null, ExcelExcel::CSV)) {
             return response()->json([
                 'success' => true
