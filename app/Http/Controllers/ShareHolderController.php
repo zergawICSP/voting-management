@@ -98,6 +98,7 @@ class ShareHolderController extends Controller
                 'name' => 'required',
                 'no_of_shares' => 'required|integer|min:1',
                 'phone' => 'required',
+                'delegate_id' => 'nullable|integer',
                 'barcode' => 'nullable'
             ]);            
         } catch(ValidationException $e) {
@@ -112,7 +113,8 @@ class ShareHolderController extends Controller
                 'no_of_shares' => $request->input('no_of_shares'),
                 'phone' => $request->input('phone'),
                 'barcode' =>$request->input('barcode'),
-                'is_present' => true
+                'is_present' => true,
+                'delegate_id'  =>  $request->delegate_id ?? null
             ]);
         } catch (Exception $e) {
             return response()->json([
