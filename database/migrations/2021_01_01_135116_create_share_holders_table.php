@@ -25,6 +25,7 @@ class CreateShareHoldersTable extends Migration
             $table->timestamp('attended_time')->nullable();
             $table->foreignId('delegate_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('barcode')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

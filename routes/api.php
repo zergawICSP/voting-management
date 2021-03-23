@@ -38,7 +38,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // API Resource Controller Routes
 Route::apiResource('/shareholders', ShareHolderController::class);
 Route::apiResource('/candidates', CandidateController::class)->only(['index', 'show']);
-Route::apiResource('/delegates', DelegateController::class)->only(['index', 'show']);
+Route::apiResource('/delegates', DelegateController::class);
 Route::apiResource('/meeting-agendas', MeetingAgendaController::class)->only(['index', 'show', 'store']);
 Route::apiResource('/voting-agendas', VotingAgendaController::class)->only(['index']);
 

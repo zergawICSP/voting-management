@@ -20,6 +20,7 @@ class CreateDelegatesTable extends Migration
             $table->boolean('is_present')->default(false);
             $table->timestamp('attended_time')->nullable();
             $table->string('barcode')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
