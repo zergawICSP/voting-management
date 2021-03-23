@@ -16,7 +16,7 @@ class CreateDelegatesTable extends Migration
         Schema::create('delegates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('no_of_shares')->default(0);
+            $table->integer('no_of_shares')->nullable()->default(0);
             $table->boolean('is_present')->default(false);
             $table->timestamp('attended_time')->nullable();
             $table->string('barcode')->nullable();
