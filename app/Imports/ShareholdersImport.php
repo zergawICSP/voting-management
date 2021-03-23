@@ -39,26 +39,26 @@ class ShareholdersImport implements ToModel
         //         'woreda_kebele' => $row[7]
         //     ]);
         // }
-        if(is_numeric($row[4])) {
+        if(!empty($row[4]) && is_numeric($row[4])) {
             return new ShareHolder([
-                'id' => $row[0],
-                'name' => $row[1],
-                'no_of_shares' => $row[2],
-                'phone' => $row[3],
-                'delegate_id' => $row[4],
-                'city' => $row[5],
-                'subcity' => $row[6],
-                'woreda_kebele' => $row[7]
+                'id' => $row[0] ?? null,
+                'name' => $row[1] ?? null,
+                'no_of_shares' => $row[2] ?? null,
+                'phone' => $row[3] ?? null,
+                'delegate_id' => $row[4] ?? null,
+                'city' => $row[5] ?? null,
+                'subcity' => $row[6] ?? null,
+                'woreda_kebele' => $row[7] ?? null
             ]);
         }
         return new ShareHolder([
-            'id' => $row[0],
-            'name' => $row[1],
-            'no_of_shares' => $row[2],
-            'phone' => $row[3],
-            'city' => $row[5],
-            'subcity' => $row[6],
-            'woreda_kebele' => $row[7]
+            'id' => $row[0] ?? null,
+            'name' => $row[1] ?? null,
+            'no_of_shares' => $row[2] ?? null,
+            'phone' => $row[3] ?? null,
+            'city' => $row[5] ?? null,
+            'subcity' => $row[6] ?? null,
+            'woreda_kebele' => $row[7] ?? null
         ]);
     }
 }
