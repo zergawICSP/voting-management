@@ -36,6 +36,7 @@ class ShareHolderController extends Controller
             $request->validate([
                 'name' => 'required',
                 'no_of_shares' => 'required|integer|min:1',
+                'delegate_id' => 'nullable|integer',
                 'phone' => 'required',
                 'barcode' => 'nullable'
             ]);            
@@ -53,7 +54,8 @@ class ShareHolderController extends Controller
                 'phone' => $request->input('phone'),
                 'barcode' =>$request->input('barcode'),
                 'is_present' => true,
-                'attended_time' => Carbon::now()
+                'attended_time' => Carbon::now(),
+                'delegate_id' => $request->delegate_id ?? null
             ]);
         } catch(Exception $e) {
             return response()->json([
