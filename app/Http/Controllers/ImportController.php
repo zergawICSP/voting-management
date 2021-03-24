@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\AgendaImport;
+use App\Imports\ShareHolders;
 use App\Imports\ShareholdersImport;
 use App\Imports\UserImport;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class ImportController extends Controller
                 'error' => $e->errors()
             ], 400);
         }
-        if (Excel::import(new ShareholdersImport, $request->file('shareholders'), null, ExcelExcel::CSV)) {
+        if (Excel::import(new Shareholders, $request->file('shareholders'), null, ExcelExcel::XLSX)) {
             return response()->json([
                 'success' => true
             ]);

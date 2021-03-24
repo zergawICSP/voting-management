@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\ShareHolder;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ShareholdersImport implements ToModel
+class ShareholdersImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -39,26 +40,34 @@ class ShareholdersImport implements ToModel
         //         'woreda_kebele' => $row[7]
         //     ]);
         // }
-        if(!empty($row[4]) && is_numeric($row[4])) {
-            return new ShareHolder([
-                'id' => $row[0] ?? null,
-                'name' => $row[1] ?? null,
-                'no_of_shares' => $row[2] ?? null,
-                'phone' => $row[3] ?? null,
-                'delegate_id' => $row[4] ?? null,
-                'city' => $row[5] ?? null,
-                'subcity' => $row[6] ?? null,
-                'woreda_kebele' => $row[7] ?? null
-            ]);
-        }
+        // if(!empty($row[4]) && is_numeric($row[4])) {
+        //     return new ShareHolder([
+        //         'id' => $row[0] ?? null,
+        //         'name' => $row[1] ?? null,
+        //         'no_of_shares' => $row[2] ?? null,
+        //         'phone' => $row[3] ?? null,
+        //         'delegate_id' => $row[4] ?? null,
+        //         'city' => $row[5] ?? null,
+        //         'subcity' => $row[6] ?? null,
+        //         'woreda_kebele' => $row[7] ?? null
+        //     ]);
+        // }
         return new ShareHolder([
-            'id' => $row[0] ?? null,
-            'name' => $row[1] ?? null,
-            'no_of_shares' => $row[2] ?? null,
-            'phone' => $row[3] ?? null,
-            'city' => $row[5] ?? null,
-            'subcity' => $row[6] ?? null,
-            'woreda_kebele' => $row[7] ?? null
+            'id' => $row['no'],
+            'name' => $row['name_of_shareholder'],
+            'subscribed_shares' =>  $row['no_of_shares_subscribed'],
+            'paidup_shares' => $row['no_of_shares_paidup'],
+            'total_share_value' => $row['total_value_of_shares_subscribed'],
+            'total_paidup_share_value' => $row['total_value_of_shares_paidup'],
+            'service_charge' => $row['service_charge'],
+            'service_charge_transaction' => $row['service_charge_transaction'],
+            'nationality' => $row['nationality'],
+            'phone' => $row['telephone'] ?? null,
+            'city' => $row['city'] ?? null,
+            'subcity' => $row['subcity'] ?? null,
+            'woreda_kebele' => $row['w/k'] ?? null,
+            'bank_name' => $row['bank_name'],
+            'gender' => $row['gender']
         ]);
     }
 }
