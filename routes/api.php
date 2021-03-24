@@ -8,6 +8,7 @@ use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DelegateAttendanceController;
 use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\DelegateSearchController;
+use App\Http\Controllers\DownloadTemplate;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\GetAllAttendantsController;
 use App\Http\Controllers\ImportController;
@@ -50,6 +51,7 @@ Route::post('/attend-delegate/{delegate}', DelegateAttendanceController::class);
 Route::get('/barcode', BarcodeSearchController::class);
 Route::get('/attendants', GetAllAttendantsController::class);
 Route::post('/initialize/{meetingAgenda}', InitializeVoteController::class);
+Route::get('/download/template', DownloadTemplate::class);
 
 // Excel Export End-Points
 Route::prefix('/export')->group(function () {
