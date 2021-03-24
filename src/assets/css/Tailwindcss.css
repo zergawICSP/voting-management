@@ -8,20 +8,28 @@
 
 @tailwind utilities;
 /* Ag_Grid Css Customization */
- 
+
 .ag-theme-bootstrap {
   min-height: 400px !important;
   text-align: left !important;
 }
-
 
 .ag-theme-bootstrap .ag-header-row {
   height: 27px !important;
   font-weight: bold !important;
 }
 
-.ag-theme-bootstrap .ag-header-row .ag-header-cell{
+.ag-theme-bootstrap .ag-header-row .ag-header-cell {
   border-right: 0.5px solid rgb(167, 167, 167) !important;
+}
+
+.modal {
+  transition: opacity 0.25s ease;
+}
+
+body.modal-active {
+  overflow-x: hidden;
+  overflow-y: visible !important;
 }
 
 /* .ag-theme-bootstrap .ag-header-icon {
@@ -82,4 +90,3 @@
   padding-top: 10px !important;
   padding-bottom: 10px !important;
 } */
-

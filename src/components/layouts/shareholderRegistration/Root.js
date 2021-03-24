@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 // EXTERNAL IMPORT
 import { Redirect, Link } from "react-router-dom";
-import { Tooltip } from "react-tippy";
+// import { Tooltip } from "react-tippy";
 
 // COMPONENT IMPORT
 import AppNavigation from "../nav/Nav";
@@ -31,7 +31,7 @@ class Root extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/admin/register",
+            pathname: "/register_sharerecord",
             state: {
               selectedShareholderData: this.state.selectedShareholderData,
               isEditingActivated: this.state.isEditingActivated,
@@ -44,12 +44,19 @@ class Root extends Component {
       <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
         <AppNavigation />
 
-        <div className="mr-auto ml-10">
-          <Link to="/admin/register">
+        <div className="flex flex-row justify-between items-center w-full pr-20 pl-10 mt-5">
+          <div className="flex flex-row justify-start space-x-5">
+            <p>Total subscribed capital</p>
+            <p>Total paid capital</p>
+            <p>Total capital</p>
+          </div>
+          <div>
+            <Link to="/register_sharerecord">
               <button className="px-5 py-2 bg-transparent shadow-2xl text-white text-md mr-auto border border-primary rounded-md hover:bg-companyYello hover:text-primary">
-                Add Shareholder
+                Add Share Record
               </button>
-          </Link>
+            </Link>
+          </div>
         </div>
 
         <div className="w-full">

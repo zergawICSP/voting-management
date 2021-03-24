@@ -12,6 +12,12 @@ import {
   SEND_DELEGATE_ATTENDANCE_DATA_ERROR,
   SEND_DELEGATE_ATTENDANCE_DATA_SUCCESS,
   DELEGATE_ATTENDANCE_LOADING,
+  ADD_NEW_DELEGATE_LOADING,
+  UPDATE_DELEGATE_LOADING,
+  ADD_NEW_DELEGATE_SUCCESS,
+  ADD_NEW_DELEGATE_ERROR,
+  UPDATE_DELEGATE_SUCCESS,
+  UPDATE_DELEGATE_ERROR,
 } from "./types";
 
 // EXTERNAL IMPORT
@@ -120,6 +126,58 @@ export const updatingShareholder = (updatedShareholderData, shareholderID) => {
       .catch((error) =>
         dispatch({
           type: UPDATE_SHAREHOLDER_ERROR,
+          payload: error.response.data.error,
+        })
+      );
+  };
+};
+
+export const submittingDelegateRegisteration = (newDelegateData) => {
+  return (dispatch) => {
+    // dispatching loading indicator
+    dispatch({ type: ADD_NEW_DELEGATE_LOADING });
+
+    // opertaion
+    instance
+      .post("/delegates", newDelegateData)
+      .then((response) => {
+        if (response.status === 201)
+          dispatch({ type: ADD_NEW_DELEGATE_SUCCESS });
+        else
+          dispatch({
+            type: ADD_NEW_DELEGATE_ERROR,
+            payload: response.status + ": Bad Request",
+          });
+      })
+      .catch((error) =>
+        dispatch({
+          type: ADD_NEW_DELEGATE_ERROR,
+          payload: error.response.data.error,
+        })
+      );
+  };
+};
+
+export const updatingDelegate = (updatedDelegateData, delegateID) => {
+  return (dispatch) => {
+    // dispatching loading indicator
+    dispatch({ type: UPDATE_DELEGATE_LOADING });
+
+    // operation
+    instance
+      .put("/delegates/" + delegateID, updatedDelegateData)
+      .then((response) => {
+        if (response.status === 200)
+          dispatch({ type: UPDATE_DELEGATE_SUCCESS });
+        else
+          dispatch({
+            type: UPDATE_DELEGATE_ERROR,
+            payload: response.status + ":Bad Request",
+          });
+      })
+      .catch((error) =>
+        dispatch({
+          type: UPDATE_DELEGATE_ERROR,
           payload: error.response.data.error,
         })
       );

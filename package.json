@@ -26,6 +26,7 @@
     "react-dom-factories": "^1.0.2",
     "react-hash-string": "^1.0.0",
     "react-icons": "^4.1.0",
+    "react-modal": "^3.12.1",
     "react-number-format": "^4.4.4",
     "react-realtime": "^1.2.0",
     "react-redux": "^7.2.2",

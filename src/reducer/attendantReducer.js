@@ -12,6 +12,10 @@ import {
   SEND_DELEGATE_ATTENDANCE_DATA_ERROR,
   SEND_DELEGATE_ATTENDANCE_DATA_SUCCESS,
   DELEGATE_ATTENDANCE_LOADING,
+  ADD_NEW_DELEGATE_SUCCESS,
+  ADD_NEW_DELEGATE_ERROR,
+  UPDATE_DELEGATE_SUCCESS,
+  UPDATE_DELEGATE_ERROR,
 } from "../action/types";
 
 // EXTERNAL IMPORT
@@ -22,6 +26,8 @@ const initialState = {
   isShareholderCreationLoading: false,
   isShareholderUpdationLoading: false,
   isDelegateAttendantLoading: false,
+  isDelegateCreationLoading: false,
+  isDelegateUpdationLoading: false
 };
 
 const attendantReducer = (state = initialState, action) => {
@@ -66,6 +72,18 @@ const attendantReducer = (state = initialState, action) => {
     case SEND_DELEGATE_ATTENDANCE_DATA_ERROR:
       toast.error("Delegate Attendance Error: " + action.payload, { position: "bottom-center" });
       return { ...state, isDelegateAttendantLoading: false };
+    case ADD_NEW_DELEGATE_SUCCESS:
+      toast.success("Delegate Added Successfully", { position: "bottom-center" });
+      return { ...state, isDelegateCreationLoading: false };
+    case ADD_NEW_DELEGATE_ERROR:
+      toast.error("Delegate Registration Error: " + action.payload, { position: "bottom-center" });
+      return { ...state, isDelegateCreationLoading: false };
+    case UPDATE_DELEGATE_SUCCESS:
+      toast.success("Delegate Updated Successfully", { position: "bottom-center" });
+      return { ...state, isDelegateUpdationLoading: false };
+    case UPDATE_DELEGATE_ERROR:
+      toast.error("Delegate Update Error: " + action.payload, { position: "bottom-center" });
+      return { ...state, isDelegateUpdationLoading: false };
     default:
       return state;
   }

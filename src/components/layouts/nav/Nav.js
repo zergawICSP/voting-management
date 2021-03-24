@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { FaVoteYea } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { MdViewAgenda } from "react-icons/md";
+import { MdViewAgenda, MdImportExport } from "react-icons/md";
 import {RiMapPinUserFill} from "react-icons/ri";
 import { hashString } from "react-hash-string";
 
@@ -29,7 +29,7 @@ export default function Nav() {
                 className="group-hover:text-white text-companyYello"
               />
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/delegate"
               className="p-4 rounded-full hover:bg-third hover:border-third group"
               activeClassName="bg-third text-white"
@@ -38,13 +38,23 @@ export default function Nav() {
                 size="30"
                 className="group-hover:text-white text-companyYello"
               />
-            </NavLink>
-            <NavLink
+            </NavLink> */}
+            {/* <NavLink
               to="/init_vote"
               className="p-4 rounded-full hover:bg-third hover:border-third group"
               activeClassName="bg-third text-white"
             >
               <MdViewAgenda
+                size="30"
+                className="group-hover:text-white text-companyYello"
+              />
+            </NavLink> */}
+            <NavLink
+              to="/export_import"
+              className="p-4 rounded-full hover:bg-third hover:border-third group"
+              activeClassName="bg-third text-white"
+            >
+              <MdImportExport
                 size="30"
                 className="group-hover:text-white text-companyYello"
               />

@@ -2,28 +2,30 @@ import React, { Component } from "react";
 
 // EXTERNAL IMMPORTS
 import RiseLoader from "react-spinners/RiseLoader";
-import { BiBarcodeReader } from "react-icons/bi";
-import { BiReset } from "react-icons/bi";
+
 import { toast } from "react-toastify";
-import { Tooltip } from "react-tippy";
 import { connect } from "react-redux";
-import BarcodeScannerComponent from "react-webcam-barcode-scanner";
+// import { Tooltip } from "react-tippy";
+// import { BiBarcodeReader } from "react-icons/bi";
+// import { BiReset } from "react-icons/bi";
+// import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
 // COMPONENT IMPORT
 import {
   submittingShareholderRegistration,
   updatingShareholder,
 } from "../../../action/attendantsAction";
+import { instance } from "../../../api/config";
 import AppNavigation from "../nav/Nav";
 
 class RegisterShareholderForm extends Component {
   state = {
-    userScannedBarcode:
-      this.props.location.state &&
-      typeof this.props.location.state.selectedShareholderData !== "undefined"
-        ? this.props.location.state.selectedShareholderData.barcode
-        : "",
-    toggelingCamera: "",
+    // userScannedBarcode:
+    //   this.props.location.state &&
+    //   typeof this.props.location.state.selectedShareholderData !== "undefined"
+    //     ? this.props.location.state.selectedShareholderData.barcode
+    //     : "",
+    // toggelingCamera: "",
     userFullName:
       this.props.location.state &&
       typeof this.props.location.state.selectedShareholderData !== "undefined"
@@ -39,7 +41,38 @@ class RegisterShareholderForm extends Component {
       typeof this.props.location.state.selectedShareholderData !== "undefined"
         ? this.props.location.state.selectedShareholderData.no_of_shares
         : "",
+    isUserDelegated:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.delegate_id !== null
+          ? true
+          : false
+        : false,
+    // userDelegateID:
+    //   this.props.location.state &&
+    //   typeof this.props.location.state.selectedShareholderData !== "undefined"
+    //     ? this.props.location.state.selectedShareholderData.delegate_id !== null
+    //       ? this.props.location.state.selectedShareholderData.delegate_id
+    //       : ""
+    //     : "",
+    // delegateList: [],
   };
+
+  // componentDidMount() {
+  //   instance
+  //     .get("/delegates")
+  //     .then((response) => {
+  //       this.setState({
+  //         delegateList: response.data.delegates,
+  //       });
+  //     })
+  //     .catch((error) =>
+  //       toast.warning(
+  //         "Error While Loading Delegates. Please Refresh the Page. Error Report: " +
+  //           error.response.data.error
+  //       )
+  //     );
+  // }
 
   render() {
     // Local variables
@@ -59,6 +92,8 @@ class RegisterShareholderForm extends Component {
 
     // Handling onChange of Input Fields
     const handleOnChange = (e) => {
+      // if (e.target.name === "isUserDelegated")
+      //   this.setState({ isUserDelegated: e.target.checked });
       this.setState({ [e.target.name]: e.target.value });
     };
 
@@ -66,13 +101,14 @@ class RegisterShareholderForm extends Component {
     const submitRegisterShareholderData = (e) => {
       e.preventDefault();
       const {
-        userScannedBarcode,
+        // userScannedBarcode,
         userFullName,
         userPhoneNumber,
         userNumberOfShares,
+        // userDelegateID,
       } = this.state;
       if (
-        userScannedBarcode !== "" &&
+        // userScannedBarcode !== "" &&
         userFullName !== "" &&
         userPhoneNumber !== "" &&
         userNumberOfShares !== ""
@@ -82,7 +118,8 @@ class RegisterShareholderForm extends Component {
             name: userFullName,
             no_of_shares: userNumberOfShares,
             phone: userPhoneNumber,
-            barcode: userScannedBarcode,
+            // delegate_id: userDelegateID !== "" ? parseInt(userDelegateID) : null,
+            // barcode: userScannedBarcode,
           };
           if (
             this.props.location.state &&
@@ -92,13 +129,17 @@ class RegisterShareholderForm extends Component {
               cummulativeFormData,
               this.props.location.state.selectedShareholderData.id
             );
-          else submittingShareholderRegistration(cummulativeFormData);
-          this.setState({
-            userFullName: "",
-            userPhoneNumber: "",
-            userNumberOfShares: "",
-            userScannedBarcode: "",
-          });
+          else {
+            submittingShareholderRegistration(cummulativeFormData);
+            console.log(cummulativeFormData);
+            this.setState({
+              userFullName: "",
+              userPhoneNumber: "",
+              userNumberOfShares: "",
+              // userDelegateID: "",
+              // userScannedBarcode: "",
+            });
+          }
         } else toast.error("Invalid Name Field Entry. Please Correct !");
       } else {
         toast.error(
@@ -107,11 +148,31 @@ class RegisterShareholderForm extends Component {
       }
     };
 
+    // const mappingDelegatesToSelect =
+    //   this.state.delegateList.length > 0 ? (
+    //     this.state.delegateList.map((Delegates) => (
+    //       <option
+    //         value={Delegates.id}
+    //         className="text-third"
+    //         key={Delegates.id}
+    //       >
+    //         {Delegates.name}
+    //       </option>
+    //     ))
+    //   ) : (
+    //     <option value="" className="text-third">
+    //       No Delegate Found
+    //     </option>
+    //   );
+
     return (
       <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
         <AppNavigation />
         <p className="text-white font-bold text-xl mt-20">
-          Register New Shareholder
+          {this.props.location.state &&
+          typeof this.props.location.state.isEditingActivated !== "undefined"
+            ? "Edit Share Record"
+            : "Register New Share Record"}
         </p>
         <form className="w-1/2 py-10" onSubmit={submitRegisterShareholderData}>
           <div className="flex flex-col space-y-6 px-16 m-auto text-left">
@@ -151,7 +212,39 @@ class RegisterShareholderForm extends Component {
                 onChange={handleOnChange}
               />
             </div>
-            <div className="flex flex-row space-x-5 items-center">
+            {/* <div className="flex flex-row items-center space-x-4">
+              <input
+                className=""
+                id="isUserDelegated"
+                name="isUserDelegated"
+                checked={this.state.isUserDelegated}
+                onClick={handleOnChange}
+                type="checkbox"
+              />
+              <label htmlFor="isUserDelegated">
+                Is the shareholder delegated ? If 'YES', Please Check the box !
+              </label>
+            </div> */}
+
+            {/* Checking for delegation and display if there is any */}
+            {/* {this.state.isUserDelegated ? (
+              <div className="flex flex-col space-y-4">
+                <label>Delegate Name</label>
+                <select
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Number of Share"
+                  id="userDelegateID"
+                  name="userDelegateID"
+                  value={this.state.userDelegateID}
+                  onChange={handleOnChange}
+                >
+                  <option value="">Choose Delegate</option>
+                  {mappingDelegatesToSelect}
+                </select>
+              </div>
+            ) : null} */}
+
+            {/* <div className="flex flex-row space-x-5 items-center">
               <div className="flex flex-col space-y-2 w-2/3">
                 <label>Barcode</label>
                 <input
@@ -213,9 +306,9 @@ class RegisterShareholderForm extends Component {
                   }}
                 />
               )}
-            </div>
+            </div> */}
             {isShareholderCreationLoading || isShareholderUpdationLoading ? (
-              <RiseLoader size="15" color="#fff" className="w-full" />
+              <RiseLoader size="15px" color="#fff" className="w-full" />
             ) : (
               <button
                 type="submit"
