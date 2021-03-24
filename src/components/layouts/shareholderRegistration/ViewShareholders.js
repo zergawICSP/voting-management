@@ -7,7 +7,7 @@ import { AgGridReact } from "ag-grid-react";
 import Modal from "react-modal";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-bootstrap.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 // import "../../../assets/script/Modal";
 
@@ -51,38 +51,28 @@ class ViewShareholders extends Component {
         );
     };
 
-    //   getting is_present value
-    // const gettingPresentValue = function (params) {
-    //   return params.data.is_present ? "Present" : "Not Present";
-    // };
-
-    //   getting is_attendant_delegated value
-    // const gettingIsAttendantDelegated = function (params) {
-    //   return params.data.delegate_id ? "Delegated" : "Not Delegated";
-    // };
-
     const columnDefs = [
       { headerName: "Name", field: "name", checkboxSelection: true },
       {
-        headerName: "Total No of Share",
-        field: "no_of_shares",
+        headerName: "No of Share - Subscribed",
+        field: "subscribed_shares",
       },
-      { headerName: "Phone Number", field: "phone" },
-      // {
-      //   headerName: "Is Present",
-      //   field: "is_present",
-      //   valueGetter: gettingPresentValue,
-      // },
-      // {
-      //   headerName: "Delegation",
-      //   field: "delegate_id",
-      //   valueGetter: gettingIsAttendantDelegated,
-      // },
-      // { headerName: "Barcode ID", field: "barcode" },
+      { headerName: "No of Share - Paidup", field: "paidup_shares" },
+      { headerName: "Total value of Share Subscribed", field: "total_share_value" },
+      { headerName: "Total value of Share Paidup", field: "total_paidup_share_value" },
+      { headerName: "Service Charge", field: "service_charge" },
+      { headerName: "Service Charge Transaction", field: "service_charge_transaction" },
+      { headerName: "Nationality", field: "nationality"},
+      { headerName: "Phone", field: "phone" },
+      { headerName: "City", field: "city"},
+      { headerName: "SubCity", field: "subcity"},
+      { headerName: "W/K", field: "woreda_kebele" },
+      { headerName: "Bank Name", field: "bank_name" },
+      { headerName: "Gender", field: "gender"},
       {
         headerName: "Action",
         field: "id",
-        filter:false,
+        filter: false,
         cellRendererFramework: (params) => (
           <>
             <button
@@ -105,11 +95,12 @@ class ViewShareholders extends Component {
     ];
 
     const defaultColDef = {
-      flex: 1,
+      // flex: 1,
       filter: true,
       sortable: true,
       floatingFilter: true,
       resizable: true,
+      scrollable: true,
     };
 
     // row selection type
@@ -176,8 +167,8 @@ class ViewShareholders extends Component {
     return (
       <div className="p-10">
         <div
-          className="ag-theme-bootstrap w-full bg-transparent border text-black placeholder-black"
-          style={{ height: "575px", color: "black" }}
+          className="ag-theme-alpine w-full bg-transparent border text-black placeholder-black"
+          style={{ height: "575px", color: "black"}}
         >
           <AgGridReact
             columnDefs={columnDefs}

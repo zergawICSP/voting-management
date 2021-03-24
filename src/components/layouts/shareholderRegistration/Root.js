@@ -2,18 +2,28 @@ import React, { Component } from "react";
 
 // EXTERNAL IMPORT
 import { Redirect, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { Tooltip } from "react-tippy";
 
 // COMPONENT IMPORT
 import AppNavigation from "../nav/Nav";
 import ShareholderView from "./ViewShareholders";
+import { instance } from "../../../api/config";
 
 class Root extends Component {
   // app state value
   state = {
     selectedShareholderData: [],
     isEditingActivated: false,
+    totalSubscribedCapital: 0,
+    totalPaidCapital: 0,
   };
+
+  // componentDidMount() {
+  //   instance.get("/").then((response) => {
+  //     this.setState({ totalSubscribedCapital: 10, totalPaidCapital: 10 });
+  //   }).catch((error) => { toast.warning("Error while loading summary") });
+  // }
 
   render() {
     // Route Guarding
@@ -44,11 +54,17 @@ class Root extends Component {
       <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
         <AppNavigation />
 
-        <div className="flex flex-row justify-between items-center w-full pr-20 pl-10 mt-5">
+        {/* <div className="flex flex-row justify-between items-center w-full pr-20 pl-10 mt-5">
           <div className="flex flex-row justify-start space-x-5">
-            <p>Total subscribed capital</p>
-            <p>Total paid capital</p>
-            <p>Total capital</p>
+            <p>
+              Total subscribed capital:{" "}
+              <span className="font-extrabold text-xl">
+                {this.state.totalSubscribedCapital}
+              </span>
+            </p>
+            <p>
+              Total paid capital: <span className="font-extrabold text-xl">{this.state.totalPaidCapital}</span>
+            </p>
           </div>
           <div>
             <Link to="/register_sharerecord">
@@ -57,7 +73,7 @@ class Root extends Component {
               </button>
             </Link>
           </div>
-        </div>
+        </div> */}
 
         <div className="w-full">
           <ShareholderView onEditButtonClicked={onEditButtonClicked} />

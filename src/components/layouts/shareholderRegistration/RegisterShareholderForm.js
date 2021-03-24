@@ -5,27 +5,16 @@ import RiseLoader from "react-spinners/RiseLoader";
 
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
-// import { Tooltip } from "react-tippy";
-// import { BiBarcodeReader } from "react-icons/bi";
-// import { BiReset } from "react-icons/bi";
-// import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
 // COMPONENT IMPORT
 import {
   submittingShareholderRegistration,
   updatingShareholder,
 } from "../../../action/attendantsAction";
-import { instance } from "../../../api/config";
 import AppNavigation from "../nav/Nav";
 
 class RegisterShareholderForm extends Component {
   state = {
-    // userScannedBarcode:
-    //   this.props.location.state &&
-    //   typeof this.props.location.state.selectedShareholderData !== "undefined"
-    //     ? this.props.location.state.selectedShareholderData.barcode
-    //     : "",
-    // toggelingCamera: "",
     userFullName:
       this.props.location.state &&
       typeof this.props.location.state.selectedShareholderData !== "undefined"
@@ -36,43 +25,69 @@ class RegisterShareholderForm extends Component {
       typeof this.props.location.state.selectedShareholderData !== "undefined"
         ? this.props.location.state.selectedShareholderData.phone
         : "",
-    userNumberOfShares:
+    userNumberOfSharesSubscribed:
       this.props.location.state &&
       typeof this.props.location.state.selectedShareholderData !== "undefined"
-        ? this.props.location.state.selectedShareholderData.no_of_shares
+        ? this.props.location.state.selectedShareholderData.subscribed_shares
         : "",
-    isUserDelegated:
+    userNumberOfSharesPaidup:
       this.props.location.state &&
       typeof this.props.location.state.selectedShareholderData !== "undefined"
-        ? this.props.location.state.selectedShareholderData.delegate_id !== null
-          ? true
-          : false
-        : false,
-    // userDelegateID:
-    //   this.props.location.state &&
-    //   typeof this.props.location.state.selectedShareholderData !== "undefined"
-    //     ? this.props.location.state.selectedShareholderData.delegate_id !== null
-    //       ? this.props.location.state.selectedShareholderData.delegate_id
-    //       : ""
-    //     : "",
-    // delegateList: [],
+        ? this.props.location.state.selectedShareholderData.paidup_shares
+        : "",
+    userNumberOfSharesSubscribedValue:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.total_share_value
+        : "",
+    userNumberOfSharesPaidupValue:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData
+            .total_paidup_share_value
+        : "",
+    userServiceCharge:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.service_charge
+        : "",
+    userServiceChargeTransaction:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData
+            .service_charge_transaction
+        : "",
+    userNationality:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.nationality
+        : "",
+    userCity:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.city
+        : "",
+    userSubcity:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.subcity
+        : "",
+    userWoredaKebele:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.woreda_kebele
+        : "",
+    userGender:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.gender
+        : "",
+    userBankName:
+      this.props.location.state &&
+      typeof this.props.location.state.selectedShareholderData !== "undefined"
+        ? this.props.location.state.selectedShareholderData.bank_name
+        : "",
   };
-
-  // componentDidMount() {
-  //   instance
-  //     .get("/delegates")
-  //     .then((response) => {
-  //       this.setState({
-  //         delegateList: response.data.delegates,
-  //       });
-  //     })
-  //     .catch((error) =>
-  //       toast.warning(
-  //         "Error While Loading Delegates. Please Refresh the Page. Error Report: " +
-  //           error.response.data.error
-  //       )
-  //     );
-  // }
 
   render() {
     // Local variables
@@ -92,8 +107,6 @@ class RegisterShareholderForm extends Component {
 
     // Handling onChange of Input Fields
     const handleOnChange = (e) => {
-      // if (e.target.name === "isUserDelegated")
-      //   this.setState({ isUserDelegated: e.target.checked });
       this.setState({ [e.target.name]: e.target.value });
     };
 
@@ -101,25 +114,50 @@ class RegisterShareholderForm extends Component {
     const submitRegisterShareholderData = (e) => {
       e.preventDefault();
       const {
-        // userScannedBarcode,
         userFullName,
         userPhoneNumber,
-        userNumberOfShares,
-        // userDelegateID,
+        userNumberOfSharesSubscribed,
+        userNumberOfSharesPaidup,
+        userNumberOfSharesSubscribedValue,
+        userNumberOfSharesPaidupValue,
+        userServiceCharge,
+        userServiceChargeTransaction,
+        userNationality,
+        userBankName,
+        userCity,
+        userSubcity,
+        userWoredaKebele,
+        userGender,
       } = this.state;
       if (
-        // userScannedBarcode !== "" &&
         userFullName !== "" &&
         userPhoneNumber !== "" &&
-        userNumberOfShares !== ""
+        userNumberOfSharesSubscribed !== "" &&
+        userNumberOfSharesPaidup !== "" &&
+        userNumberOfSharesSubscribedValue !== "" &&
+        userNumberOfSharesPaidupValue !== "" &&
+        userServiceChargeTransaction !== "" &&
+        userServiceCharge !== "" &&
+        userNationality !== "" &&
+        userBankName !== "" &&
+        userGender !== ""
       ) {
         if (validateName(userFullName)) {
           let cummulativeFormData = {
             name: userFullName,
-            no_of_shares: userNumberOfShares,
+            subscribed_shares: userNumberOfSharesSubscribed,
             phone: userPhoneNumber,
-            // delegate_id: userDelegateID !== "" ? parseInt(userDelegateID) : null,
-            // barcode: userScannedBarcode,
+            paidup_shares: userNumberOfSharesPaidup,
+            total_share_value: userNumberOfSharesSubscribedValue,
+            total_paidup_share_value: userNumberOfSharesPaidupValue,
+            service_charge: userServiceCharge,
+            service_charge_transaction: userServiceChargeTransaction,
+            nationality: userNationality,
+            city: userCity,
+            subcity: userSubcity,
+            woreda_kebele: userWoredaKebele,
+            bank_name: userBankName,
+            gender: userGender,
           };
           if (
             this.props.location.state &&
@@ -135,9 +173,15 @@ class RegisterShareholderForm extends Component {
             this.setState({
               userFullName: "",
               userPhoneNumber: "",
-              userNumberOfShares: "",
-              // userDelegateID: "",
-              // userScannedBarcode: "",
+              userNumberOfSharesSubscribed: "",
+              userNumberOfSharesPaidup: "",
+              userNumberOfSharesSubscribedValue: "",
+              userNumberOfSharesPaidupValue: "",
+              userServiceChargeTransaction: "",
+              userServiceCharge: "",
+              userNationality: "",
+              userBankName: "",
+              userGender: ""
             });
           }
         } else toast.error("Invalid Name Field Entry. Please Correct !");
@@ -148,23 +192,6 @@ class RegisterShareholderForm extends Component {
       }
     };
 
-    // const mappingDelegatesToSelect =
-    //   this.state.delegateList.length > 0 ? (
-    //     this.state.delegateList.map((Delegates) => (
-    //       <option
-    //         value={Delegates.id}
-    //         className="text-third"
-    //         key={Delegates.id}
-    //       >
-    //         {Delegates.name}
-    //       </option>
-    //     ))
-    //   ) : (
-    //     <option value="" className="text-third">
-    //       No Delegate Found
-    //     </option>
-    //   );
-
     return (
       <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
         <AppNavigation />
@@ -174,44 +201,200 @@ class RegisterShareholderForm extends Component {
             ? "Edit Share Record"
             : "Register New Share Record"}
         </p>
-        <form className="w-1/2 py-10" onSubmit={submitRegisterShareholderData}>
+        <form className="w-2/3 py-10" onSubmit={submitRegisterShareholderData}>
           <div className="flex flex-col space-y-6 px-16 m-auto text-left">
-            <div className="flex flex-col space-y-4">
-              <label>Full Name</label>
-              <input
-                className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
-                placeholder="Enter Full Name"
-                id="userFullName"
-                name="userFullName"
-                type="text"
-                value={this.state.userFullName}
-                onChange={handleOnChange}
-              />
+            <div className="flex flex-row space-x-5">
+              <div className="flex flex-col space-y-4 w-1/2">
+                <label>Full Name</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Full Name"
+                  id="userFullName"
+                  name="userFullName"
+                  type="text"
+                  value={this.state.userFullName}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4">
+                <label>Gender</label>
+                <select
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Full Name"
+                  id="userGender"
+                  name="userGender"
+                  type="text"
+                  value={this.state.userGender}
+                  onChange={handleOnChange}
+                >
+                  <option value="" className="text-third">
+                    Choose Gender
+                  </option>
+                  <option value="Male" className="text-third">
+                    Male
+                  </option>
+                  <option value="Female" className="text-third">
+                    Female
+                  </option>
+                </select>
+              </div>
+              <div className="flex flex-col space-y-4">
+                <label>Bank Name</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Bank Name"
+                  id="userBankName"
+                  name="userBankName"
+                  type="text"
+                  value={this.state.userBankName}
+                  onChange={handleOnChange}
+                />
+              </div>
             </div>
-            <div className="flex flex-col space-y-4">
-              <label>Number of Share</label>
-              <input
-                className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
-                placeholder="Enter Number of Share"
-                id="userNumberOfShares"
-                name="userNumberOfShares"
-                type="number"
-                value={this.state.userNumberOfShares}
-                onChange={handleOnChange}
-              />
+            <div className="flex flex-row space-x-5">
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>No of Share Subscribed</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter No of Share Subscribed"
+                  id="userNumberOfSharesSubscribed"
+                  name="userNumberOfSharesSubscribed"
+                  type="number"
+                  value={this.state.userNumberOfSharesSubscribed}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>Number of Share Paidup</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter No of Share Paidup"
+                  id="userNumberOfSharesPaidup"
+                  name="userNumberOfSharesPaidup"
+                  type="number"
+                  value={this.state.userNumberOfSharesPaidup}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>Total Value of Share Subscribed</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Total Subscribed Value"
+                  id="userNumberOfSharesSubscribedValue"
+                  name="userNumberOfSharesSubscribedValue"
+                  type="number"
+                  value={this.state.userNumberOfSharesSubscribedValue}
+                  onChange={handleOnChange}
+                />
+              </div>
             </div>
-            <div className="flex flex-col space-y-4">
-              <label>Phone Number</label>
-              <input
-                className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
-                placeholder="Enter Phone Number"
-                id="userPhoneNumber"
-                name="userPhoneNumber"
-                type="text"
-                value={this.state.userPhoneNumber}
-                onChange={handleOnChange}
-              />
+
+            <div className="flex flex-row space-x-5">
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>Total Value of Share Paidup</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Total Paidup Value"
+                  id="userNumberOfSharesPaidupValue"
+                  name="userNumberOfSharesPaidupValue"
+                  type="number"
+                  value={this.state.userNumberOfSharesPaidupValue}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>Service Charge</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Service Charge"
+                  id="userServiceCharge"
+                  name="userServiceCharge"
+                  type="number"
+                  value={this.state.userServiceCharge}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>Service Charge Transaction</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Service Charge Transaction"
+                  id="userServiceChargeTransaction"
+                  name="userServiceChargeTransaction"
+                  type="text"
+                  value={this.state.userServiceChargeTransaction}
+                  onChange={handleOnChange}
+                />
+              </div>
             </div>
+
+            <div className="flex flex-row space-x-5">
+              <div className="flex flex-col space-y-4 w-1/2">
+                <label>Phone Number</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Phone Number"
+                  id="userPhoneNumber"
+                  name="userPhoneNumber"
+                  type="text"
+                  value={this.state.userPhoneNumber}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-1/2">
+                <label>Nationality</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Nationality"
+                  id="userNationality"
+                  name="userNationality"
+                  type="text"
+                  value={this.state.userNationality}
+                  onChange={handleOnChange}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-row space-x-5">
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>City</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter City"
+                  id="userCity"
+                  name="userCity"
+                  type="text"
+                  value={this.state.userCity}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>Subcity</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Subcity"
+                  id="userSubcity"
+                  name="userSubcity"
+                  type="text"
+                  value={this.state.userSubcity}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-1/3">
+                <label>Woreda/Kebele</label>
+                <input
+                  className="px-5 py-2 bg-transparent border border-gray-100 rounded-full text-white focus:outline-none focus:text-white"
+                  placeholder="Enter Woreda/Kebele"
+                  id="userWoredaKebele"
+                  name="userWoredaKebele"
+                  type="text"
+                  value={this.state.userWoredaKebele}
+                  onChange={handleOnChange}
+                />
+              </div>
+            </div>
+
             {/* <div className="flex flex-row items-center space-x-4">
               <input
                 className=""

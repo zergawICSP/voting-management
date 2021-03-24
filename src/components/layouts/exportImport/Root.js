@@ -10,9 +10,6 @@ import AppNavigation from "../nav/Nav";
 import ImportShareholderForm from "./ImportShareholderForm";
 import { instance } from "../../../api/config";
 
-// Image import
-import ImportTemplate from "../../../assets/images/Zergaw ISP Logo.png";
-
 class Root extends Component {
   state = {
     selectedExportType: "",
@@ -71,7 +68,7 @@ class Root extends Component {
         <div className="flex flex-col justify-around items-center">
           <div className="m-auto mt-16 flex flex-col justify-center items-center">
             <p className="text-white">Before Importing, Please download and use the below share record entry template</p>
-            <a href={ImportTemplate} className="text-white bg-transparent border border-gray-500 rounded-md p-3 mt-4 hover:border-companyYello hover:bg-companyYello hover:text-primary w-1/2" download="Import Template">Download Import Template</a>
+            <a href="..." className="text-white bg-transparent border border-gray-500 rounded-md p-3 mt-4 hover:border-companyYello hover:bg-companyYello hover:text-primary w-1/2" download="Import Template">Download Import Template</a>
           </div>
           <div className="flex flex-row justify-center items-center space-x-5 divide-x-2 divide-white divide-solid mt-24 w-full">
             <div className="w-1/2">

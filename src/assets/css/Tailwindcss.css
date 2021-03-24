@@ -12,10 +12,16 @@
 .ag-theme-bootstrap {
   min-height: 400px !important;
   text-align: left !important;
+  overflow-x: scroll !important;
+}
+
+.ag-theme-bootstrap .ag-body-viewport{
+  overflow-x: scroll !important;
 }
 
 .ag-theme-bootstrap .ag-header-row {
   height: 27px !important;
+  width: 200px !important;
   font-weight: bold !important;
 }
 
