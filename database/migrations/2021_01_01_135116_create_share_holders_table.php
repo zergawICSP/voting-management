@@ -16,15 +16,19 @@ class CreateShareHoldersTable extends Migration
         Schema::create('share_holders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('no_of_shares');
+            $table->integer('subscribed_shares');
+            $table->integer('paidup_shares');
+            $table->float('total_share_value');
+            $table->float('total_paidup_share_value');
+            $table->float('service_charge');
+            $table->string('service_charge_transaction');
+            $table->string('nationality');
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
             $table->string('subcity')->nullable();
             $table->string('woreda_kebele')->nullable();
-            $table->boolean('is_present')->default(false);
-            $table->timestamp('attended_time')->nullable();
-            $table->foreignId('delegate_id')->nullable()->constrained()->onDelete('cascade');
-            $table->string('barcode')->nullable();
+            $table->string('bank_name');
+            $table->string('gender');
             $table->softDeletes();
             $table->timestamps();
         });

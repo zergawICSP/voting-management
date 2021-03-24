@@ -27,31 +27,24 @@ class ShareholderExport implements FromCollection, WithHeadings, ShouldAutoSize,
 
     public function collection()
     {
-        $shareholders = ShareHolder::all(['id', 'name', 'no_of_shares','phone', 'is_present', 'delegate_id', 'barcode']);
+        $shareholders = ShareHolder::all([
+            'id',
+            'name',
+            'subscribed_shares',
+            'total_share_value',
+            'total_paidup_share_value',
+            'service_charge',
+            'service_charge_transaction',
+            'nationality',
+            'phone',
+            'city',
+            'subcity',
+            'woreda_kebele',
+            'bank_name',
+            'gender'
+        ]);
 
         ini_set('memory_limit', -1);
-
-        $shareholders->each(function($shareholder){
-            $shareholder->name = trim($shareholder->name);
-            $shareholder->phone = $shareholder->phone;
-            if($shareholder->delegate) {
-                $shareholder->delegate_id = $shareholder->delegate->name;
-            }
-            if ($shareholder->is_present) {
-                $shareholder->is_present = 'Present';
-            }else
-            {
-                $shareholder->is_present = 'Absent';
-            }
-            $meetingAgendas = MeetingAgenda::all();
-            foreach($meetingAgendas as $meetingAgenda) {
-               if(!$shareholder->meetingAgendas->find($meetingAgenda->id)){
-                    $shareholder->$meetingAgenda = '-';
-               } else {
-                   $shareholder->$meetingAgenda = $shareholder->meetingAgendas->find($meetingAgenda->id)->pivot->answer;
-               }
-            }
-        });
 
         return $shareholders;
     }
@@ -63,15 +56,19 @@ class ShareholderExport implements FromCollection, WithHeadings, ShouldAutoSize,
         $headings = [
             'id',
             'name',
-            'no of shares', 
+            'subscribed_shares',
+            'total_share_value',
+            'total_paidup_share_value',
+            'service_charge',
+            'service_charge_transaction',
+            'nationality',
             'phone',
-            'is present',
-            'delegate',
-            'barcode'            
+            'city',
+            'subcity',
+            'woreda_kebele',
+            'bank_name',
+            'gender'            
         ];
-        foreach(MeetingAgenda::all() as $agenda) {
-            array_push($headings, $agenda->title);
-        }
         return $headings;
     }
 }

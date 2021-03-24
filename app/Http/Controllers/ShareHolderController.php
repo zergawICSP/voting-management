@@ -35,10 +35,19 @@ class ShareHolderController extends Controller
         try {
             $request->validate([
                 'name' => 'required',
-                'no_of_shares' => 'required|integer|min:1',
-                'delegate_id' => 'nullable|integer',
-                'phone' => 'required',
-                'barcode' => 'nullable'
+                'subscribed_shares' => 'required|integer',
+                'paidup_shares' => 'required|integer',
+                'total_share_value' => 'required|numeric',
+                'total_paidup_share_value' => 'required|numeric',
+                'service_charge' => 'required|numeric',
+                'service_charge_transaction' => 'required|unique:share_holders',
+                'nationality' => 'required',
+                'phone' => 'nullable',
+                'city' => 'nullable',
+                'subcity' => 'nullable',
+                'woreda_kebele' => 'nullable',
+                'bank_name' => 'required',
+                'gender' => 'required'
             ]);            
         } catch(ValidationException $e) {
             return response()->json([
@@ -50,12 +59,19 @@ class ShareHolderController extends Controller
         try {
             $shareholder = ShareHolder::create([
                 'name' => $request->input('name'),
-                'no_of_shares' => $request->input('no_of_shares'),
+                'subscribed_shares' => $request->input('subscribed_shares'),
+                'paidup_shares' => $request->input('paidup_shares'),
+                'total_share_value' => $request->input('total_share_value'),
+                'total_paidup_share_value' => $request->input('total_paidup_share_value'),
+                'service_charge' => $request->input('service_charge'),
+                'service_charge_transaction' => $request->input('service_charge_transaction'),
+                'nationality' => $request->input('nationality'),
                 'phone' => $request->input('phone'),
-                'barcode' =>$request->input('barcode'),
-                'is_present' => true,
-                'attended_time' => Carbon::now(),
-                'delegate_id' => $request->delegate_id ?? null
+                'city' => $request->input('city'),
+                'subcity' => $request->input('subcity'),
+                'woreda_kebele' => $request->input('woreda_kebele'),
+                'bank_name' => $request->input('bank_name'),
+                'gender' => $request->input('gender')
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -96,25 +112,43 @@ class ShareHolderController extends Controller
         try {
             $request->validate([
                 'name' => 'required',
-                'no_of_shares' => 'required|integer|min:1',
-                'phone' => 'required',
-                'delegate_id' => 'nullable|integer',
-                'barcode' => 'nullable'
+                'subscribed_shares' => 'required|integer',
+                'paidup_shares' => 'required|integer',
+                'total_share_value' => 'required|numeric',
+                'total_paidup_share_value' => 'required|numeric',
+                'service_charge' => 'required|numeric',
+                'service_charge_transaction' => 'required|unique:share_holders,service_charge_transaction,'. $shareholder->id .',id' ,
+                'nationality' => 'required',
+                'phone' => 'nullable',
+                'city' => 'nullable',
+                'subcity' => 'nullable',
+                'woreda_kebele' => 'nullable',
+                'bank_name' => 'required',
+                'gender' => 'required'
             ]);            
         } catch(ValidationException $e) {
             return response()->json([
-                'error' => $e->errors()
-            ]);
+                'error' => 'Some fields must be filled!',
+                'error_message' => $e->errors()
+            ], 400);
         }
 
         try {
             $shareholder->update([
                 'name' => $request->input('name'),
-                'no_of_shares' => $request->input('no_of_shares'),
+                'subscribed_shares' => $request->input('subscribed_shares'),
+                'paidup_shares' => $request->input('paidup_shares'),
+                'total_share_value' => $request->input('total_share_value'),
+                'total_paidup_share_value' => $request->input('total_paidup_share_value'),
+                'service_charge' => $request->input('service_charge'),
+                'service_charge_transaction' => $request->input('service_charge_transaction'),
+                'nationality' => $request->input('nationality'),
                 'phone' => $request->input('phone'),
-                'barcode' =>$request->input('barcode'),
-                'is_present' => true,
-                'delegate_id'  =>  $request->delegate_id ?? null
+                'city' => $request->input('city'),
+                'subcity' => $request->input('subcity'),
+                'woreda_kebele' => $request->input('woreda_kebele'),
+                'bank_name' => $request->input('bank_name'),
+                'gender' => $request->input('gender')
             ]);
         } catch (Exception $e) {
             return response()->json([
