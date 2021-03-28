@@ -54,8 +54,8 @@ class Root extends Component {
       <div className="flex flex-col min-h-screen items-center bg-gradient-to-bl from-primary to-secondary text-white">
         <AppNavigation />
 
-        {/* <div className="flex flex-row justify-between items-center w-full pr-20 pl-10 mt-5">
-          <div className="flex flex-row justify-start space-x-5">
+        <div className="flex flex-row justify-between items-center w-full pr-20 pl-10 mt-5">
+          {/* <div className="flex flex-row justify-start space-x-5">
             <p>
               Total subscribed capital:{" "}
               <span className="font-extrabold text-xl">
@@ -65,7 +65,7 @@ class Root extends Component {
             <p>
               Total paid capital: <span className="font-extrabold text-xl">{this.state.totalPaidCapital}</span>
             </p>
-          </div>
+          </div> */}
           <div>
             <Link to="/register_sharerecord">
               <button className="px-5 py-2 bg-transparent shadow-2xl text-white text-md mr-auto border border-primary rounded-md hover:bg-companyYello hover:text-primary">
@@ -73,7 +73,7 @@ class Root extends Component {
               </button>
             </Link>
           </div>
-        </div> */}
+        </div>
 
         <div className="w-full">
           <ShareholderView onEditButtonClicked={onEditButtonClicked} />
